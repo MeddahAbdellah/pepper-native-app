@@ -1,21 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import PepperIntro from './components/pepperIntro/pepperIntro';
+import PepperMain from './components/pepperMain/pepperMain';
+import { PepperTitle, PepperMenu, PepperQrCode } from './components/pepperHeader/pepperHeader';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator 
+       screenOptions={{ 
+         headerShadowVisible: false,
+         headerTitle: () => (<PepperTitle/>),
+         headerLeft: () => (<PepperMenu />),
+         headerRight: () => (<PepperQrCode />),
+        }}
+       >
+        <Stack.Screen
+          name="Intro"
+          component={PepperIntro}
+          options={{ title: 'Welcome' }}
+        />
+        <Stack.Screen name="Main" component={PepperMain} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
