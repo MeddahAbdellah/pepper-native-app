@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import PepperImage, { PepperImages } from '../peperImage/pepperImage';
+import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import Carousel from 'react-native-snap-carousel';
 import { white, grey_1, space_unit, grey_2 } from '../../styles/common';
 

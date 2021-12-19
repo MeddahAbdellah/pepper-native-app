@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import PepperCarousel from '../pepperCarousel/pepperCarousel';
-import { PepperImages } from '../peperImage/pepperImage';
+import { PepperImages } from '../pepperImage/pepperImage';
 
 export default function PepperIntro() {
   return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import PepperImage, { PepperImages } from '../peperImage/pepperImage';
+import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import { space_unit } from '../../styles/common';
 
 export const PepperTitle = () => {
