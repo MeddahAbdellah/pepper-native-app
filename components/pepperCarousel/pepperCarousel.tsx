@@ -7,7 +7,7 @@ import { white, space_unit, grey_2 } from '../../styles/common';
 export default function PepperCarousel(onBoardingProps: { pages: Array<{ image: PepperImages, text: string }> }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const renderItem = (carouselProps: { item: any, index: any }) => (
+  const renderItem = (carouselProps: { item: { image: PepperImages, text: string }, index: number }) => (
     <View style={styles.container}>
       <PepperImage src={carouselProps.item.image} style={styles.image}></PepperImage>
       <Text style={styles.description}>{carouselProps.item.text}</Text>

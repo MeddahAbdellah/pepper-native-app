@@ -18,12 +18,8 @@ export default function App() {
          headerRight: () => (<PepperQrCode />),
         }}
        >
-        <Stack.Screen
-          name="Intro"
-          component={PepperIntro}
-          options={{ title: 'Welcome' }}
-        />
         <Stack.Screen name="Main" component={PepperMain} />
+        <Stack.Screen name="Intro" component={PepperIntro} />
       </Stack.Navigator>
     </NavigationContainer>
   );
