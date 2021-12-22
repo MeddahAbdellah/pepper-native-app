@@ -3,6 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import PepperParties from '../pepperParties/pepperParties';
 import PepperIcon from '../pepperIcon/pepperIcon';
 import { space_unit, grey_3, pepper } from '../../styles/common';
+import PepperUserParties from '../pepperUserParties/pepperUserParties';
+import PepperMatches from '../pepperMatches/pepperMatches';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,8 +23,8 @@ export default function PepperMain() {
         tabBarIcon: ({ color }) => renderIcon(route, color),
       })}>
       <Tab.Screen name="pepper-chili" component={PepperParties} />
-      <Tab.Screen name="pepper-disco" component={PepperParties} />
-      <Tab.Screen name="pepper-couple" component={PepperParties} />
+      <Tab.Screen name="pepper-disco" component={PepperUserParties} />
+      <Tab.Screen name="pepper-couple" component={PepperMatches} />
     </Tab.Navigator>
   );
 }
