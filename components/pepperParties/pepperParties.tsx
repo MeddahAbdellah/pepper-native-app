@@ -1,12 +1,16 @@
 import React from 'react'
-import { StyleSheet, View, Text, ImageBackground } from 'react-native'
-import { space_unit, white, black, color, fontSizeHeader, fontSizeSubHeader, sun_2, sun, indigo_2, fire, fire_2, indigo_3, fontSizeRegular, pepper, pepper_2 } from '../../styles/common';
+import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native'
+import { space_unit, white, black, color, fontSizeHeader, fontSizeSubHeader, sun_2, sun, indigo_2, fire, fire_2, indigo_3, fontSizeRegular, pepper, pepper_2, loremIpsium } from '../../styles/common';
 import Swiper from 'react-native-deck-swiper';
 import { LinearGradient } from 'expo-linear-gradient';
 import PepperTag from '../pepperTags/pepperTags';
 import { IParty } from '../../models/types';
+import { useNavigation } from '@react-navigation/native';
 
 export default function PepperParties() {
+  // The push method is not present in the types while it does exist thats we we cast navigation as any
+  const navigation = useNavigation<any>();
+
   // TODO : fill parties
   const parties: IParty[] = [
     {
@@ -18,7 +22,25 @@ export default function PepperParties() {
       people: 34,
       minAge: 19,
       maxAge: 28,
-      img: { uri: 'https://image.jimcdn.com/app/cms/image/transf/none/path/s2f6af3166883d3ee/image/i8c4fa5b2ed1f62b8/version/1454158048/image.jpg' },
+      description: loremIpsium,
+      foods: [
+        { name: 'Steak', price: 10 },
+        { name: 'Chicken', price: 12 },
+        { name: 'Porc', price: 8 },
+        { name: 'Beef', price: 14 },
+      ],
+      drinks: [
+        { name: 'Beer', price: 6 },
+        { name: 'Champain', price: 8 },
+        { name: 'Whiskey', price: 9 },
+        { name: 'Wine', price: 14 },
+      ],
+      price: 0,
+      imgs: [
+        { uri: 'https://image.jimcdn.com/app/cms/image/transf/none/path/s2f6af3166883d3ee/image/i8c4fa5b2ed1f62b8/version/1454158048/image.jpg' },
+        { uri: 'https://image.jimcdn.com/app/cms/image/transf/none/path/s2f6af3166883d3ee/image/i8c4fa5b2ed1f62b8/version/1454158048/image.jpg' },
+        { uri: 'https://image.jimcdn.com/app/cms/image/transf/none/path/s2f6af3166883d3ee/image/i8c4fa5b2ed1f62b8/version/1454158048/image.jpg' },
+      ],
     },
     {
       id: 2,
@@ -29,7 +51,21 @@ export default function PepperParties() {
       people: 22,
       minAge: 19,
       maxAge: 28,
-      img: { uri: 'https://storage.googleapis.com/eyp-wordpress/1/2021/09/social-bar-saint-ouen-1440x946.jpg' },
+      description: loremIpsium,
+      foods: [
+        { name: 'Steak', price: 10 },
+        { name: 'Chicken', price: 12 },
+        { name: 'Porc', price: 8 },
+        { name: 'Beef', price: 14 },
+      ],
+      drinks: [
+        { name: 'Beer', price: 6 },
+        { name: 'Champain', price: 8 },
+        { name: 'Whiskey', price: 9 },
+        { name: 'Wine', price: 14 },
+      ],
+      price: 0,
+      imgs: [{ uri: 'https://storage.googleapis.com/eyp-wordpress/1/2021/09/social-bar-saint-ouen-1440x946.jpg' }],
     },
     {
       id: 3,
@@ -40,7 +76,21 @@ export default function PepperParties() {
       people: 14,
       minAge: 19,
       maxAge: 28,
-      img: { uri: 'https://www.oubruncher.com/photos1/1631_1.jpg' },
+      description: loremIpsium,
+      foods: [
+        { name: 'Steak', price: 10 },
+        { name: 'Chicken', price: 12 },
+        { name: 'Porc', price: 8 },
+        { name: 'Beef', price: 14 },
+      ],
+      drinks: [
+        { name: 'Beer', price: 6 },
+        { name: 'Champain', price: 8 },
+        { name: 'Whiskey', price: 9 },
+        { name: 'Wine', price: 14 },
+      ],
+      price: 0,
+      imgs: [{ uri: 'https://www.oubruncher.com/photos1/1631_1.jpg' }],
     },
   ];
 
@@ -48,23 +98,33 @@ export default function PepperParties() {
     const attendeesTag = (attendees: { people: number, minAge: number, maxAge: number }): string => {
       return `${attendees.people} people (${attendees.minAge}yo - ${attendees.maxAge}yo)`;
     }
+
+    const miniFoodPrice = (): string =>  `${Math.min(...party.foods.map((food) => food.price))}$`;
+    const miniDrinkPrice = (): string =>  `${Math.min(...party.drinks.map((food) => food.price))}$`;
+    const partyPrice = (): string =>  party.price !== 0 ? `${party.price}$` : 'Free';
+
     return (
-      <ImageBackground source={party.img} style={styles.image} resizeMode='cover'>
-        <LinearGradient colors={['transparent', color(black, .7), black]} style={styles.imageMask}>
-          <View style={styles.descriptionContainer}> 
-            <Text style={{...styles.description, fontSize: fontSizeHeader}}>{party.title}</Text>
-            <Text style={{...styles.description, fontSize: fontSizeSubHeader}}>{party.theme}</Text>
-            <Text style={{...styles.description, marginBottom: 2 * space_unit}}>{party.date}</Text>
-            <View style={styles.tagsContainer}>
-              <PepperTag iconName="pepper-dancing" text={attendeesTag(party)} firstGradientColor={pepper} secondGradientColor={pepper_2} style={styles.tags}/>
-            </View>
-            <View style={styles.tagsContainer}>
-              <PepperTag iconName="pepper-beer" text="8$" firstGradientColor={sun} secondGradientColor={sun_2} style={styles.tags}/>
-              <PepperTag iconName="pepper-burger" text="12$" firstGradientColor={fire} secondGradientColor={fire_2} style={styles.tags}/>
-              <PepperTag iconName="pepper-partyPopper" text="Free" firstGradientColor={indigo_2} secondGradientColor={indigo_3} style={styles.tags}/>
-            </View>
-          </View>
-        </LinearGradient>
+      <ImageBackground source={party.imgs[0]} style={styles.image} resizeMode='cover'>
+            <TouchableOpacity
+              style={{...styles.imageMask, zIndex: styles.imageMask.zIndex + 1}}
+              onPress={() => navigation.push('PartyDescription', party)}
+              >
+            </TouchableOpacity>
+            <LinearGradient colors={['transparent', color(black, .7), black]} style={styles.imageMask}>
+                <View style={styles.descriptionContainer}> 
+                  <Text style={{...styles.description, fontSize: fontSizeHeader}}>{party.title}</Text>
+                  <Text style={{...styles.description, fontSize: fontSizeSubHeader}}>{party.theme}</Text>
+                  <Text style={{...styles.description, marginBottom: 2 * space_unit}}>{party.date}</Text>
+                  <View style={styles.tagsContainer}>
+                    <PepperTag iconName="pepper-dancing" text={attendeesTag(party)} firstGradientColor={pepper} secondGradientColor={pepper_2} style={styles.tags}/>
+                  </View>
+                  <View style={styles.tagsContainer}>
+                    <PepperTag iconName="pepper-beer" text={miniDrinkPrice()} firstGradientColor={sun} secondGradientColor={sun_2} style={styles.tags}/>
+                    <PepperTag iconName="pepper-burger" text={miniFoodPrice()} firstGradientColor={fire} secondGradientColor={fire_2} style={styles.tags}/>
+                    <PepperTag iconName="pepper-partyPopper" text={partyPrice()} firstGradientColor={indigo_2} secondGradientColor={indigo_3} style={styles.tags}/>
+                  </View>
+                </View>
+            </LinearGradient>
       </ImageBackground>
     );
   } 

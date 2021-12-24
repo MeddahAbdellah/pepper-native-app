@@ -7,7 +7,7 @@ import { white, space_unit, grey_2 } from '../../styles/common';
 export default function PepperCarousel(onBoardingProps: { pages: Array<{ image: PepperImages, text: string }> }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const renderItem = (carouselProps: { item: { image: PepperImages, text: string }, index: number }) => (
+  const CarouselItem = (carouselProps: { item: { image: PepperImages, text: string }, index: number }) => (
     <View style={styles.container}>
       <PepperImage src={carouselProps.item.image} style={styles.image}></PepperImage>
       <Text style={styles.description}>{carouselProps.item.text}</Text>
@@ -21,19 +21,13 @@ export default function PepperCarousel(onBoardingProps: { pages: Array<{ image: 
       data={onBoardingProps.pages}
       sliderWidth={50 * space_unit}
       itemWidth={50 * space_unit}
-      renderItem={renderItem}
+      renderItem={CarouselItem}
       onSnapToItem={(index) => { setActiveIndex(index); } } />
 
       <Pagination
         dotsLength={onBoardingProps.pages.length}
         activeDotIndex={activeIndex}
-        dotStyle={{
-            width: 2 * space_unit,
-            height: 2 * space_unit,
-            borderRadius: space_unit,
-            marginHorizontal: space_unit,
-            backgroundColor: grey_2,
-        }}
+        dotStyle={styles.dot}
         inactiveDotOpacity={0.4}
         inactiveDotScale={0.6}
       />
@@ -61,5 +55,12 @@ const styles = StyleSheet.create({
   description: {
     width: '80%',
     textAlign: 'center',
+  },
+  dot: {
+    width: 2 * space_unit,
+    height: 2 * space_unit,
+    borderRadius: space_unit,
+    marginHorizontal: space_unit,
+    backgroundColor: grey_2,
   }
 });

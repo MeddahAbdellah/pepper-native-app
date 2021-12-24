@@ -7,12 +7,17 @@ export interface IParty {
   people: number,
   minAge: number,
   maxAge: number,
-  img: { uri: string },
+  description: string,
+  foods: Array<{ name: string, price: number }>,
+  drinks: Array<{ name: string, price: number }>,
+  price: number,
+  imgs: Array<{ uri: string }>,
 };
 
 export interface IMatch {
   id: number,
   name: string,
+  gender: Gender
   phoneNumber: string,
   job: string,
   status: MatchStatus,
@@ -24,4 +29,9 @@ export enum MatchStatus {
   WAITING = 'waiting',
   UNCHECKED = 'unchecked',
   UNAVAILABLE = 'unavailable',
+}
+
+export enum Gender {
+  MAN = 'man',
+  WOMAN = 'woman'
 }

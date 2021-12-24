@@ -34,3 +34,7 @@ const hexToRgb = (hex: string): string => {
 
     return '';
 }
+
+export const loremIpsium = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.\
+    Quis eget in purus, consectetur turpis nunc. Vulputate cras aenean eros, lacus, in at.\
+    Rhoncus, amet quam auctor integer hendrerit vel tellus. Dictum tincidunt eu augue pulvinar orci, posuere.';

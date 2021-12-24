@@ -1,9 +1,12 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity} from 'react-native'
-import { space_unit, fontSizeSubHeader, white, fontSizeRegular } from '../../styles/common';
+import { space_unit, fontSizeSubHeader, white, fontSizeRegular, loremIpsium } from '../../styles/common';
 import { IParty } from '../../models/types';
+import { useNavigation } from '@react-navigation/native';
 
 const PepperUserParties = () => {
+  // The push method is not present in the types while it does exist thats we we cast navigation as any
+  const navigation = useNavigation<any>();
   // TODO : fill parties
   const parties: IParty[] = [
     {
@@ -15,7 +18,25 @@ const PepperUserParties = () => {
       people: 34,
       minAge: 19,
       maxAge: 28,
-      img: { uri: 'https://image.jimcdn.com/app/cms/image/transf/none/path/s2f6af3166883d3ee/image/i8c4fa5b2ed1f62b8/version/1454158048/image.jpg' },
+      description: loremIpsium,
+      foods: [
+        { name: 'Steak', price: 10 },
+        { name: 'Chicken', price: 12 },
+        { name: 'Porc', price: 8 },
+        { name: 'Beef', price: 14 },
+      ],
+      drinks: [
+        { name: 'Beer', price: 6 },
+        { name: 'Champain', price: 8 },
+        { name: 'Whiskey', price: 9 },
+        { name: 'Wine', price: 14 },
+      ],
+      price: 0,
+      imgs: [
+        { uri: 'https://image.jimcdn.com/app/cms/image/transf/none/path/s2f6af3166883d3ee/image/i8c4fa5b2ed1f62b8/version/1454158048/image.jpg' },
+        { uri: 'https://image.jimcdn.com/app/cms/image/transf/none/path/s2f6af3166883d3ee/image/i8c4fa5b2ed1f62b8/version/1454158048/image.jpg' },
+        { uri: 'https://image.jimcdn.com/app/cms/image/transf/none/path/s2f6af3166883d3ee/image/i8c4fa5b2ed1f62b8/version/1454158048/image.jpg' },
+      ],
     },
     {
       id: 2,
@@ -26,7 +47,21 @@ const PepperUserParties = () => {
       people: 22,
       minAge: 19,
       maxAge: 28,
-      img: { uri: 'https://storage.googleapis.com/eyp-wordpress/1/2021/09/social-bar-saint-ouen-1440x946.jpg' },
+      description: loremIpsium,
+      foods: [
+        { name: 'Steak', price: 10 },
+        { name: 'Chicken', price: 12 },
+        { name: 'Porc', price: 8 },
+        { name: 'Beef', price: 14 },
+      ],
+      drinks: [
+        { name: 'Beer', price: 6 },
+        { name: 'Champain', price: 8 },
+        { name: 'Whiskey', price: 9 },
+        { name: 'Wine', price: 14 },
+      ],
+      price: 0,
+      imgs: [{ uri: 'https://storage.googleapis.com/eyp-wordpress/1/2021/09/social-bar-saint-ouen-1440x946.jpg' }],
     },
     {
       id: 3,
@@ -37,13 +72,27 @@ const PepperUserParties = () => {
       people: 14,
       minAge: 19,
       maxAge: 28,
-      img: { uri: 'https://www.oubruncher.com/photos1/1631_1.jpg' },
+      description: loremIpsium,
+      foods: [
+        { name: 'Steak', price: 10 },
+        { name: 'Chicken', price: 12 },
+        { name: 'Porc', price: 8 },
+        { name: 'Beef', price: 14 },
+      ],
+      drinks: [
+        { name: 'Beer', price: 6 },
+        { name: 'Champain', price: 8 },
+        { name: 'Whiskey', price: 9 },
+        { name: 'Wine', price: 14 },
+      ],
+      price: 0,
+      imgs: [{ uri: 'https://www.oubruncher.com/photos1/1631_1.jpg' }],
     },
   ];
 
   const partyItem = (party: IParty) => (
-    <TouchableOpacity style={styles.partyItemContainer} onPress={() => console.log('show party')}>
-      <Image source={party.img} style={styles.partyImage}/>
+    <TouchableOpacity style={styles.partyItemContainer} onPress={() => navigation.push('PartyDescription', party)}>
+      <Image source={party.imgs[0]} style={styles.partyImage}/>
       <View style={{ flex: 1 }}>
         <Text style={{ fontSize: fontSizeSubHeader }}>{party.title}</Text>
         <View style={styles.themeAndDateContainer}>
