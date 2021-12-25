@@ -3,11 +3,12 @@ Multiple components are used throughout the app to accelerate work and factorize
 
 ## PepperCarousel
 ```javascript
-<PepperCarousel pages={[
-  {image: PepperImages, text: string},
-  {image: PepperImages, text: string},
-  ...
-  ]}
+<PepperCarousel 
+  pages={[
+   {image: PepperImages, text: string},
+   {image: PepperImages, text: string},
+   ...
+   ]}
   nextStep= string
   ></PepperCarousel>
 ```
