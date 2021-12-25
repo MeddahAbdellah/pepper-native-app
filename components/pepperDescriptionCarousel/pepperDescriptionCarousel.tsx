@@ -11,7 +11,7 @@ const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carou
   const navigation = useNavigation();
   
   const DescriptionImgs = (partyImg: {item: { uri: string } } ) => (
-    <ImageBackground source={partyImg.item} style={styles.image} resizeMode='cover'>
+    <ImageBackground source={partyImg.item} style={styles.image} resizeMode="cover">
       <LinearGradient colors={['transparent', color(black, .7)]} style={styles.imageMask}>
       </LinearGradient>
     </ImageBackground>
@@ -35,7 +35,7 @@ const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carou
           size={6 * space_unit}
           style={styles.backButton}
           colors={[indigo, pepper]}
-          iconName='pepper-arrowLeft'
+          iconName="pepper-arrowLeft"
           onPress={navigation.goBack}
         />
       <View style={styles.paginationContainer} pointerEvents="none">

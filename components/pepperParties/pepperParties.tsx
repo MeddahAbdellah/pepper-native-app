@@ -104,7 +104,7 @@ export default function PepperParties() {
     const partyPrice = (): string =>  party.price !== 0 ? `${party.price}$` : 'Free';
 
     return (
-      <ImageBackground source={party.imgs[0]} style={styles.image} resizeMode='cover'>
+      <ImageBackground source={party.imgs[0]} style={styles.image} resizeMode="cover">
             <TouchableOpacity
               style={{...styles.imageMask, zIndex: styles.imageMask.zIndex + 1}}
               onPress={() => navigation.push('PartyDescription', party)}

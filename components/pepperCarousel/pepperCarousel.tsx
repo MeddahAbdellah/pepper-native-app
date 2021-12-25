@@ -40,7 +40,7 @@ export default function PepperCarousel(onBoardingProps: { pages: Array<{ image: 
             size={6 * space_unit}
             style={styles.nextButton}
             colors={[indigo, pepper]}
-            iconName='pepper-arrowRight'
+            iconName="pepper-arrowRight"
             onPress={() => {navigation.navigate(onBoardingProps.nextStep)}}
           />) : null
       }

@@ -31,7 +31,7 @@ const PepperTag = (tagProps: {
   )
 }
 
-export default PepperTag
+export default PepperTag;
 
 const styles = StyleSheet.create({
   container: {

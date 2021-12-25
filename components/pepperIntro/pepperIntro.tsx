@@ -11,7 +11,7 @@ export default function PepperIntro() {
         { image: PepperImages.Bar, text: 'Pepper Parties are the best place to meet awesome guys/girls' },
         { image: PepperImages.Bracelets, text: 'You will all have the same bracelets so talking to strangers will be much easier' },
         ]}
-        nextStep='Main'
+        nextStep="Main"
         ></PepperCarousel>
     </View>
   );
