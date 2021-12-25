@@ -1,7 +1,7 @@
 # Pepper native app
 Multiple components are used throughout the app to accelerate work and factorize code
 
-#Prerequisites
+##Prerequisites
 
 * Node v16 is required
 * Expo-cli
