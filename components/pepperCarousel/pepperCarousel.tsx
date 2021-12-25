@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { white, space_unit, grey_2, indigo, pepper } from '../../styles/common';
@@ -7,6 +7,8 @@ import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { useNavigation } from '@react-navigation/native';
 
 export default function PepperCarousel(onBoardingProps: { pages: Array<{ image: PepperImages, text: string }>, nextStep: string }) {
+  const carouselWidth = Dimensions.get("window").width;
+  
   const [activeIndex, setActiveIndex] = useState(0);
   const navigation = useNavigation<any>();
 
@@ -22,10 +24,13 @@ export default function PepperCarousel(onBoardingProps: { pages: Array<{ image: 
       <Carousel
       layout={"default"}
       data={onBoardingProps.pages}
-      sliderWidth={50 * space_unit}
-      itemWidth={50 * space_unit}
+      sliderWidth={carouselWidth}
+      itemWidth={carouselWidth}
       renderItem={CarouselItem}
-      onSnapToItem={(index) => { setActiveIndex(index); } } />
+      activeSlideOffset={.1 * carouselWidth}
+      swipeThreshold={.1 * carouselWidth}
+      enableMomentum={true}
+      onBeforeSnapToItem={(index) => { setActiveIndex(index); } } />
 
       <Pagination
         dotsLength={onBoardingProps.pages.length}
@@ -37,7 +42,7 @@ export default function PepperCarousel(onBoardingProps: { pages: Array<{ image: 
       />
       { (activeIndex === onBoardingProps.pages.length - 1) ? 
           (<PepperRoundButton
-            size={6 * space_unit}
+            size={7 * space_unit}
             style={styles.nextButton}
             colors={[indigo, pepper]}
             iconName="pepper-arrowRight"
@@ -79,7 +84,7 @@ const styles = StyleSheet.create({
   nextButton: {
     position: 'absolute',
     bottom: 3 * space_unit,
-    right: space_unit,
+    right: 2 * space_unit,
     zIndex: 2,
     shadowColor: white,
     shadowOffset: { width: 0, height: 0 },

@@ -30,7 +30,7 @@ const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carou
         contentContainerCustomStyle={{ height: styles.image.height}}
         inactiveSlideScale={1}
         renderItem={DescriptionImgs}
-        onSnapToItem={(index) => { setActiveIndex(index); } } />
+        onBeforeSnapToItem={(index) => { setActiveIndex(index); } } />
       <PepperRoundButton
           size={6 * space_unit}
           style={styles.backButton}
