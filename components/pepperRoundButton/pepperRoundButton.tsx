@@ -3,12 +3,10 @@ import { LinearGradient } from "expo-linear-gradient";
 import PepperIcon from "../pepperIcon/pepperIcon";
 import { white } from "../../styles/common";
 import { TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
-const PepperRoundButton = (props: { size: number, style?: any, colors: string[], iconName: string}) => {
-  const navigation = useNavigation();
+const PepperRoundButton = (props: { size: number, style?: any, colors: string[], iconName: string , onPress: () => void }) => {
   return (
-    <TouchableOpacity onPress={() => navigation.goBack()} style={{
+    <TouchableOpacity onPress={() => props.onPress()} style={{
         ...props.style,
       }}>
       <LinearGradient 

@@ -5,7 +5,7 @@ import PepperIcon from '../pepperIcon/pepperIcon'
 import { LinearGradient } from 'expo-linear-gradient'
 
 const PepperTag = (tagProps: {
-  iconName: string, text: string,
+  iconName?: string, text: string,
   firstGradientColor: string,
   secondGradientColor: string,
   style?: any,
@@ -23,8 +23,8 @@ const PepperTag = (tagProps: {
           x: 1,
           y: .5,
         }}>
-        <Text style={styles.tagDescription}>{tagProps. text}</Text>
-        <PepperIcon name={tagProps.iconName} color={white} size={3.5 * space_unit} />
+        <Text style={styles.tagDescription}>{tagProps.text}</Text>
+        { tagProps.iconName ? <PepperIcon name={tagProps.iconName} color={white} size={3.5 * space_unit} style={{ marginLeft: 1 * space_unit }} /> : null }
       </LinearGradient>
     </View>
 
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
   },
   tagDescription: {
     fontSize: fontSizeBody,
-    marginRight: 1 * space_unit,
     color: white,
   }
 })

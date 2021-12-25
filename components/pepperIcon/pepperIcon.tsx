@@ -9,7 +9,7 @@ const Icon = createIconSetFromIcoMoon(
   'icomoon.ttf'
 );
 
-export default function PepperIcon(iconProps: { name: string, size: number, color: string}) {
+export default function PepperIcon(iconProps: { name: string, size: number, color: string, style?: any}) {
   // Load the icon font before using it
   const [fontsLoaded] = useFonts({ IcoMoon: require('../../assets/fonts/icomoon.ttf') });
   if (!fontsLoaded) {
@@ -17,6 +17,6 @@ export default function PepperIcon(iconProps: { name: string, size: number, colo
   }
 
   return (
-    <Icon name={iconProps.name} size={iconProps.size} color={iconProps.color} />
+    <Icon name={iconProps.name} size={iconProps.size} color={iconProps.color} style={iconProps.style} />
   );
 }

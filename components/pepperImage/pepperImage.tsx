@@ -4,8 +4,11 @@ import { Image, ImageSourcePropType } from 'react-native';
 export enum PepperImages {
   Bar = 'bar',
   Bracelets = 'bracelets',
+  Briefcase = 'briefcase',
   Cupid = 'cupid',
   Man = 'man',
+  House = 'house',
+  OldPhone = 'oldPhone',
   PepperTitle = 'pepperTitle',
   Weirdo = 'weirdo',
   Wellness = 'wellness',
@@ -14,8 +17,11 @@ export enum PepperImages {
 const images: { [keyof in PepperImages]: ImageSourcePropType } = {
   bar: require(`../../assets/bar.png`),
   bracelets: require(`../../assets/bracelets.png`),
+  briefcase: require(`../../assets/briefcase.png`),
   cupid: require(`../../assets/cupid.png`),
   man: require(`../../assets/man.png`),
+  house: require(`../../assets/house.png`),
+  oldPhone: require(`../../assets/oldPhone.png`),
   pepperTitle: require(`../../assets/pepperTitle.png`),
   weirdo: require(`../../assets/weirdo.png`),
   wellness: require(`../../assets/wellness.png`),

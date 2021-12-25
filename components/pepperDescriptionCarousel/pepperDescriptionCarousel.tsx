@@ -4,9 +4,11 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { LinearGradient } from 'expo-linear-gradient';
 import { color, black, space_unit, white, pepper, indigo } from '../../styles/common';
 import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
+import { useNavigation } from '@react-navigation/native';
 
 const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carouselImgs: Array<{ uri: string }> }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const navigation = useNavigation();
   
   const DescriptionImgs = (partyImg: {item: { uri: string } } ) => (
     <ImageBackground source={partyImg.item} style={styles.image} resizeMode='cover'>
@@ -34,6 +36,7 @@ const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carou
           style={styles.backButton}
           colors={[indigo, pepper]}
           iconName='pepper-arrowLeft'
+          onPress={navigation.goBack}
         />
       <View style={styles.paginationContainer} pointerEvents="none">
         <Pagination

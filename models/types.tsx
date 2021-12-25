@@ -14,14 +14,17 @@ export interface IParty {
   imgs: Array<{ uri: string }>,
 };
 
-export interface IMatch {
+export interface IUser {
   id: number,
   name: string,
   gender: Gender
   phoneNumber: string,
+  address: string,
+  description: string,
   job: string,
   status: MatchStatus,
   imgs: Array<{ uri: string }>,
+  interests: string[],
 };
 
 export enum MatchStatus {

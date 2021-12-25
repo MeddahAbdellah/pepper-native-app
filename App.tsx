@@ -5,6 +5,7 @@ import PepperIntro from './components/pepperIntro/pepperIntro';
 import PepperMain from './components/pepperMain/pepperMain';
 import { PepperTitle, PepperMenu, PepperQrCode } from './components/pepperHeader/pepperHeader';
 import PepperPartyDescription from './components/pepperPartyDescription/pepperPartyDescription';
+import PepperUserDescription from './components/pepperUserDescription/pepperUserDescription';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,9 +22,10 @@ export default function App() {
          headerRight: () => (<PepperQrCode />),
         }}
        >
+        <Stack.Screen name="Intro" component={PepperIntro} />
         <Stack.Screen name="Main" component={PepperMain} />
         <Stack.Screen name="PartyDescription" component={PepperPartyDescription} />
-        <Stack.Screen name="Intro" component={PepperIntro} />
+        <Stack.Screen name="UserDescription" component={PepperUserDescription} />
       </Stack.Navigator>
     </NavigationContainer>
   );

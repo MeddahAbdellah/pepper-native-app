@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, Text, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, ScrollView, Dimensions } from 'react-native'
 import { IParty } from '../../models/types';
 import { space_unit, white, fontSizeRegular, fontSizeHeader, fontSizeSubHeader, pepper, pepper_2, sun, sun_2, fire, fire_2, indigo_2, indigo_3, black } from '../../styles/common';
 import PepperDescriptionCarousel from '../pepperDescriptionCarousel/pepperDescriptionCarousel';
@@ -7,7 +7,9 @@ import PepperTag from '../pepperTags/pepperTags';
 
 
 const PepperPartyDescription = (descriptionProps: { route: { params: IParty } }) => {
-  const [carouselWidth, setCarouselWidth] = useState(100);
+  // TODO: fix location, make it open google maps or something
+  const { width } = Dimensions.get("window");
+  const [carouselWidth, setCarouselWidth] = useState(width);
   const party = descriptionProps.route.params;
 
   const attendeesTag = (attendees: { people: number, minAge: number, maxAge: number }): string => {
