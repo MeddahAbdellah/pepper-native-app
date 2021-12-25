@@ -2,7 +2,7 @@
 Multiple components are used throughout the app to accelerate work and factorize code
 
 ## PepperCarousel
-```react
+```javascript
 <PepperCarousel pages={[
   {image: PepperImages, text: string},
   {image: PepperImages, text: string},
