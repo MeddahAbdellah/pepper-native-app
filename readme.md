@@ -1,6 +1,14 @@
 # Pepper native app
 Multiple components are used throughout the app to accelerate work and factorize code
 
+#Prerequisites
+
+* Node v16 is required
+* Expo-cli
+```bash
+npm install -g expo-cli
+```
+
 ## PepperCarousel
 ```javascript
 <PepperCarousel
