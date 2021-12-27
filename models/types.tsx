@@ -14,7 +14,7 @@ export interface IParty {
   imgs: Array<{ uri: string }>,
 };
 
-export interface IUser {
+interface IUserBase {
   id: number,
   name: string,
   gender: Gender
@@ -22,9 +22,17 @@ export interface IUser {
   address: string,
   description: string,
   job: string,
-  status: MatchStatus,
   imgs: Array<{ uri: string }>,
   interests: string[],
+}
+
+export interface IUser extends IUserBase {
+  matches: IMatch[],
+  parties: IParty[],
+};
+
+export interface IMatch extends IUserBase{
+  status: MatchStatus,
 };
 
 export enum MatchStatus {
@@ -38,3 +46,10 @@ export enum Gender {
   MAN = 'man',
   WOMAN = 'woman'
 }
+
+export enum StoreStatus {
+  Idle = 'idle',
+  Pending = 'pending',
+  Fulfilled = 'fulfilled',
+  Rejected = 'rejected',
+};
