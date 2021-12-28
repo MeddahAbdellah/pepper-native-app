@@ -159,7 +159,7 @@ const PepperMatches = () => {
       <CupidModal/>
       <FlatList
         data={pepperUser.user.matches}
-        refreshing={pepperUser.status !== StoreStatus.Fulfilled}
+        refreshing={pepperUser.fetchStatus !== StoreStatus.Fulfilled}
         onRefresh={() => pepperDispatch(fetchUser())}
         renderItem={(item) => matchItem(item.item) }
         keyExtractor={(item) => item.id.toString() }

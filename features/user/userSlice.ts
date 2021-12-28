@@ -16,45 +16,53 @@ const emptyUser: IUser = {
   parties: [],
 }
 
-const initialState: { user: IUser, status: string, error: any } = {
+const initialState: { user: IUser, fetchStatus: StoreStatus,  updateMatchStatus: StoreStatus, updatePartyStatus: StoreStatus, error: any } = {
   user: emptyUser,
-  status: 'idle',
+  fetchStatus: StoreStatus.Idle,
+  updateMatchStatus: StoreStatus.Idle,
+  updatePartyStatus: StoreStatus.Idle,
   error: null,
 };
 
-const pendingReducer = (state: any) => {
-  state.status = StoreStatus.Pending;
-};
-
-const rejectedReducer = (state: any, action: any) => {
-  state.status = StoreStatus.Rejected;
-  state.error = action.error.message;
-};
-
 export const userSlice = createSlice({
-  name: 'user' ,
+  name: 'user',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUser.pending, pendingReducer)
+      .addCase(fetchUser.pending, (state) => {
+        state.fetchStatus = StoreStatus.Pending;
+      })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        state.status = StoreStatus.Fulfilled;
+        state.fetchStatus = StoreStatus.Fulfilled;
         state.user = action.payload;
       })
-      .addCase(fetchUser.rejected, rejectedReducer)
-      .addCase(updateMatch.pending, pendingReducer)
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.fetchStatus = StoreStatus.Rejected;
+        state.error = action.error.message;
+      })
+      .addCase(updateMatch.pending, (state) => {
+        state.updateMatchStatus = StoreStatus.Pending;
+      })
       .addCase(updateMatch.fulfilled, (state, action) => {
-        state.status = StoreStatus.Fulfilled;
+        state.updateMatchStatus = StoreStatus.Fulfilled;
         state.user.matches = action.payload;
       })
-      .addCase(updateMatch.rejected, rejectedReducer)
-      .addCase(updateParty.pending, pendingReducer)
+      .addCase(updateMatch.rejected, (state, action) => {
+        state.updateMatchStatus = StoreStatus.Rejected;
+        state.error = action.error.message;
+      })
+      .addCase(updateParty.pending, (state) => {
+        state.updatePartyStatus = StoreStatus.Pending;
+      })
       .addCase(updateParty.fulfilled, (state, action) => {
-        state.status = StoreStatus.Fulfilled;
+        state.updatePartyStatus = StoreStatus.Fulfilled;
         state.user.parties = action.payload;
       })
-      .addCase(updateParty.rejected, rejectedReducer);
+      .addCase(updateParty.rejected, (state, action) => {
+        state.updatePartyStatus = StoreStatus.Rejected;
+        state.error = action.error.message;
+      });
   }
 })
 

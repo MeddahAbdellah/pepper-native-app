@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, ActivityIndicator} from 'react-native'
+import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native'
 import { space_unit, fontSizeSubHeader, white, fontSizeRegular } from '../../styles/common';
 import { IParty, StoreStatus } from '../../models/types';
 import { useNavigation } from '@react-navigation/native';
@@ -32,7 +32,7 @@ const PepperUserParties = () => {
     <View style={styles.listContainer}>
       <FlatList
         data={pepperUser.user.parties}
-        refreshing={pepperUser.status !== StoreStatus.Fulfilled}
+        refreshing={pepperUser.fetchStatus !== StoreStatus.Fulfilled}
         onRefresh={() => pepperDispatch(fetchUser())}
         renderItem={(item) => partyItem(item.item) }
         keyExtractor={(item) => item.id.toString() }
