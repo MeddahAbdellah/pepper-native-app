@@ -22,11 +22,11 @@ const initialState: { user: IUser, status: string, error: any } = {
   error: null,
 };
 
-const pendingAction = (state: any) => {
+const pendingReducer = (state: any) => {
   state.status = StoreStatus.Pending;
 };
 
-const rejectedAction = (state: any, action: any) => {
+const rejectedReducer = (state: any, action: any) => {
   state.status = StoreStatus.Rejected;
   state.error = action.error.message;
 };
@@ -37,25 +37,24 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUser.pending, pendingAction)
+      .addCase(fetchUser.pending, pendingReducer)
       .addCase(fetchUser.fulfilled, (state, action) => {
-        console.log('FULFILLED');
         state.status = StoreStatus.Fulfilled;
         state.user = action.payload;
       })
-      .addCase(fetchUser.rejected, rejectedAction)
-      .addCase(updateMatch.pending, pendingAction)
+      .addCase(fetchUser.rejected, rejectedReducer)
+      .addCase(updateMatch.pending, pendingReducer)
       .addCase(updateMatch.fulfilled, (state, action) => {
         state.status = StoreStatus.Fulfilled;
         state.user.matches = action.payload;
       })
-      .addCase(updateMatch.rejected, rejectedAction)
-      .addCase(updateParty.pending, pendingAction)
+      .addCase(updateMatch.rejected, rejectedReducer)
+      .addCase(updateParty.pending, pendingReducer)
       .addCase(updateParty.fulfilled, (state, action) => {
         state.status = StoreStatus.Fulfilled;
         state.user.parties = action.payload;
       })
-      .addCase(updateParty.rejected, rejectedAction);
+      .addCase(updateParty.rejected, rejectedReducer);
   }
 })
 

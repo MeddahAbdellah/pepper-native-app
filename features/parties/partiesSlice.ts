@@ -9,11 +9,11 @@ const initialState: { parties: IParty[], status: string, error: any } = {
   status: 'idle',
   error: null,
 };
-const pendingAction = (state: any) => {
+const pendingReducer = (state: any) => {
   state.status = StoreStatus.Pending;
 };
 
-const rejectedAction = (state: any, action: any) => {
+const rejectedReducer = (state: any, action: any) => {
   state.status = StoreStatus.Rejected;
   state.error = action.error.message;
 };
@@ -24,12 +24,12 @@ export const partiesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchParties.pending, pendingAction)
+      .addCase(fetchParties.pending, pendingReducer)
       .addCase(fetchParties.fulfilled, (state, action) => {
         state.status = StoreStatus.Fulfilled;
         state.parties = action.payload;
       })
-      .addCase(fetchParties.rejected, rejectedAction);
+      .addCase(fetchParties.rejected, rejectedReducer);
   }
 })
 
