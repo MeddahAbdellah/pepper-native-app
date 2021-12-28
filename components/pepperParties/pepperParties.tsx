@@ -1,98 +1,22 @@
-import React from 'react'
-import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native'
+import React, { useEffect } from 'react'
+import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { space_unit, white, black, color, fontSizeHeader, fontSizeSubHeader, sun_2, sun, indigo_2, fire, fire_2, indigo_3, fontSizeRegular, pepper, pepper_2, loremIpsium } from '../../styles/common';
 import Swiper from 'react-native-deck-swiper';
 import { LinearGradient } from 'expo-linear-gradient';
 import PepperTag from '../pepperTags/pepperTags';
-import { IParty } from '../../models/types';
+import { IParty, StoreStatus } from '../../models/types';
 import { useNavigation } from '@react-navigation/native';
+import { usePepperDispatch } from '../../hooks/store.hooks';
+import { usePepperParties } from '../../hooks/parties.hooks';
+import { fetchParties } from '../../features/parties/partiesActions';
 
 export default function PepperParties() {
   // The push method is not present in the types while it does exist thats we we cast navigation as any
   const navigation = useNavigation<any>();
-
-  // TODO : fill parties
-  const parties: IParty[] = [
-    {
-      id: 1,
-      title: 'Fleurus',
-      theme: 'Soirée Internationl',
-      date: '24 octobre',
-      location: 'Paris 14',
-      people: 34,
-      minAge: 19,
-      maxAge: 28,
-      description: loremIpsium,
-      foods: [
-        { name: 'Steak', price: 10 },
-        { name: 'Chicken', price: 12 },
-        { name: 'Porc', price: 8 },
-        { name: 'Beef', price: 14 },
-      ],
-      drinks: [
-        { name: 'Beer', price: 6 },
-        { name: 'Champain', price: 8 },
-        { name: 'Whiskey', price: 9 },
-        { name: 'Wine', price: 14 },
-      ],
-      price: 0,
-      imgs: [
-        { uri: 'https://image.jimcdn.com/app/cms/image/transf/none/path/s2f6af3166883d3ee/image/i8c4fa5b2ed1f62b8/version/1454158048/image.jpg' },
-        { uri: 'https://image.jimcdn.com/app/cms/image/transf/none/path/s2f6af3166883d3ee/image/i8c4fa5b2ed1f62b8/version/1454158048/image.jpg' },
-        { uri: 'https://image.jimcdn.com/app/cms/image/transf/none/path/s2f6af3166883d3ee/image/i8c4fa5b2ed1f62b8/version/1454158048/image.jpg' },
-      ],
-    },
-    {
-      id: 2,
-      title: 'Social Bar',
-      theme: 'Soirée Internation',
-      date: '24 octobre',
-      location: 'Paris 12',
-      people: 22,
-      minAge: 19,
-      maxAge: 28,
-      description: loremIpsium,
-      foods: [
-        { name: 'Steak', price: 10 },
-        { name: 'Chicken', price: 12 },
-        { name: 'Porc', price: 8 },
-        { name: 'Beef', price: 14 },
-      ],
-      drinks: [
-        { name: 'Beer', price: 6 },
-        { name: 'Champain', price: 8 },
-        { name: 'Whiskey', price: 9 },
-        { name: 'Wine', price: 14 },
-      ],
-      price: 0,
-      imgs: [{ uri: 'https://storage.googleapis.com/eyp-wordpress/1/2021/09/social-bar-saint-ouen-1440x946.jpg' }],
-    },
-    {
-      id: 3,
-      title: 'Café OZ',
-      theme: 'Soirée Internationl',
-      date: '12 octobre',
-      location: 'Paris 01',
-      people: 14,
-      minAge: 19,
-      maxAge: 28,
-      description: loremIpsium,
-      foods: [
-        { name: 'Steak', price: 10 },
-        { name: 'Chicken', price: 12 },
-        { name: 'Porc', price: 8 },
-        { name: 'Beef', price: 14 },
-      ],
-      drinks: [
-        { name: 'Beer', price: 6 },
-        { name: 'Champain', price: 8 },
-        { name: 'Whiskey', price: 9 },
-        { name: 'Wine', price: 14 },
-      ],
-      price: 0,
-      imgs: [{ uri: 'https://www.oubruncher.com/photos1/1631_1.jpg' }],
-    },
-  ];
+  const pepperDispatch = usePepperDispatch();
+  const pepperParties = usePepperParties();
+  //Fetch user on load
+  useEffect(() => { pepperDispatch(fetchParties()); }, []);
 
   function Card(party: IParty) {
     const attendeesTag = (attendees: { people: number, minAge: number, maxAge: number }): string => {
@@ -132,8 +56,10 @@ export default function PepperParties() {
   return (
     <View style={styles.container}>
       <View style={styles.cardContainer}>
-        <Swiper
-              cards={parties}
+        {
+          pepperParties.status !== StoreStatus.Fulfilled ? <ActivityIndicator /> : (
+            <Swiper
+              cards={pepperParties.parties}
               renderCard={Card}
               onSwiped={(cardIndex) => {console.log(cardIndex)}}
               onSwipedAll={() => {console.log('onSwipedAll')}}
@@ -143,7 +69,10 @@ export default function PepperParties() {
               stackSeparation={0}
               stackSize={3}
               cardStyle={styles.swiper}>
-          </Swiper>
+            </Swiper>
+          )
+        }
+
       </View>
     </View>
   );
@@ -157,11 +86,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cardContainer: {
-    backgroundColor: 'red',
     height: '98%',
     width: '97%',
     overflow: 'hidden',
     borderRadius:  .75 * space_unit,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   swiper: {
     height: '100%',

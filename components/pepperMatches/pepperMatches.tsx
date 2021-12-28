@@ -1,74 +1,24 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, Modal} from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, Modal, ActivityIndicator} from 'react-native'
 import { space_unit, fontSizeSubHeader, white, fontSizeRegular, heaven, pepper_2, sea, grey_3, black, fontSizeBody, pepper, loremIpsium } from '../../styles/common';
-import { IUser, MatchStatus, Gender } from '../../models/types';
+import { IMatch, MatchStatus, Gender, StoreStatus } from '../../models/types';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import { BlurView } from 'expo-blur';
 import { useNavigation } from '@react-navigation/native';
+import { usePepperUser } from '../../hooks/user.hooks';
+import { usePepperDispatch } from '../../hooks/store.hooks';
+import { fetchUser } from '../../features/user/userActions';
 
 const PepperMatches = () => {
   const navigation = useNavigation<any>();
   const [patienceModalVisible, setPatienceModalVisible] = useState<boolean>(false);
   const [cupidModalVisible, setCupidModalVisible] = useState<boolean>(false);
   const [evaluationModalVisible, setEvaluationModalVisible] = useState<boolean>(false);
-  const [selectedMatch, setSelectedMatch] = useState<IUser>();
-
-  // TODO : fill matches
-  const matches: IUser[] = [
-    {
-      id: 1,
-      name: 'Clémentine',
-      gender: Gender.WOMAN,
-      phoneNumber: '07692039459',
-      status: MatchStatus.ACCEPTED,
-      address: 'Paris',
-      description: loremIpsium,
-      job: 'Engineer',
-      imgs: [
-        { uri: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cG9ydHJhaXR8ZW58MHx8MHx8&w=1000&q=80' },
-        { uri: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGJlYXV0aWZ1bCUyMCUyMHdvbWFufGVufDB8fDB8fA%3D%3D&w=1000&q=80' },
-        { uri: 'https://images.pexels.com/photos/38554/girl-people-landscape-sun-38554.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500' },
-        { uri: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bWFuJTIwYW5kJTIwd29tYW58ZW58MHx8MHx8&w=1000&q=80' },
-      ],
-      interests: ['Science', 'Art', 'Socialism'],
-    },
-    {
-      id: 2,
-      name: 'Noemie',
-      gender: Gender.WOMAN,
-      phoneNumber: '07442039459',
-      status: MatchStatus.UNCHECKED,
-      address: 'Paris',
-      description: loremIpsium,
-      job: 'Danseuse',
-      imgs: [{ uri: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGJlYXV0aWZ1bCUyMCUyMHdvbWFufGVufDB8fDB8fA%3D%3D&w=1000&q=80' }],
-      interests: ['Science', 'Art', 'Socialism'],
-    },
-    {
-      id: 3,
-      name: 'Fiona',
-      gender: Gender.WOMAN,
-      phoneNumber: '07492039459',
-      status: MatchStatus.WAITING,
-      address: 'Paris',
-      description: loremIpsium,
-      job: 'Designer',
-      imgs: [{ uri: 'https://images.pexels.com/photos/38554/girl-people-landscape-sun-38554.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500' }],
-      interests: ['Science', 'Art', 'Socialism'],
-    },
-    {
-      id: 4,
-      name: 'Alice',
-      gender: Gender.WOMAN,
-      phoneNumber: '07122039459',
-      status: MatchStatus.UNAVAILABLE,
-      address: 'Paris',
-      description: loremIpsium,
-      job: 'Barwomen',
-      imgs: [{ uri: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bWFuJTIwYW5kJTIwd29tYW58ZW58MHx8MHx8&w=1000&q=80' }],
-      interests: ['Science', 'Art', 'Socialism'],
-    },
-  ];
+  const [selectedMatch, setSelectedMatch] = useState<IMatch>();
+  const pepperDispatch = usePepperDispatch();
+  //Fetch user on load
+  useEffect(() => { pepperDispatch(fetchUser()); }, []);
+  const pepperUser = usePepperUser();
 
   const StatusTag = (statusProps: { status: MatchStatus, matchName: string }) => {
     switch(statusProps.status) {
@@ -83,7 +33,7 @@ const PepperMatches = () => {
     }
   }
 
-  const checkMatch = (match: IUser): void => {
+  const checkMatch = (match: IMatch): void => {
     switch(match.status) {
       case MatchStatus.ACCEPTED:
         navigation.push('UserDescription', match);
@@ -123,7 +73,7 @@ const PepperMatches = () => {
     closeModalAndResetSelection();
   };
 
-  const matchItem = (match: IUser) => (
+  const matchItem = (match: IMatch) => (
     <TouchableOpacity style={styles.matchItemContainer} onPress={() => checkMatch(match)}>
       <Image source={match.imgs[0]} style={styles.matchImage}/>
       <View style={{ flex: 1 }}>
@@ -208,7 +158,9 @@ const PepperMatches = () => {
       <CheckMatchModal/>
       <CupidModal/>
       <FlatList
-        data={matches}
+        data={pepperUser.user.matches}
+        refreshing={pepperUser.fetchStatus !== StoreStatus.Fulfilled}
+        onRefresh={() => pepperDispatch(fetchUser())}
         renderItem={(item) => matchItem(item.item) }
         keyExtractor={(item) => item.id.toString() }
       />
