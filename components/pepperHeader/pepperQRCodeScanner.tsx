@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+
+import React, { useState, useEffect } from "react";
 import { Camera, BarCodeScanningResult } from "expo-camera";
 import { fontSizeBody, space_unit, raven } from "../../styles/common";
 import { StyleSheet, View, Text } from "react-native";
@@ -16,6 +17,7 @@ const PepperQrCodeScanner = (scannerProp: { onBarCodeScanned: (result: BarCodeSc
   if (hasPermission === null) {
     return (<Text style={{fontSize: fontSizeBody, paddingVertical: 8 * space_unit}}>Requesting for camera permission</Text>);
   }
+
   if (hasPermission === false) {
     return (<Text style={{fontSize: fontSizeBody, paddingVertical: 8 * space_unit}}>No access to camera</Text>);
   }
