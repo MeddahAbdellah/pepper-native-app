@@ -2,17 +2,17 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { white, space_unit, grey_2, indigo, pepper } from '../../styles/common';
+import { white, space_unit, grey_2, indigo, pepper, fontSizeBody } from '../../styles/common';
 import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { useNavigation } from '@react-navigation/native';
 
-export default function PepperCarousel(onBoardingProps: { pages: Array<{ image: PepperImages, text: string }>, nextStep: string }) {
+export default function PepperCarousel(onBoardingProps: { pages: Array<{ image: PepperImages, text: string | JSX.Element }>, nextStep: string }) {
   const carouselWidth = Dimensions.get("window").width;
   
   const [activeIndex, setActiveIndex] = useState(0);
   const navigation = useNavigation<any>();
 
-  const CarouselItem = (carouselProps: { item: { image: PepperImages, text: string }, index: number }) => (
+  const CarouselItem = (carouselProps: { item: { image: PepperImages, text: string | JSX.Element }, index: number }) => (
     <View style={styles.container}>
       <PepperImage src={carouselProps.item.image} style={styles.image}></PepperImage>
       <Text style={styles.description}>{carouselProps.item.text}</Text>
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
   description: {
     width: '80%',
     textAlign: 'center',
+    fontSize: fontSizeBody,
   },
   dot: {
     width: 1.5 * space_unit,

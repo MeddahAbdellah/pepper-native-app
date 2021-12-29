@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { usePepperDispatch } from '../../hooks/store.hooks';
 import { usePepperParties } from '../../hooks/parties.hooks';
 import { fetchParties } from '../../features/parties/partiesActions';
+import { PepperStackRoutes } from '../../models/routes';
 
 export default function PepperParties() {
   // The push method is not present in the types while it does exist thats we we cast navigation as any
@@ -29,26 +30,26 @@ export default function PepperParties() {
 
     return (
       <ImageBackground source={party.imgs[0]} style={styles.image} resizeMode="cover">
-            <TouchableOpacity
-              style={{...styles.imageMask, zIndex: styles.imageMask.zIndex + 1}}
-              onPress={() => navigation.push('PartyDescription', party)}
-              >
-            </TouchableOpacity>
-            <LinearGradient colors={['transparent', color(black, .7), black]} style={styles.imageMask}>
-                <View style={styles.descriptionContainer}> 
-                  <Text style={{...styles.description, fontSize: fontSizeHeader}}>{party.title}</Text>
-                  <Text style={{...styles.description, fontSize: fontSizeSubHeader}}>{party.theme}</Text>
-                  <Text style={{...styles.description, marginBottom: 2 * space_unit}}>{party.date}</Text>
-                  <View style={styles.tagsContainer}>
-                    <PepperTag iconName="pepper-dancing" text={attendeesTag(party)} firstGradientColor={pepper} secondGradientColor={pepper_2} style={styles.tags}/>
-                  </View>
-                  <View style={styles.tagsContainer}>
-                    <PepperTag iconName="pepper-beer" text={miniDrinkPrice()} firstGradientColor={sun} secondGradientColor={sun_2} style={styles.tags}/>
-                    <PepperTag iconName="pepper-burger" text={miniFoodPrice()} firstGradientColor={fire} secondGradientColor={fire_2} style={styles.tags}/>
-                    <PepperTag iconName="pepper-partyPopper" text={partyPrice()} firstGradientColor={indigo_2} secondGradientColor={indigo_3} style={styles.tags}/>
-                  </View>
-                </View>
-            </LinearGradient>
+        <TouchableOpacity
+          style={{...styles.imageMask, zIndex: styles.imageMask.zIndex + 1}}
+          onPress={() => navigation.push(PepperStackRoutes.PartyDescription, party)}
+          >
+        </TouchableOpacity>
+        <LinearGradient colors={['transparent', color(black, .7), black]} style={styles.imageMask}>
+          <View style={styles.descriptionContainer}> 
+            <Text style={{...styles.description, fontSize: fontSizeHeader}}>{party.title}</Text>
+            <Text style={{...styles.description, fontSize: fontSizeSubHeader}}>{party.theme}</Text>
+            <Text style={{...styles.description, marginBottom: 2 * space_unit}}>{party.date}</Text>
+            <View style={styles.tagsContainer}>
+              <PepperTag iconName="pepper-dancing" text={attendeesTag(party)} firstGradientColor={pepper} secondGradientColor={pepper_2} style={styles.tags}/>
+            </View>
+            <View style={styles.tagsContainer}>
+              <PepperTag iconName="pepper-beer" text={miniDrinkPrice()} firstGradientColor={sun} secondGradientColor={sun_2} style={styles.tags}/>
+              <PepperTag iconName="pepper-burger" text={miniFoodPrice()} firstGradientColor={fire} secondGradientColor={fire_2} style={styles.tags}/>
+              <PepperTag iconName="pepper-partyPopper" text={partyPrice()} firstGradientColor={indigo_2} secondGradientColor={indigo_3} style={styles.tags}/>
+            </View>
+          </View>
+        </LinearGradient>
       </ImageBackground>
     );
   } 
@@ -57,7 +58,7 @@ export default function PepperParties() {
     <View style={styles.container}>
       <View style={styles.cardContainer}>
         {
-          pepperParties.status !== StoreStatus.Fulfilled ? <ActivityIndicator /> : (
+          pepperParties.status !== StoreStatus.Fulfilled ? <ActivityIndicator size="large" color={pepper} /> : (
             <Swiper
               cards={pepperParties.parties}
               renderCard={Card}
@@ -72,7 +73,6 @@ export default function PepperParties() {
             </Swiper>
           )
         }
-
       </View>
     </View>
   );

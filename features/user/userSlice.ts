@@ -11,7 +11,7 @@ const emptyUser: IUser = {
   description: '',
   job: '',
   imgs: [],
-  interests: ['Science', 'Art', 'Socialism'],
+  interests: [],
   matches: [],
   parties: [],
 }

@@ -8,6 +8,8 @@ import PepperPartyDescription from './components/pepperPartyDescription/pepperPa
 import PepperUserDescription from './components/pepperUserDescription/pepperUserDescription';
 import { Provider } from 'react-redux';
 import store from './services/store';
+import { PepperStackRoutes } from './models/routes';
+import PepperTutorial from './components/pepperTutorial/pepperTutorial';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,10 +27,11 @@ export default function App() {
             headerRight: () => (<PepperQrCode />),
           }}
           >
-          <Stack.Screen name="Intro" component={PepperIntro} />
-          <Stack.Screen name="Main" component={PepperMain} />
-          <Stack.Screen name="PartyDescription" component={PepperPartyDescription} />
-          <Stack.Screen name="UserDescription" component={PepperUserDescription} />
+          <Stack.Screen name={PepperStackRoutes.Intro} component={PepperIntro} />
+          <Stack.Screen name={PepperStackRoutes.Tutorial} component={PepperTutorial} />
+          <Stack.Screen name={PepperStackRoutes.Main} component={PepperMain} />
+          <Stack.Screen name={PepperStackRoutes.PartyDescription} component={PepperPartyDescription} />
+          <Stack.Screen name={PepperStackRoutes.UserDescription} component={PepperUserDescription} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
