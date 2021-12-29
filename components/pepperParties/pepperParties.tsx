@@ -57,7 +57,7 @@ export default function PepperParties() {
     <View style={styles.container}>
       <View style={styles.cardContainer}>
         {
-          pepperParties.status !== StoreStatus.Fulfilled ? <ActivityIndicator /> : (
+          pepperParties.status !== StoreStatus.Fulfilled ? <ActivityIndicator size="large" color={pepper} /> : (
             <Swiper
               cards={pepperParties.parties}
               renderCard={Card}
@@ -72,7 +72,6 @@ export default function PepperParties() {
             </Swiper>
           )
         }
-
       </View>
     </View>
   );

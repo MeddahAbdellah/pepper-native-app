@@ -10,6 +10,7 @@ export const indigo = '#972FFF';
 export const indigo_2 = '#825DED';
 export const indigo_3 = '#B819F0';
 export const black = '#000';
+export const raven = '#212121';
 export const fire = '#EDA25D';
 export const fire_2 = '#F06619';
 export const sun = '#EDDE5D';
