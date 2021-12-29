@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native'
 import { BlurView } from 'expo-blur';
 import { fontSizeBody, white, space_unit, black, fontSizeRegular, raven } from '../../styles/common';
 import QRCode from 'react-native-qrcode-svg';
 import PepperImage, { pepperImages, PepperImages } from '../pepperImage/pepperImage';
-import { Camera } from 'expo-camera';
 import PepperIcon from '../pepperIcon/pepperIcon';
+import PepperQrCodeScanner from './pepperQRCodeScanner';
+import { BarCodeScanningResult } from 'expo-camera';
 
 enum QRcodeModalMode {
   Scan = 'scan',
@@ -16,7 +17,7 @@ const PepperQRCodeModal = (modalProps: { show: boolean, onRequestClose: () => vo
   const [mode, setMode] = useState(QRcodeModalMode.Display);
   const [qrCodeScanned, setQrCodeScanned] = useState(false);
 
-  const handleBarCodeScanned = (result: any) => {
+  const handleBarCodeScanned = (result: BarCodeScanningResult) => {
     console.log(`Bar code with type ${result.type} and data ${result.data} has been scanned!`);
     modalProps.onRequestClose();
     setQrCodeScanned(true);
@@ -41,33 +42,6 @@ const PepperQRCodeModal = (modalProps: { show: boolean, onRequestClose: () => vo
       </BlurView>
     </Modal>
   );
-
-  const QrCodeScanner = () => {
-    const [hasPermission, setHasPermission] = useState(false);
-
-    useEffect(() => {
-      (async () => {
-        const { status } = await Camera.requestCameraPermissionsAsync();
-        setHasPermission(status === 'granted');
-      })();
-    }, []);
-
-    if (hasPermission === null) {
-      return (<Text style={{fontSize: fontSizeBody, paddingVertical: 8 * space_unit}}>Requesting for camera permission</Text>);
-    }
-    if (hasPermission === false) {
-      return (<Text style={{fontSize: fontSizeBody, paddingVertical: 8 * space_unit}}>No access to camera</Text>);
-    }
-  
-    return (
-      <View style={styles.scannerContainer}>
-        <Camera
-          onBarCodeScanned={handleBarCodeScanned}
-          style={{ flex: 1 }}
-        />
-      </View>
-    );
-  }
 
   return (
     <>
@@ -99,13 +73,12 @@ const PepperQRCodeModal = (modalProps: { show: boolean, onRequestClose: () => vo
                 ) : (
                 <>
                   <Text style={{fontSize: fontSizeBody, marginBottom: 3 * space_unit}}>Scan a QR code</Text>
-                  <QrCodeScanner/>
+                  <PepperQrCodeScanner onBarCodeScanned={handleBarCodeScanned}/>
                   <TouchableOpacity onPress={() => setMode(QRcodeModalMode.Display) }>
                     <Text style={{fontSize: fontSizeBody, marginTop: 5 * space_unit}}>Show your QR code</Text>
                   </TouchableOpacity>
                 </>
               )}
-
             </View>
           </BlurView>
       </Modal>
@@ -163,4 +136,4 @@ const styles = StyleSheet.create({
     height: 40 * space_unit,
     width: 40 * space_unit,
   }
-})
+});
