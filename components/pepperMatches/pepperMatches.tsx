@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { usePepperUser } from '../../hooks/user.hooks';
 import { usePepperDispatch } from '../../hooks/store.hooks';
 import { fetchUser } from '../../features/user/userActions';
+import { PepperStackRoutes } from '../../models/routes';
 
 const PepperMatches = () => {
   const navigation = useNavigation<any>();
@@ -36,7 +37,7 @@ const PepperMatches = () => {
   const checkMatch = (match: IMatch): void => {
     switch(match.status) {
       case MatchStatus.ACCEPTED:
-        navigation.push('UserDescription', match);
+        navigation.push(PepperStackRoutes.UserDescription, match);
         break;
       case MatchStatus.WAITING:
         setSelectedMatch(match);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native'
 import { BlurView } from 'expo-blur';
-import { fontSizeBody, white, space_unit, black, fontSizeRegular, raven, pepper } from '../../styles/common';
+import { fontSizeBody, white, space_unit, black, fontSizeRegular, raven } from '../../styles/common';
 import QRCode from 'react-native-qrcode-svg';
 import PepperImage, { pepperImages, PepperImages } from '../pepperImage/pepperImage';
 import { Camera } from 'expo-camera';
@@ -15,6 +15,7 @@ enum QRcodeModalMode {
 const PepperQRCodeModal = (modalProps: { show: boolean, onRequestClose: () => void }) => {
   const [mode, setMode] = useState(QRcodeModalMode.Display);
   const [qrCodeScanned, setQrCodeScanned] = useState(false);
+
   const handleBarCodeScanned = (result: any) => {
     console.log(`Bar code with type ${result.type} and data ${result.data} has been scanned!`);
     modalProps.onRequestClose();

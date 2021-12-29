@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { usePepperUser } from '../../hooks/user.hooks';
 import { usePepperDispatch } from '../../hooks/store.hooks';
 import { fetchUser } from '../../features/user/userActions';
+import { PepperStackRoutes } from '../../models/routes';
 
 const PepperUserParties = () => {
   // The push method is not present in the types while it does exist thats we we cast navigation as any
@@ -16,7 +17,7 @@ const PepperUserParties = () => {
   const pepperUser = usePepperUser();
   
   const partyItem = (party: IParty) => (
-    <TouchableOpacity style={styles.partyItemContainer} onPress={() => navigation.push('PartyDescription', party)}>
+    <TouchableOpacity style={styles.partyItemContainer} onPress={() => navigation.push(PepperStackRoutes.PartyDescription, party)}>
       <Image source={party.imgs[0]} style={styles.partyImage}/>
       <View style={{ flex: 1 }}>
         <Text style={{ fontSize: fontSizeSubHeader }}>{party.title}</Text>
