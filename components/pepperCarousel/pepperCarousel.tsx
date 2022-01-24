@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Dimensions } from 'react-native'
+import {  Text, View, Dimensions } from 'react-native'
+import styles from "./styles";
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { white, space_unit, grey_2, indigo, pepper, fontSizeBody } from '../../styles/common';
+import { space_unit, indigo, pepper } from '../../styles/common';
 import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { useNavigation } from '@react-navigation/native';
 
@@ -12,12 +13,13 @@ export default function PepperCarousel(onBoardingProps: { pages: Array<{ image: 
   const [activeIndex, setActiveIndex] = useState(0);
   const navigation = useNavigation<any>();
 
-  const CarouselItem = (carouselProps: { item: { image: PepperImages, text: string | JSX.Element }, index: number }) => (
-    <View style={styles.container}>
-      <PepperImage src={carouselProps.item.image} style={styles.image}></PepperImage>
-      <Text style={styles.description}>{carouselProps.item.text}</Text>
-    </View>
-  );
+  const CarouselItem = (carouselProps: { item: { image: PepperImages, text: string | JSX.Element }, index: number }) => {
+
+     return <View style={styles.container}>
+        <PepperImage src={carouselProps.item.image} style={styles.image}></PepperImage>
+        <Text style={styles.description}>{carouselProps.item.text}</Text>
+      </View>
+  }
 
   return (
     <View>
@@ -52,45 +54,3 @@ export default function PepperCarousel(onBoardingProps: { pages: Array<{ image: 
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  image: {
-    height: '50%',
-    marginBottom: 4 * space_unit,
-  },
-  chipsContainer: {
-    flexDirection: 'row',
-    backgroundColor: white,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  description: {
-    width: '80%',
-    textAlign: 'center',
-    fontSize: fontSizeBody,
-  },
-  dot: {
-    width: 1.5 * space_unit,
-    height: 1.5 * space_unit,
-    borderRadius: space_unit,
-    marginHorizontal: space_unit,
-    backgroundColor: grey_2,
-  },
-  nextButton: {
-    position: 'absolute',
-    bottom: 3 * space_unit,
-    right: 2 * space_unit,
-    zIndex: 2,
-    shadowColor: white,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: .3,
-    shadowRadius: 3,
-    elevation: 2,
-  }
-});

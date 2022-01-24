@@ -21,13 +21,13 @@ const PepperPartyDescription = (descriptionProps: { route: { params: IParty } })
     setCarouselWidth(.97 * width);
   };
 
-  const miniFoodPrice = (): string =>  `${Math.min(...party.foods.map((food) => food.price))}$`;
-  const miniDrinkPrice = (): string =>  `${Math.min(...party.drinks.map((food) => food.price))}$`;
-  const partyPrice = (): string =>  party.price !== 0 ? `${party.price}$` : 'Free';
+  const miniFoodPrice = (): string =>  `${Math.min(...party.foods.map((food) => food.price))}€`;
+  const miniDrinkPrice = (): string =>  `${Math.min(...party.drinks.map((food) => food.price))}€`;
+  const partyPrice = (): string =>  party.price !== 0 ? `${party.price}€` : 'Free';
   const MenuList = (items: Array<{ name: string, price: number }>) => items.map((item) => (
     <View key={item.name} style={styles.menuDescription}>
       <Text>{item.name}</Text>
-      <Text>{`${item.price}$`}</Text>
+      <Text>{`${item.price}€`}</Text>
     </View>
   ));
 

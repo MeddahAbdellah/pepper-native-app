@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import store from './services/store';
 import { PepperStackRoutes } from './models/routes';
 import PepperTutorial from './components/pepperTutorial/pepperTutorial';
+import pepperNewPartyForm from "./components/pepperNewPartyPage/pepperOrgenizerParty";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
+
         <Stack.Navigator 
           screenOptions={{ 
             headerShadowVisible: false,
@@ -28,11 +30,13 @@ export default function App() {
           }}
           >
           <Stack.Screen name={PepperStackRoutes.Intro} component={PepperIntro} />
+          <Stack.Screen name={PepperStackRoutes.OrganizerForms} component={pepperNewPartyForm} />
           <Stack.Screen name={PepperStackRoutes.Tutorial} component={PepperTutorial} />
           <Stack.Screen name={PepperStackRoutes.Main} component={PepperMain} />
           <Stack.Screen name={PepperStackRoutes.PartyDescription} component={PepperPartyDescription} />
           <Stack.Screen name={PepperStackRoutes.UserDescription} component={PepperUserDescription} />
         </Stack.Navigator>
+
       </NavigationContainer>
     </Provider>
   );

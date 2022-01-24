@@ -21,6 +21,10 @@ export enum PepperImages {
   Weirdo = 'weirdo',
   Wellness = 'wellness',
   Woman = 'woman',
+  Drinks='drinks',
+  Food="food",
+  Waiter="waiter",
+
 }
 export const pepperImages: { [keyof in PepperImages]: ImageSourcePropType } = {
   bar: require(`../../assets/bar.png`),
@@ -42,6 +46,10 @@ export const pepperImages: { [keyof in PepperImages]: ImageSourcePropType } = {
   weirdo: require(`../../assets/weirdo.png`),
   wellness: require(`../../assets/wellness.png`),
   woman: require(`../../assets/woman.png`),
+  drinks:require(`../../assets/drinks.png`),
+  food:require(`../../assets/food.png`),
+  waiter:require(`../../assets/waiter.png`),
+
 };
 
 function PepperImage(props: { src: PepperImages, style?: any }) {
