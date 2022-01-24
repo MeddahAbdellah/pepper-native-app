@@ -11,12 +11,14 @@ import store from './services/store';
 import { PepperStackRoutes } from './models/routes';
 import PepperTutorial from './components/pepperTutorial/pepperTutorial';
 import pepperNewPartyForm from "./components/pepperNewPartyPage/pepperOrgenizerParty";
+import {RootSiblingParent} from 'react-native-root-siblings';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <Provider store={store}>
+      <RootSiblingParent>
       <NavigationContainer>
 
         <Stack.Navigator 
@@ -38,6 +40,7 @@ export default function App() {
         </Stack.Navigator>
 
       </NavigationContainer>
+      </RootSiblingParent>
     </Provider>
   );
 }

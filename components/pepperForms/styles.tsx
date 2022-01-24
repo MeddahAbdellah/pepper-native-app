@@ -12,13 +12,9 @@ const styles = StyleSheet.create({
 	},
 
 	AddableFormContainer: {
-
 		flexGrow: 1,
-
 		padding:space_unit,
 		flexDirection:'column',
-
-
 
 	},
 	image: {
@@ -97,7 +93,6 @@ const styles = StyleSheet.create({
 	},
 	menuDescriptionIn:
 	{
-
 		marginTop: 3 * space_unit,
 		paddingHorizontal: 2*space_unit,
 		paddingStart:4*space_unit,
@@ -130,7 +125,6 @@ const styles = StyleSheet.create({
 		shadowRadius: 3,
 		elevation: 2,
 	},
-	// INPUTS
 
 	full_line_field:
 		{
@@ -146,7 +140,6 @@ const styles = StyleSheet.create({
 			color:color("#595959",1),
 			elevation:1,
 			//fontFamily:'Sora'
-
 			marginLeft:"5%",
 			width:"90%",
 			marginRight:"5%"
@@ -164,11 +157,8 @@ const styles = StyleSheet.create({
 			fontWeight:"normal",
 			color:color("#595959",1),
 			elevation:1,
-			//fontFamily:'Sora'
-			//justifyContent: 'flex-start',
 			textAlignVertical: 'top',
 			textAlign:"left",
-
 			marginLeft:"5%",
 			width:"90%",
 			marginRight:"5%"
@@ -177,29 +167,25 @@ const styles = StyleSheet.create({
 		container_input: {
 		flex: 1,
 		backgroundColor: '#fff',
-		//alignItems: 'center',
-		//justifyContent:"center"
 	},
 
 	gender_image:
 	{
-
 		width:"100%",
 		height:"100%",
 	},
 
 	gender_image_holder:
-		{
-			backgroundColor:"#FAFAFA",
-			borderRadius:10,
-			borderWidth:1,
-			borderColor:"#CCCCCC",
-			alignSelf:"flex-end",
-			height:30*space_unit,
-			width:"42%",
+	{
+		backgroundColor:"#FAFAFA",
+		borderRadius:10,
+		borderWidth:2,
+		borderColor:"#CCCCCC",
+		alignSelf:"flex-end",
+		height:30*space_unit,
+		width:"42%",
 
-		}
-
+	}
 
 
 });

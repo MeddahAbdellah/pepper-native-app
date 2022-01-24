@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {  Text, View, Dimensions } from 'react-native'
-import styles from "./styles";
+import styles from "../pepperForms/styles";
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { space_unit, indigo, pepper } from '../../styles/common';

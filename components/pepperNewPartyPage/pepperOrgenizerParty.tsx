@@ -1,18 +1,18 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import PepperCarouselForm from '../pepperCarousel/pepperCarouselForm';
+import PepperForm from '../pepperForms/pepperForm'
 import {PepperImages} from '../pepperImage/pepperImage';
 import {PepperStackRoutes} from '../../models/routes';
-import {PepperFormType, PepperInputType} from "../pepperCarousel/Interface";
+import {IProduct, PepperFormType, PepperInputType} from "../pepperForms/Interface";
 
 const pepperNewPartyForm = ()=>{
 
 	return (
 		<View style={styles.container}>
-			<PepperCarouselForm pages={[
+			<PepperForm pages={[
 
 				{
-					prefix:"prefix1", type_form:PepperFormType.QuestionsForm, questions_form:{ questions:[
+					prefix:"prefix1", typeForm:PepperFormType.QuestionsForm, questionsForm:{ questions:[
 
 							{id:"3++", type:PepperInputType.RegularField, placeHolder:"Theme maybe please !"},
 /*							{id:"4", type:PepperInputType.EventDate},
@@ -21,27 +21,25 @@ const pepperNewPartyForm = ()=>{
 						]}
 				},
 				{
-					prefix:"prefix2", type_form:PepperFormType.QuestionsForm, questions_form:{ questions:[
-							{id:"7", type:PepperInputType.DualInputFields, placeHolder:"Name ... | Age"},
-/*							{id:"8", type:PepperInputType.DualInputFields, placeHolder:"Name ... | Age"},
+					prefix:"prefix2", typeForm:PepperFormType.QuestionsForm, questionsForm:{ questions:[
+
 							{id:"9", type:PepperInputType.RegularField, placeHolder:"Theme maybe please !"},
 							{id:"10", type:PepperInputType.EventDate},
 							{id:"11", type:PepperInputType.GenderChoice},
 							{id:"12", type:PepperInputType.MultiLineField, placeHolder:"Theme maybe please !", lines_number:4},
-*/
-						], top_image:PepperImages.Waiter }
+
+						], topImage:PepperImages.Waiter }
 				},
 
-
-				{ prefix:"page1",type_form: PepperFormType.AddableForm, addable_form:{ bottom_image:PepperImages.Food, product_category:"Food" }},
-				{ prefix:"page2",type_form: PepperFormType.AddableForm, addable_form:{ bottom_image:PepperImages.Drinks, product_category:"Drink"}},
-			  { prefix:"page4",type_form: PepperFormType.ImagesForm, image_form:{ image:PepperImages.Peace }},
+				{ prefix:"page1",typeForm: PepperFormType.AddableForm, addableForm:{ bottomImage:PepperImages.Food, productCategory:"Food" }},
+				{ prefix:"page2",typeForm: PepperFormType.AddableForm, addableForm:{ bottomImage:PepperImages.Drinks, productCategory:"Drink"}},
+			  { prefix:"page4",typeForm: PepperFormType.ImagesForm, imageForm:{ image:PepperImages.Peace }},
 			]}
 											nextStep={PepperStackRoutes.Tutorial}
 
-													resultData={(data: any)=>{
-														console.log(data)
-													}}
+											resultData={(data:{ [key : string]:Array<IProduct>|{[key : string]:string|Date|number} })=>{
+												console.log(data)
+											}}
 			/>
 		</View>
 	);

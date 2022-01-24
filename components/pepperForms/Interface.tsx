@@ -11,10 +11,7 @@ export enum PepperInputType {
 	EventDate = 'event_data',
 	RegularField = 'string_field',
 	MultiLineField = 'text_filed',
-	/**
-	 * Be wary that it should have 2 labels encoded in 	placeHolder?:string (separated by "|")
-	 * results ids for reach field are id + "_1" & id + "_2" */
-	DualInputFields ='dual_Field'
+
 }
 
 /**
@@ -22,7 +19,7 @@ export enum PepperInputType {
 export interface IField
 {
 	/**
-	 * Unique key for the question to be reused for the out put
+	 * Unique key to distinguish between the result of different inputs
 	 * */
 	id:string,
 	type:PepperInputType,
@@ -37,20 +34,18 @@ export interface ICarouselPage
 	 * Unique key to distinguish between the result of different forms
 	 * */
 	prefix:string,
-	type_form: PepperFormType,
-	image_form?: {
+	typeForm: PepperFormType,
+	imageForm?: {
 		image:PepperImages,
-		//onImageAdded: (image:any)=>void
 	},
-	questions_form?: {
+	questionsForm?: {
 		questions: Array<IField>,
-		top_image?:PepperImages,
-		//onFormSubmitted:(data:any)=>void
+		topImage?:PepperImages,
 	},
-	addable_form?: {
-		bottom_image:PepperImages,
-		product_category : string,
-		//onPriceSubmitted:(data:Array<IProduct>)=>void
+	addableForm?: {
+		bottomImage:PepperImages,
+		productCategory : string,
+
 	}
 }
 
