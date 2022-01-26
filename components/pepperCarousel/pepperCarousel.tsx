@@ -1,18 +1,22 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View, Dimensions } from 'react-native'
+import React, { useState } from 'react';
+import {
+  StyleSheet, Text, View, Dimensions 
+} from 'react-native';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { white, space_unit, grey_2, indigo, pepper, fontSizeBody } from '../../styles/common';
+import {
+  white, space_unit, grey_2, indigo, pepper, fontSizeBody 
+} from '../../styles/common';
 import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { useNavigation } from '@react-navigation/native';
 
-export default function PepperCarousel(onBoardingProps: { pages: Array<{ image: PepperImages, text: string | JSX.Element }>, nextStep: string }) {
+const PepperCarousel = (onBoardingProps: { pages: Array<{ image: PepperImages, text: string | JSX.Element }>, nextStep: string }): JSX.Element => {
   const carouselWidth = Dimensions.get("window").width;
   
   const [activeIndex, setActiveIndex] = useState(0);
   const navigation = useNavigation<any>();
 
-  const CarouselItem = (carouselProps: { item: { image: PepperImages, text: string | JSX.Element }, index: number }) => (
+  const StaticCarouselItem = (carouselProps: { item: { image: PepperImages, text: string | JSX.Element }, index: number }): JSX.Element => (
     <View style={styles.container}>
       <PepperImage src={carouselProps.item.image} style={styles.image}></PepperImage>
       <Text style={styles.description}>{carouselProps.item.text}</Text>
@@ -22,15 +26,15 @@ export default function PepperCarousel(onBoardingProps: { pages: Array<{ image: 
   return (
     <View>
       <Carousel
-      layout={"default"}
-      data={onBoardingProps.pages}
-      sliderWidth={carouselWidth}
-      itemWidth={carouselWidth}
-      renderItem={CarouselItem}
-      activeSlideOffset={.1 * carouselWidth}
-      swipeThreshold={.1 * carouselWidth}
-      enableMomentum={true}
-      onBeforeSnapToItem={(index) => { setActiveIndex(index); } } />
+        layout={"default"}
+        data={onBoardingProps.pages}
+        sliderWidth={carouselWidth}
+        itemWidth={carouselWidth}
+        renderItem={StaticCarouselItem}
+        activeSlideOffset={.1 * carouselWidth}
+        swipeThreshold={.1 * carouselWidth}
+        enableMomentum={true}
+        onBeforeSnapToItem={(index) => { setActiveIndex(index); } } />
 
       <Pagination
         dotsLength={onBoardingProps.pages.length}
@@ -41,17 +45,20 @@ export default function PepperCarousel(onBoardingProps: { pages: Array<{ image: 
         containerStyle={{ marginBottom: 5 * space_unit }}
       />
       { (activeIndex === onBoardingProps.pages.length - 1) ? 
-          (<PepperRoundButton
-            size={7 * space_unit}
-            style={styles.nextButton}
-            colors={[indigo, pepper]}
-            iconName="pepper-arrowRight"
-            onPress={() => {navigation.navigate(onBoardingProps.nextStep)}}
-          />) : null
+        <PepperRoundButton
+          size={7 * space_unit}
+          style={styles.nextButton}
+          colors={[indigo, pepper]}
+          iconName="pepper-arrowRight"
+          onPress={() => {navigation.navigate(onBoardingProps.nextStep);}}
+        /> :
+        null
       }
     </View>
   );
-}
+};
+
+export default PepperCarousel;
 
 const styles = StyleSheet.create({
   container: {

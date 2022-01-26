@@ -1,2 +1,12 @@
 import { usePepperSelector } from "./store.hooks";
-export const usePepperUser = () => usePepperSelector((state) => state.user);
+import { IUser, StoreStatus } from "../models/types";
+
+interface IUserStore {
+  user: IUser;
+  fetchStatus: StoreStatus;
+  updateMatchStatus: StoreStatus;
+  updatePartyStatus: StoreStatus;
+  error: any;
+}
+
+export const usePepperUser = (): IUserStore => usePepperSelector((state) => state.user);

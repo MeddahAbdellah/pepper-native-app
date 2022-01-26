@@ -53,7 +53,23 @@
       {
         "selector": "variable",
         "filter": {
-          "regex": "^([Pp][Ee][Pp][Pp][Ee][Rr])",
+          "regex": "^([Pp]epper)",
+          "match": true
+        },
+        "format": ["PascalCase"]
+      },
+      {
+        "selector": "variable",
+        "filter": {
+          "regex": "^([Ss]tatic)",
+          "match": true
+        },
+        "format": ["PascalCase"]
+      },
+      {
+        "selector": "variable",
+        "filter": {
+          "regex": "^([Rr]eact)",
           "match": true
         },
         "format": ["PascalCase"]
@@ -72,8 +88,13 @@
         "format": ["PascalCase", "UPPER_CASE"]
       },
       {
+        "selector": ["enumMember"],
+        "format": ["PascalCase"],
+        "leadingUnderscore": "allow"
+      },
+      {
         "selector": ["objectLiteralProperty", "enumMember"],
-        "format": ["camelCase", "UPPER_CASE"],
+        "format": ["camelCase"],
         "leadingUnderscore": "allow"
       },
       {

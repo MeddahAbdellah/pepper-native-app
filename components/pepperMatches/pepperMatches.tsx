@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, Modal, ActivityIndicator} from 'react-native'
-import { space_unit, fontSizeSubHeader, white, fontSizeRegular, heaven, pepper_2, sea, grey_3, black, fontSizeBody, pepper, loremIpsium } from '../../styles/common';
-import { IMatch, MatchStatus, Gender, StoreStatus } from '../../models/types';
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet, Text, View, Image, FlatList, TouchableOpacity, Modal
+} from 'react-native';
+import {
+  space_unit, fontSizeSubHeader, white, fontSizeRegular, heaven, pepper_2, sea, grey_3, black, fontSizeBody, pepper 
+} from '../../styles/common';
+import {
+  IMatch, MatchStatus, Gender, StoreStatus 
+} from '../../models/types';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import { BlurView } from 'expo-blur';
 import { useNavigation } from '@react-navigation/native';
@@ -10,29 +16,29 @@ import { usePepperDispatch } from '../../hooks/store.hooks';
 import { fetchUser } from '../../features/user/userActions';
 import { PepperStackRoutes } from '../../models/routes';
 
-const PepperMatches = () => {
+const PepperMatches = (): JSX.Element => {
   const navigation = useNavigation<any>();
   const [patienceModalVisible, setPatienceModalVisible] = useState<boolean>(false);
   const [cupidModalVisible, setCupidModalVisible] = useState<boolean>(false);
   const [evaluationModalVisible, setEvaluationModalVisible] = useState<boolean>(false);
   const [selectedMatch, setSelectedMatch] = useState<IMatch>();
-  const pepperDispatch = usePepperDispatch();
-  //Fetch user on load
-  useEffect(() => { pepperDispatch(fetchUser()); }, []);
-  const pepperUser = usePepperUser();
+  const storeDispatch = usePepperDispatch();
+  // Fetch user on load
+  useEffect(() => { storeDispatch(fetchUser()); }, []);
+  const currentUser = usePepperUser();
 
-  const StatusTag = (statusProps: { status: MatchStatus, matchName: string }) => {
+  const StaticStatusTag = (statusProps: { status: MatchStatus, matchName: string }): JSX.Element => {
     switch(statusProps.status) {
       case MatchStatus.ACCEPTED:
-        return <Text style={{ fontSize: fontSizeRegular, color: heaven }}>Check her profile</Text>
+        return <Text style={{ fontSize: fontSizeRegular, color: heaven }}>Check her profile</Text>;
       case MatchStatus.WAITING:
-        return <Text style={{ fontSize: fontSizeRegular, color: grey_3 }}>Didn't check you yet</Text>
+        return <Text style={{ fontSize: fontSizeRegular, color: grey_3 }}>Didn't check you yet</Text>;
       case MatchStatus.UNCHECKED:
-        return <Text style={{ fontSize: fontSizeRegular, color: sea }}>How was {statusProps.matchName}?</Text>
+        return <Text style={{ fontSize: fontSizeRegular, color: sea }}>How was {statusProps.matchName}?</Text>;
       default: 
-        return <Text style={{ fontSize: fontSizeRegular, color: pepper_2 }}>Too Early to text her!</Text> 
+        return <Text style={{ fontSize: fontSizeRegular, color: pepper_2 }}>Too Early to text her!</Text>; 
     }
-  }
+  };
 
   const checkMatch = (match: IMatch): void => {
     switch(match.status) {
@@ -50,44 +56,44 @@ const PepperMatches = () => {
       default: 
         break;
     }
-  }
+  };
 
-  const closeModalAndResetSelection = () => {
+  const closeModalAndResetSelection = (): void => {
     setPatienceModalVisible(false);
     setEvaluationModalVisible(false);
     setSelectedMatch(undefined);
-  }
+  };
 
-  const validateMatch = () => {
+  const validateMatch = (): void => {
     // TODO: add validate logic
     closeModalAndResetSelection();
     setCupidModalVisible(true);
   };
 
-  const discardMatch = () => {
+  const discardMatch = (): void => {
     // TODO: add discard logic
     closeModalAndResetSelection();
   };
 
-  const reportMatch = () => {
+  const reportMatch = (): void => {
     // TODO: add report logic
     closeModalAndResetSelection();
   };
 
-  const matchItem = (match: IMatch) => (
+  const matchItem = (match: IMatch): JSX.Element => (
     <TouchableOpacity style={styles.matchItemContainer} onPress={() => checkMatch(match)}>
       <Image source={match.imgs[0]} style={styles.matchImage}/>
       <View style={{ flex: 1 }}>
         <Text style={{ fontSize: fontSizeSubHeader }}>{match.name}</Text>
         <View style={styles.themeAndDateContainer}>
           <Text style={{ fontSize: fontSizeRegular }}>{match.job}</Text>
-          <StatusTag status={match.status} matchName={match.name}></StatusTag>
+          <StaticStatusTag status={match.status} matchName={match.name}></StaticStatusTag>
         </View>
       </View>
     </TouchableOpacity>
   );
 
-  const PatienceModal = () => (
+  const StaticPatienceModal = (): JSX.Element => (
     <Modal
       animationType="fade"
       visible={patienceModalVisible}
@@ -107,7 +113,7 @@ const PepperMatches = () => {
     </Modal>
   );
 
-  const CupidModal = () => (
+  const StaticCupidModal = (): JSX.Element => (
     <Modal
       animationType="fade"
       visible={cupidModalVisible}
@@ -127,7 +133,7 @@ const PepperMatches = () => {
     </Modal>
   );
 
-  const CheckMatchModal = () => (
+  const StaticCheckMatchModal = (): JSX.Element => (
     <Modal
       animationType="fade"
       visible={evaluationModalVisible}
@@ -155,19 +161,19 @@ const PepperMatches = () => {
 
   return (
     <View style={styles.listContainer}>
-      <PatienceModal/>
-      <CheckMatchModal/>
-      <CupidModal/>
+      <StaticPatienceModal/>
+      <StaticCheckMatchModal/>
+      <StaticCupidModal/>
       <FlatList
-        data={pepperUser.user.matches}
-        refreshing={pepperUser.fetchStatus !== StoreStatus.Fulfilled}
-        onRefresh={() => pepperDispatch(fetchUser())}
+        data={currentUser.user.matches}
+        refreshing={currentUser.fetchStatus !== StoreStatus.Fulfilled}
+        onRefresh={() => storeDispatch(fetchUser())}
         renderItem={(item) => matchItem(item.item) }
         keyExtractor={(item) => item.id.toString() }
       />
     </View>
-  )
-}
+  );
+};
 
 export default PepperMatches;
 
@@ -224,4 +230,4 @@ const styles = StyleSheet.create({
     marginVertical: 2 * space_unit,
     fontSize: fontSizeRegular,
   }
-})
+});

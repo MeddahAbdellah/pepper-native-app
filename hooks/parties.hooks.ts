@@ -1,2 +1,10 @@
 import { usePepperSelector } from "./store.hooks";
-export const usePepperParties = () => usePepperSelector((state) => state.parties);
+import { IParty } from "../models/types";
+
+interface IPartyStore {
+  parties: IParty[];
+  status: string;
+  error: any;
+}
+
+export const usePepperParties = (): IPartyStore => usePepperSelector((state) => state.parties);

@@ -1,30 +1,32 @@
-import React, { useState } from 'react'
-import { StyleSheet, View, Text, ScrollView, Dimensions } from 'react-native'
+import React, { useState } from 'react';
+import {
+  StyleSheet, View, Text, ScrollView, Dimensions 
+} from 'react-native';
 import { IParty } from '../../models/types';
-import { space_unit, white, fontSizeRegular, fontSizeHeader, fontSizeSubHeader, pepper, pepper_2, sun, sun_2, fire, fire_2, indigo_2, indigo_3, black } from '../../styles/common';
+import {
+  space_unit, white, fontSizeRegular, fontSizeHeader, fontSizeSubHeader, pepper, pepper_2, sun, sun_2, fire, fire_2, indigo_2, indigo_3, black 
+} from '../../styles/common';
 import PepperDescriptionCarousel from '../pepperDescriptionCarousel/pepperDescriptionCarousel';
 import PepperTag from '../pepperTags/pepperTags';
 
 
-const PepperPartyDescription = (descriptionProps: { route: { params: IParty } }) => {
+const PepperPartyDescription = (descriptionProps: { route: { params: IParty } }): JSX.Element => {
   // TODO: fix location, make it open google maps or something
   const { width } = Dimensions.get("window");
   const [carouselWidth, setCarouselWidth] = useState(width);
   const party = descriptionProps.route.params;
 
-  const attendeesTag = (attendees: { people: number, minAge: number, maxAge: number }): string => {
-    return `${attendees.people} people (${attendees.minAge}yo - ${attendees.maxAge}yo)`;
-  };
+  const attendeesTag = (attendees: { people: number, minAge: number, maxAge: number }): string => `${attendees.people} people (${attendees.minAge}yo - ${attendees.maxAge}yo)`;
 
-  const onLayout=(event: {nativeEvent: { layout: { width: number } } })=> {
+  const onLayout = (event: {nativeEvent: { layout: { width: number } } }): void => {
     const { width } = event.nativeEvent.layout;
     setCarouselWidth(.97 * width);
   };
 
   const miniFoodPrice = (): string =>  `${Math.min(...party.foods.map((food) => food.price))}$`;
   const miniDrinkPrice = (): string =>  `${Math.min(...party.drinks.map((food) => food.price))}$`;
-  const partyPrice = (): string =>  party.price !== 0 ? `${party.price}$` : 'Free';
-  const MenuList = (items: Array<{ name: string, price: number }>) => items.map((item) => (
+  const partyPrice = (): string =>  (party.price !== 0 ? `${party.price}$` : 'Free');
+  const StaticMenuList = (items: Array<{ name: string, price: number }>): JSX.Element[] => items.map((item) => (
     <View key={item.name} style={styles.menuDescription}>
       <Text>{item.name}</Text>
       <Text>{`${item.price}$`}</Text>
@@ -52,14 +54,14 @@ const PepperPartyDescription = (descriptionProps: { route: { params: IParty } })
           </View>
           <Text style={styles.description}>{party.description}</Text>
           <Text style={{...styles.menuTitle, marginTop: 0}}>Drinks</Text>
-          {MenuList(party.drinks)}
+          {StaticMenuList(party.drinks)}
           <Text style={styles.menuTitle}>Foods</Text>
-          {MenuList(party.foods)}
+          {StaticMenuList(party.foods)}
         </View>
       </View>
     </ScrollView>
-  )
-}
+  );
+};
 
 export default PepperPartyDescription;
 

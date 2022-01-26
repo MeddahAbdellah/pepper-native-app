@@ -1,4 +1,6 @@
-import { IMatch, Gender, MatchStatus, IParty, IUser } from "../models/types";
+import {
+  IMatch, Gender, MatchStatus, IParty, IUser 
+} from "../models/types";
 import { loremIpsium } from "../styles/common";
 
 export const fakeFetch = <T>(response: T, delay: number): Promise<T> => new Promise((resolve) => {

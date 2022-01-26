@@ -1,16 +1,18 @@
-import React, { useState } from 'react'
-import { StyleSheet, View, ImageBackground } from 'react-native'
+import React, { useState } from 'react';
+import { StyleSheet, View, ImageBackground } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { LinearGradient } from 'expo-linear-gradient';
-import { color, black, space_unit, white, pepper, indigo } from '../../styles/common';
+import {
+  color, black, space_unit, white, pepper, indigo 
+} from '../../styles/common';
 import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { useNavigation } from '@react-navigation/native';
 
-const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carouselImgs: Array<{ uri: string }> }) => {
+const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carouselImgs: Array<{ uri: string }> }): JSX.Element => {
   const [activeIndex, setActiveIndex] = useState(0);
   const navigation = useNavigation();
   
-  const DescriptionImgs = (partyImg: {item: { uri: string } } ) => (
+  const StaticDescriptionImgs = (partyImg: {item: { uri: string } } ): JSX.Element => (
     <ImageBackground source={partyImg.item} style={styles.image} resizeMode="cover">
       <LinearGradient colors={['transparent', color(black, .7)]} style={styles.imageMask}>
       </LinearGradient>
@@ -29,15 +31,15 @@ const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carou
         enableMomentum={true}
         contentContainerCustomStyle={{ height: styles.image.height}}
         inactiveSlideScale={1}
-        renderItem={DescriptionImgs}
+        renderItem={StaticDescriptionImgs}
         onBeforeSnapToItem={(index) => { setActiveIndex(index); } } />
       <PepperRoundButton
-          size={6 * space_unit}
-          style={styles.backButton}
-          colors={[indigo, pepper]}
-          iconName="pepper-arrowLeft"
-          onPress={navigation.goBack}
-        />
+        size={6 * space_unit}
+        style={styles.backButton}
+        colors={[indigo, pepper]}
+        iconName="pepper-arrowLeft"
+        onPress={navigation.goBack}
+      />
       <View style={styles.paginationContainer} pointerEvents="none">
         <Pagination
           dotsLength={carouselProps.carouselImgs.length}
@@ -49,8 +51,8 @@ const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carou
         />
       </View>
     </> 
-  )
-}
+  );
+};
 
 export default PepperDescriptionCarousel;
 

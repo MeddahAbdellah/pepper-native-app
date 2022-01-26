@@ -4,11 +4,11 @@ import { Camera, BarCodeScanningResult } from "expo-camera";
 import { fontSizeBody, space_unit, raven } from "../../styles/common";
 import { StyleSheet, View, Text } from "react-native";
 
-const PepperQrCodeScanner = (scannerProp: { onBarCodeScanned: (result: BarCodeScanningResult) => void }) => {
+const PepperQrCodeScanner = (scannerProp: { onBarCodeScanned: (result: BarCodeScanningResult) => void }): JSX.Element => {
   const [hasPermission, setHasPermission] = useState(false);
 
   useEffect(() => {
-    (async () => {
+    (async() => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
@@ -30,7 +30,7 @@ const PepperQrCodeScanner = (scannerProp: { onBarCodeScanned: (result: BarCodeSc
       />
     </View>
   );
-}
+};
 
 export default PepperQrCodeScanner;
 
