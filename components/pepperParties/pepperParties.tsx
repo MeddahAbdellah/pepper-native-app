@@ -1,6 +1,10 @@
-import React, { useEffect } from 'react'
-import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, ActivityIndicator } from 'react-native'
-import { space_unit, white, black, color, fontSizeHeader, fontSizeSubHeader, sun_2, sun, indigo_2, fire, fire_2, indigo_3, fontSizeRegular, pepper, pepper_2, loremIpsium } from '../../styles/common';
+import React, { useEffect } from 'react';
+import {
+  StyleSheet, View, Text, ImageBackground, TouchableOpacity, ActivityIndicator 
+} from 'react-native';
+import {
+  space_unit, white, black, color, fontSizeHeader, fontSizeSubHeader, sun_2, sun, indigo_2, fire, fire_2, indigo_3, fontSizeRegular, pepper, pepper_2 
+} from '../../styles/common';
 import Swiper from 'react-native-deck-swiper';
 import { LinearGradient } from 'expo-linear-gradient';
 import PepperTag from '../pepperTags/pepperTags';
@@ -11,29 +15,27 @@ import { usePepperParties } from '../../hooks/parties.hooks';
 import { fetchParties } from '../../features/parties/partiesActions';
 import { PepperStackRoutes } from '../../models/routes';
 
-export default function PepperParties() {
+const PepperParties = (): JSX.Element => {
   // The push method is not present in the types while it does exist thats we we cast navigation as any
   const navigation = useNavigation<any>();
-  const pepperDispatch = usePepperDispatch();
-  const pepperParties = usePepperParties();
-  //Fetch user on load
-  useEffect(() => { pepperDispatch(fetchParties()); }, []);
+  const storeDispatch = usePepperDispatch();
+  const currentParties = usePepperParties();
+  // Fetch user on load
+  useEffect(() => { storeDispatch(fetchParties()); }, []);
 
-  function Card(party: IParty) {
-    const attendeesTag = (attendees: { people: number, minAge: number, maxAge: number }): string => {
-      return `${attendees.people} people (${attendees.minAge}yo - ${attendees.maxAge}yo)`;
-    }
+  const StaticCard = (party: IParty): JSX.Element => {
+    const attendeesTag = (attendees: { people: number, minAge: number, maxAge: number }): string => `${attendees.people} people (${attendees.minAge}yo - ${attendees.maxAge}yo)`;
 
     const miniFoodPrice = (): string =>  `${Math.min(...party.foods.map((food) => food.price))}$`;
     const miniDrinkPrice = (): string =>  `${Math.min(...party.drinks.map((food) => food.price))}$`;
-    const partyPrice = (): string =>  party.price !== 0 ? `${party.price}$` : 'Free';
+    const partyPrice = (): string =>  (party.price !== 0 ? `${party.price}$` : 'Free');
 
     return (
       <ImageBackground source={party.imgs[0]} style={styles.image} resizeMode="cover">
         <TouchableOpacity
           style={{...styles.imageMask, zIndex: styles.imageMask.zIndex + 1}}
           onPress={() => navigation.push(PepperStackRoutes.PartyDescription, party)}
-          >
+        >
         </TouchableOpacity>
         <LinearGradient colors={['transparent', color(black, .7), black]} style={styles.imageMask}>
           <View style={styles.descriptionContainer}> 
@@ -52,18 +54,22 @@ export default function PepperParties() {
         </LinearGradient>
       </ImageBackground>
     );
-  } 
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.cardContainer}>
         {
-          pepperParties.status !== StoreStatus.Fulfilled ? <ActivityIndicator size="large" color={pepper} /> : (
+          currentParties.status !== StoreStatus.Fulfilled ?
+            <ActivityIndicator size="large" color={pepper} /> :
             <Swiper
-              cards={pepperParties.parties}
-              renderCard={Card}
-              onSwiped={(cardIndex) => {console.log(cardIndex)}}
-              onSwipedAll={() => {console.log('onSwipedAll')}}
+              cards={currentParties.parties}
+              renderCard={StaticCard}
+              // disabling linter for console for now until these are implemented
+              // eslint-disable-next-line no-console
+              onSwiped={(cardIndex) => {console.log(cardIndex);}}
+              // eslint-disable-next-line no-console
+              onSwipedAll={() => {console.log('onSwipedAll');}}
               backgroundColor={white}
               cardVerticalMargin={0}
               cardHorizontalMargin={0}
@@ -71,12 +77,13 @@ export default function PepperParties() {
               stackSize={3}
               cardStyle={styles.swiper}>
             </Swiper>
-          )
         }
       </View>
     </View>
   );
-}
+};
+
+export default PepperParties;
 
 const styles = StyleSheet.create({
   container: {

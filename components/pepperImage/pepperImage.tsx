@@ -26,7 +26,7 @@ export enum PepperImages {
   Waiter="waiter",
 
 }
-export const pepperImages: { [keyof in PepperImages]: ImageSourcePropType } = {
+export const imagesPepperSources: { [keyof in PepperImages]: ImageSourcePropType } = {
   bar: require(`../../assets/bar.png`),
   bracelets: require(`../../assets/bracelets.png`),
   briefcase: require(`../../assets/briefcase.png`),
@@ -52,10 +52,8 @@ export const pepperImages: { [keyof in PepperImages]: ImageSourcePropType } = {
 
 };
 
-function PepperImage(props: { src: PepperImages, style?: any }) {
-  return (
-      <Image source={pepperImages[props.src]} style={props.style} resizeMode="contain"/>
-  );
-}
+const PepperImage = (props: { src: PepperImages, style?: any }): JSX.Element => (
+  <Image source={imagesPepperSources[props.src]} style={props.style} resizeMode="contain"/>
+);
 
 export default PepperImage;

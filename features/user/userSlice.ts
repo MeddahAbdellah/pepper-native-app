@@ -14,7 +14,7 @@ const emptyUser: IUser = {
   interests: [],
   matches: [],
   parties: [],
-}
+};
 
 const initialState: { user: IUser, fetchStatus: StoreStatus,  updateMatchStatus: StoreStatus, updatePartyStatus: StoreStatus, error: any } = {
   user: emptyUser,
@@ -64,6 +64,6 @@ export const userSlice = createSlice({
         state.error = action.error.message;
       });
   }
-})
+});
 
 export default userSlice.reducer;

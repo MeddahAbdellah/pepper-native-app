@@ -18,6 +18,8 @@
     "@reduxjs/toolkit": "^1.7.1",
     "@types/react-native-snap-carousel": "^3.8.5",
     "@types/react-redux": "^7.1.21",
+    "@typescript-eslint/eslint-plugin": "^5.10.1",
+    "ansi-regex": "^5.0.1",
     "expo": "~43.0.2",
     "expo-app-loading": "~1.2.1",
     "expo-barcode-scanner": "~11.1.2",
@@ -26,6 +28,9 @@
     "expo-linear-gradient": "~10.0.3",
     "expo-status-bar": "~1.1.0",
     "moment": "^2.29.1",
+    "nanoid": "^3.1.31",
+    "node-fetch": "^2.6.7",
+    "nth-check": "^2.0.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-hook-form": "^7.22.5",
@@ -40,14 +45,15 @@
     "react-native-swipe": "^1.0.0",
     "react-native-swipe-cards": "^0.1.1",
     "react-native-web": "0.17.1",
-    "react-redux": "^7.2.6"
+    "react-redux": "^7.2.6",
+    "shelljs": "^0.8.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@react-native-community/eslint-config": "^3.0.1",
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.64.12",
-    "eslint": "^8.4.0",
+    "eslint": "6.8.0",
     "prettier": "^2.5.1",
     "typescript": "~4.3.5"
   },

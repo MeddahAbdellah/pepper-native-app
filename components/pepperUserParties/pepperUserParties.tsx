@@ -1,6 +1,10 @@
-import React, { useEffect } from 'react'
-import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native'
-import { space_unit, fontSizeSubHeader, white, fontSizeRegular } from '../../styles/common';
+import React, { useEffect } from 'react';
+import {
+  StyleSheet, Text, View, Image, FlatList, TouchableOpacity,
+} from 'react-native';
+import {
+  space_unit, fontSizeSubHeader, white, fontSizeRegular,
+} from '../../styles/common';
 import { IParty, StoreStatus } from '../../models/types';
 import { useNavigation } from '@react-navigation/native';
 import { usePepperUser } from '../../hooks/user.hooks';
@@ -8,15 +12,15 @@ import { usePepperDispatch } from '../../hooks/store.hooks';
 import { fetchUser } from '../../features/user/userActions';
 import { PepperStackRoutes } from '../../models/routes';
 
-const PepperUserParties = () => {
+const PepperUserParties = (): JSX.Element => {
   // The push method is not present in the types while it does exist thats we we cast navigation as any
   const navigation = useNavigation<any>();
-  const pepperDispatch = usePepperDispatch();
-  //Fetch user on load
-  useEffect(() => { pepperDispatch(fetchUser()); }, []);
-  const pepperUser = usePepperUser();
+  const storeDispatch = usePepperDispatch();
+  // Fetch user on load
+  useEffect(() => { storeDispatch(fetchUser()); }, []);
+  const currentUser = usePepperUser();
   
-  const partyItem = (party: IParty) => (
+  const partyItem = (party: IParty): JSX.Element => (
     <TouchableOpacity style={styles.partyItemContainer} onPress={() => navigation.push(PepperStackRoutes.PartyDescription, party)}>
       <Image source={party.imgs[0]} style={styles.partyImage}/>
       <View style={{ flex: 1 }}>
@@ -32,15 +36,15 @@ const PepperUserParties = () => {
   return (
     <View style={styles.listContainer}>
       <FlatList
-        data={pepperUser.user.parties}
-        refreshing={pepperUser.fetchStatus !== StoreStatus.Fulfilled}
-        onRefresh={() => pepperDispatch(fetchUser())}
+        data={currentUser.user.parties}
+        refreshing={currentUser.fetchStatus !== StoreStatus.Fulfilled}
+        onRefresh={() => storeDispatch(fetchUser())}
         renderItem={(item) => partyItem(item.item) }
         keyExtractor={(item) => item.id.toString() }
       />
     </View>
-  )
-}
+  );
+};
 
 export default PepperUserParties;
 
@@ -67,4 +71,4 @@ const styles = StyleSheet.create({
     borderRadius: space_unit,
     marginRight: space_unit,
   }
-})
+});

@@ -1,29 +1,33 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native'
-import { white, space_unit, fontSizeRegular, black, fontSizeHeader, sun, sun_2, fire, fire_2, indigo_2, indigo, grey_3, color } from '../../styles/common';
+import React, { useState } from 'react';
+import {
+  StyleSheet, Text, View, ScrollView, Dimensions 
+} from 'react-native';
+import {
+  white, space_unit, fontSizeRegular, black, fontSizeHeader, sun, sun_2, fire, fire_2, indigo_2, indigo, grey_3, color 
+} from '../../styles/common';
 import PepperDescriptionCarousel from '../pepperDescriptionCarousel/pepperDescriptionCarousel';
 import { IUser } from '../../models/types';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import PepperTag from '../pepperTags/pepperTags';
 
-const PepperUserDescription = (descriptionProps: { route: { params: IUser } }) => {
+const PepperUserDescription = (descriptionProps: { route: { params: IUser } }): JSX.Element => {
   const { width } = Dimensions.get("window");
   const [carouselWidth, setCarouselWidth] = useState(width);
   const user = descriptionProps.route.params;
 
-  const onLayout=(event: {nativeEvent: { layout: { width: number } } })=> {
+  const onLayout = (event: {nativeEvent: { layout: { width: number } } }): void => {
     const { width } = event.nativeEvent.layout;
     setCarouselWidth(.97 * width);
   };
 
-  const InterestTags = () => user.interests.map((interest, index) => {
+  const StaticInterestTags = (): JSX.Element[] => user.interests.map((interest, index) => {
     const tagColors = [[sun, sun_2], [fire, fire_2], [indigo, indigo_2]];
     return (<PepperTag 
-              key={interest}
-              text={interest}
-              firstGradientColor={tagColors[index][0]}
-              secondGradientColor={tagColors[index][1]}
-              style={styles.tags}/>)
+      key={interest}
+      text={interest}
+      firstGradientColor={tagColors[index][0]}
+      secondGradientColor={tagColors[index][1]}
+      style={styles.tags}/>);
   });
 
   return (
@@ -46,15 +50,15 @@ const PepperUserDescription = (descriptionProps: { route: { params: IUser } }) =
             <PepperImage src={PepperImages.House} style={styles.detailImages}></PepperImage>
             <Text style={styles.detailText}>{user.phoneNumber}</Text>
           </View>
-          <View style={styles.tagsContainer}>{InterestTags()}</View>
+          <View style={styles.tagsContainer}>{StaticInterestTags()}</View>
           <Text style={styles.description}>{user.description}</Text>
         </View>
       </View>
     </ScrollView>
-  )
-}
+  );
+};
 
-export default PepperUserDescription
+export default PepperUserDescription;
 
 const styles = StyleSheet.create({
   container: {
