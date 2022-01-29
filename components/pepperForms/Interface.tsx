@@ -1,57 +1,61 @@
 import {PepperImages} from "../pepperImage/pepperImage";
 
 export enum PepperFormType {
-	ImagesForm = 'ImagesForm',
-	QuestionsForm = 'QuestionsForm',
-	AddableForm = 'AddableForm',
+  ImagesForm = 'ImagesForm',
+  QuestionsForm = 'QuestionsForm',
+  AddableForm = 'AddableForm',
 }
 
 export enum PepperInputType {
-	GenderChoice = 'gender_choice',
-	EventDate = 'event_data',
-	RegularField = 'string_field',
-	MultiLineField = 'text_filed',
+  GenderChoice = 'gender_choice',
+  EventDate = 'event_data',
+  RegularField = 'string_field',
+  MultiLineField = 'text_filed',
 
 }
 
 /**
- * Warning : In many kind of inputs the optional attributes could become required*/
-export interface IField
-{
-	/**
+ * Warning : In many kind of inputs the optional attributes could become required */
+export interface IField {
+  /**
 	 * Unique key to distinguish between the result of different inputs
 	 * */
-	id:string,
-	type:PepperInputType,
-	placeHolder?:string,
-	lines_number?:number,
+  id:string,
+  type:PepperInputType,
+  placeHolder?:string,
+  linesNumber?:number,
+}
+
+export interface IPageAddableForm{
+  prefix:string,
+  typeForm: PepperFormType.AddableForm,
+  addableForm: {
+    bottomImage:PepperImages,
+    productCategory : string,
+  }
+}
+
+export interface IPageImageForm{
+  prefix:string,
+  typeForm: PepperFormType.ImagesForm,
+  imageForm: {
+    image:PepperImages,
+  },
 }
 
 
-export interface ICarouselPage
-{
-	/**
-	 * Unique key to distinguish between the result of different forms
-	 * */
-	prefix:string,
-	typeForm: PepperFormType,
-	imageForm?: {
-		image:PepperImages,
-	},
-	questionsForm?: {
-		questions: Array<IField>,
-		topImage?:PepperImages,
-	},
-	addableForm?: {
-		bottomImage:PepperImages,
-		productCategory : string,
-
-	}
+export interface IPageQuestionForm{
+  prefix:string,
+  typeForm: PepperFormType.QuestionsForm,
+  questionsForm: {
+    questions: IField[],
+    topImage?:PepperImages,
+  },
 }
 
-export interface IProduct
-{
-	name:string,
-	price:number
+
+export interface IProduct {
+  name:string,
+  price:number
 }
 

@@ -10,18 +10,17 @@ import { Provider } from 'react-redux';
 import store from './services/store';
 import { PepperStackRoutes } from './models/routes';
 import PepperTutorial from './components/pepperTutorial/pepperTutorial';
-import pepperNewPartyForm from "./components/pepperNewPartyPage/pepperOrgenizerParty";
+import PepperNewPartyForm from "./components/pepperNewPartyPage/pepperOrgenizerParty";
 import {RootSiblingParent} from 'react-native-root-siblings';
 
-const Stack = createNativeStackNavigator();
+const ReactStack = createNativeStackNavigator();
 
-export default function App() {
-  return (
-    <Provider store={store}>
-      <RootSiblingParent>
+const PepperApp = (): JSX.Element => (
+  <Provider store={store}>
+    <RootSiblingParent>
       <NavigationContainer>
 
-        <Stack.Navigator 
+        <ReactStack.Navigator 
           screenOptions={{ 
             headerShadowVisible: false,
             gestureEnabled: false,
@@ -30,17 +29,18 @@ export default function App() {
             headerLeft: () => (<PepperMenu />),
             headerRight: () => (<PepperQrCode />),
           }}
-          >
-          <Stack.Screen name={PepperStackRoutes.Intro} component={PepperIntro} />
-          <Stack.Screen name={PepperStackRoutes.OrganizerForms} component={pepperNewPartyForm} />
-          <Stack.Screen name={PepperStackRoutes.Tutorial} component={PepperTutorial} />
-          <Stack.Screen name={PepperStackRoutes.Main} component={PepperMain} />
-          <Stack.Screen name={PepperStackRoutes.PartyDescription} component={PepperPartyDescription} />
-          <Stack.Screen name={PepperStackRoutes.UserDescription} component={PepperUserDescription} />
-        </Stack.Navigator>
+        >
+          <ReactStack.Screen name={PepperStackRoutes.Intro} component={PepperIntro} />
+          <ReactStack.Screen name={PepperStackRoutes.OrganizerForms} component={PepperNewPartyForm} />
+          <ReactStack.Screen name={PepperStackRoutes.Tutorial} component={PepperTutorial} />
+          <ReactStack.Screen name={PepperStackRoutes.Main} component={PepperMain} />
+          <ReactStack.Screen name={PepperStackRoutes.PartyDescription} component={PepperPartyDescription} />
+          <ReactStack.Screen name={PepperStackRoutes.UserDescription} component={PepperUserDescription} />
+        </ReactStack.Navigator>
 
       </NavigationContainer>
-      </RootSiblingParent>
-    </Provider>
-  );
-}
+    </RootSiblingParent>
+  </Provider>
+);
+
+export default PepperApp;

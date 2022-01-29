@@ -1,79 +1,79 @@
-import React, { useState} from 'react'
+import React, { useState} from 'react';
 
-//import Carousel, {  } from 'react-native-snap-carousel';
-//import { space_unit, indigo, pepper} from '../../styles/common';
+// import Carousel, {  } from 'react-native-snap-carousel';
+// import { space_unit, indigo, pepper} from '../../styles/common';
 
-//import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
+// import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { useNavigation } from '@react-navigation/native';
 
-import CarouselItemAddableForm from "./pepperPages/pepperAddableForm";
-import {ICarouselPage,IProduct,PepperFormType} from "./Interface";
-import CarouselItemQuestionsForm from "./pepperPages/pepperQuestionsForm";
-import CarouselItemImageForm from "./pepperPages/pepperImageForm";
+import PepperCarouselItemAddableForm from "./pepperPages/pepperAddableForm";
+import {
+  IPageAddableForm,IPageImageForm,IPageQuestionForm,IProduct,PepperFormType
+} from "./Interface";
+import PepperCarouselItemQuestionsForm from "./pepperPages/pepperQuestionsForm";
+import PepperCarouselItemImageForm from "./pepperPages/pepperImageForm";
 
 
-const  PepperForm = (onBoardingProps: { pages: Array<ICarouselPage>,
+const  PepperForm = (onBoardingProps: { pages: Array<IPageAddableForm|IPageQuestionForm|IPageImageForm>,
 																 nextStep: string,
-	resultData:(data:{ [key : string]:Array<IProduct>|{[key : string]:string|Date|number} })=>void })=> {
+  resultData:(data:{ [key : string]:IProduct[]|{[key : string]:string|Date|number} })=>void }):JSX.Element=> {
 
 
-	const [activeIndex, setActiveIndex] = useState(0);
-	const [resultAll,setResultAll] = useState<{ [key: string]: any }>({})
-	const navigation = useNavigation<any>();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [resultAll,setResultAll] = useState<{ [key: string]: any }>({});
+  const navigation = useNavigation<any>();
 
-	// a Trigger passed to lower components to allow them to validate form & skip to next
-	const goToNextForm = () => {
-			if(activeIndex !== onBoardingProps.pages.length-1)
-			{
-				setActiveIndex(activeIndex+1)
-			}
-			else
-			{// last element
-				onBoardingProps.resultData(resultAll)
-				navigation.navigate(onBoardingProps.nextStep)
-			}
-	}
+  // a Trigger passed to lower components to allow them to validate form & skip to next
+  const goToNextForm = ():void => {
+    if(activeIndex !== onBoardingProps.pages.length-1) {
+      setActiveIndex(activeIndex+1);
+    } else {// last element
+      onBoardingProps.resultData(resultAll);
+      navigation.navigate(onBoardingProps.nextStep);
+    }
+  };
 
-	const concatResults = (key:string,value:any)=>{
-		let copy = {...resultAll, [key]: value }
-		copy[key] = value;
-		setResultAll(copy);
-	}
+  const concatResults = (key:string,value:any):void=>{
+    let copy = {...resultAll, [key]: value };
+    copy[key] = value;
+    setResultAll(copy);
+  };
 
-	const PageSelector = (props:{item:ICarouselPage})=> {
-		return <>
-			{
-				(props.item.typeForm ===PepperFormType.ImagesForm)?
-					<CarouselItemImageForm item={ props.item } nextFormTrigger={goToNextForm}
+  const StaticPageSelector = (props:{item:IPageAddableForm|IPageQuestionForm|IPageImageForm}):JSX.Element=> <>
+    {
+      (props.item.typeForm ===PepperFormType.ImagesForm)?
+        <PepperCarouselItemImageForm item={ props.item as IPageImageForm} nextFormTrigger={goToNextForm}
 						 concatResults={(v:any)=>{
-							 concatResults(props.item.prefix,v)
-						 }} />:null
-}
+							 concatResults(props.item.prefix,v);
+						 }} />:
+						 null
+    }
 
-			{
-				(props.item.typeForm ===PepperFormType.QuestionsForm)?
-				 <CarouselItemQuestionsForm item={ props.item } nextFormTrigger={goToNextForm}
+    {
+      (props.item.typeForm ===PepperFormType.QuestionsForm)?
+				 <PepperCarouselItemQuestionsForm item={ props.item as IPageQuestionForm } nextFormTrigger={goToNextForm}
 						 concatResults={(v:any)=>{
-							 concatResults(props.item.prefix,v)
-						 }} />:null
-			}
+							 concatResults(props.item.prefix,v);
+						 }} />:
+						 null
+    }
 
-			{
-				(props.item.typeForm ===PepperFormType.AddableForm)?
-					<CarouselItemAddableForm item={ props.item } nextFormTrigger={goToNextForm}
+    {
+      (props.item.typeForm ===PepperFormType.AddableForm)?
+        <PepperCarouselItemAddableForm item={ props.item as IPageAddableForm } nextFormTrigger={goToNextForm}
 						 concatResults={(v:any)=>{
-							 concatResults(props.item.prefix,v)
-						 }} />:null
-			}
-		</>
-	}
+							 concatResults(props.item.prefix,v);
+						 }} />:
+						 null
+    }
+  </>;
 
-	return (
-		<>
-			{PageSelector({item:onBoardingProps.pages[activeIndex]})}
-		</>
-	);
-}
+  return (
+    <>
+      {StaticPageSelector({item:onBoardingProps.pages[activeIndex]})}
+    </>
+  );
+};
 
 
 export default PepperForm;
