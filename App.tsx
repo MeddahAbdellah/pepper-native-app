@@ -11,29 +11,29 @@ import store from './services/store';
 import { PepperStackRoutes } from './models/routes';
 import PepperTutorial from './components/pepperTutorial/pepperTutorial';
 
-const Stack = createNativeStackNavigator();
+const ReactStack = createNativeStackNavigator();
 
-export default function App() {
-  return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator 
-          screenOptions={{ 
-            headerShadowVisible: false,
-            gestureEnabled: false,
-            headerBackVisible:false,
-            headerTitle: () => (<PepperTitle/>),
-            headerLeft: () => (<PepperMenu />),
-            headerRight: () => (<PepperQrCode />),
-          }}
-          >
-          <Stack.Screen name={PepperStackRoutes.Intro} component={PepperIntro} />
-          <Stack.Screen name={PepperStackRoutes.Tutorial} component={PepperTutorial} />
-          <Stack.Screen name={PepperStackRoutes.Main} component={PepperMain} />
-          <Stack.Screen name={PepperStackRoutes.PartyDescription} component={PepperPartyDescription} />
-          <Stack.Screen name={PepperStackRoutes.UserDescription} component={PepperUserDescription} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
-  );
-}
+const PepperApp = (): JSX.Element => (
+  <Provider store={store}>
+    <NavigationContainer>
+      <ReactStack.Navigator 
+        screenOptions={{ 
+          headerShadowVisible: false,
+          gestureEnabled: false,
+          headerBackVisible:false,
+          headerTitle: () => (<PepperTitle/>),
+          headerLeft: () => (<PepperMenu />),
+          headerRight: () => (<PepperQrCode />),
+        }}
+      >
+        <ReactStack.Screen name={PepperStackRoutes.Intro} component={PepperIntro} />
+        <ReactStack.Screen name={PepperStackRoutes.Tutorial} component={PepperTutorial} />
+        <ReactStack.Screen name={PepperStackRoutes.Main} component={PepperMain} />
+        <ReactStack.Screen name={PepperStackRoutes.PartyDescription} component={PepperPartyDescription} />
+        <ReactStack.Screen name={PepperStackRoutes.UserDescription} component={PepperUserDescription} />
+      </ReactStack.Navigator>
+    </NavigationContainer>
+  </Provider>
+);
+
+export default PepperApp;

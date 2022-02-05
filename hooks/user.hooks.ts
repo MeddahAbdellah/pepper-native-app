@@ -5,6 +5,7 @@ interface IUserStore {
   user: IUser;
   fetchStatus: StoreStatus;
   updateMatchStatus: StoreStatus;
+  deleteMatchStatus: StoreStatus;
   updatePartyStatus: StoreStatus;
   error: any;
 }

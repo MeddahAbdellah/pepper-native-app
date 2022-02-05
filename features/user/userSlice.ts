@@ -1,6 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IUser, Gender, StoreStatus } from '../../models/types';
-import { fetchUser, updateMatch, updateParty } from './userActions';
+import {
+  fetchUser, updateMatch, updateParty, deleteMatch 
+} from './userActions';
+
+interface IUserStore {
+  user: IUser;
+  fetchStatus: StoreStatus;
+  updateMatchStatus: StoreStatus;
+  deleteMatchStatus: StoreStatus;
+  updatePartyStatus: StoreStatus;
+  error: any;
+}
 
 const emptyUser: IUser = {
   id: 0,
@@ -16,10 +27,11 @@ const emptyUser: IUser = {
   parties: [],
 };
 
-const initialState: { user: IUser, fetchStatus: StoreStatus,  updateMatchStatus: StoreStatus, updatePartyStatus: StoreStatus, error: any } = {
+const initialState: IUserStore = {
   user: emptyUser,
   fetchStatus: StoreStatus.Idle,
   updateMatchStatus: StoreStatus.Idle,
+  deleteMatchStatus: StoreStatus.Idle,
   updatePartyStatus: StoreStatus.Idle,
   error: null,
 };
@@ -50,6 +62,17 @@ export const userSlice = createSlice({
       })
       .addCase(updateMatch.rejected, (state, action) => {
         state.updateMatchStatus = StoreStatus.Rejected;
+        state.error = action.error.message;
+      })
+      .addCase(deleteMatch.pending, (state) => {
+        state.deleteMatchStatus = StoreStatus.Pending;
+      })
+      .addCase(deleteMatch.fulfilled, (state, action) => {
+        state.deleteMatchStatus = StoreStatus.Fulfilled;
+        state.user.matches = action.payload;
+      })
+      .addCase(deleteMatch.rejected, (state, action) => {
+        state.deleteMatchStatus = StoreStatus.Rejected;
         state.error = action.error.message;
       })
       .addCase(updateParty.pending, (state) => {

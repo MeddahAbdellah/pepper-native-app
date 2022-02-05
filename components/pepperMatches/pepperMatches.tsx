@@ -13,8 +13,9 @@ import { BlurView } from 'expo-blur';
 import { useNavigation } from '@react-navigation/native';
 import { usePepperUser } from '../../hooks/user.hooks';
 import { usePepperDispatch } from '../../hooks/store.hooks';
-import { fetchUser } from '../../features/user/userActions';
+import { fetchUser, updateMatch, deleteMatch } from '../../features/user/userActions';
 import { PepperStackRoutes } from '../../models/routes';
+import { keyExtractor } from '../../helpers/flatListHelper';
 
 const PepperMatches = (): JSX.Element => {
   const navigation = useNavigation<any>();
@@ -64,20 +65,20 @@ const PepperMatches = (): JSX.Element => {
     setSelectedMatch(undefined);
   };
 
-  const validateMatch = (): void => {
-    // TODO: add validate logic
+  const validateMatch = (matchId: number): void => {
     closeModalAndResetSelection();
+    storeDispatch(updateMatch({ matchId, status: MatchStatus.WAITING }));
     setCupidModalVisible(true);
   };
 
-  const discardMatch = (): void => {
-    // TODO: add discard logic
+  const discardMatch = (matchId: number): void => {
     closeModalAndResetSelection();
+    storeDispatch(deleteMatch({ matchId }));
   };
 
-  const reportMatch = (): void => {
-    // TODO: add report logic
+  const reportMatch = (matchId: number): void => {
     closeModalAndResetSelection();
+    storeDispatch(deleteMatch({ matchId }));
   };
 
   const matchItem = (match: IMatch): JSX.Element => (
@@ -145,13 +146,13 @@ const PepperMatches = (): JSX.Element => {
           <Text style={styles.modalDescription}>
             How was {selectedMatch?.name} ?
           </Text>
-          <TouchableOpacity onPress={() => validateMatch() }>
+          <TouchableOpacity onPress={() => (selectedMatch ? validateMatch(selectedMatch.id) : null) }>
             <Text style={{ marginVertical: 1.5 * space_unit, color: heaven, fontSize: fontSizeBody}}>Awesome I wanna see {selectedMatch?.gender === Gender.MAN ? 'him' : 'her' } again!</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => discardMatch() }>
+          <TouchableOpacity onPress={() => (selectedMatch ? discardMatch(selectedMatch.id) : null) }>
             <Text style={{ marginVertical: 1.5 * space_unit, color: sea, fontSize: fontSizeBody}}>Cool but not my type</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => reportMatch() }>
+          <TouchableOpacity onPress={() => (selectedMatch ? reportMatch(selectedMatch.id) : null) }>
             <Text style={{ marginVertical: 1.5 * space_unit, color: pepper_2, fontSize: fontSizeBody}}>Don’t wanna meet again</Text>
           </TouchableOpacity>
         </View>
@@ -169,7 +170,7 @@ const PepperMatches = (): JSX.Element => {
         refreshing={currentUser.fetchStatus !== StoreStatus.Fulfilled}
         onRefresh={() => storeDispatch(fetchUser())}
         renderItem={(item) => matchItem(item.item) }
-        keyExtractor={(item) => item.id.toString() }
+        keyExtractor={(item) => keyExtractor(item.id) }
       />
     </View>
   );

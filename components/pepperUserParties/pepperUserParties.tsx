@@ -11,6 +11,7 @@ import { usePepperUser } from '../../hooks/user.hooks';
 import { usePepperDispatch } from '../../hooks/store.hooks';
 import { fetchUser } from '../../features/user/userActions';
 import { PepperStackRoutes } from '../../models/routes';
+import { keyExtractor } from '../../helpers/flatListHelper';
 
 const PepperUserParties = (): JSX.Element => {
   // The push method is not present in the types while it does exist thats we we cast navigation as any
@@ -40,7 +41,7 @@ const PepperUserParties = (): JSX.Element => {
         refreshing={currentUser.fetchStatus !== StoreStatus.Fulfilled}
         onRefresh={() => storeDispatch(fetchUser())}
         renderItem={(item) => partyItem(item.item) }
-        keyExtractor={(item) => item.id.toString() }
+        keyExtractor={(item) => keyExtractor(item.id) }
       />
     </View>
   );
