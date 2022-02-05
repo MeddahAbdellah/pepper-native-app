@@ -67,8 +67,9 @@ const PepperMatches = (): JSX.Element => {
 
   const validateMatch = (matchId: number): void => {
     closeModalAndResetSelection();
-    storeDispatch(updateMatch({ matchId, status: MatchStatus.WAITING }));
-    setCupidModalVisible(true);
+    storeDispatch(updateMatch({ matchId, status: MatchStatus.WAITING })).finally(() => {
+      setCupidModalVisible(true);
+    });
   };
 
   const discardMatch = (matchId: number): void => {
