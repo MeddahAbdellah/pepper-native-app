@@ -1,12 +1,12 @@
 import PepperImage, {PepperImages} from "../../pepperImage/pepperImage";
 // import {strict as assert} from "assert";
 import { Text, View} from "react-native";
-import styles from "../styles";
+import styles from "../formStyles";
 import React from "react";
 import {indigo, pepper, space_unit} from "../../../styles/common";
 import PepperRoundButton from "../../pepperRoundButton/pepperRoundButton";
 
-const PepperCarouselItemImageForm = (carouselProps: { item: { prefix: string, imageForm: {
+const PepperItemImageForm = (carouselProps: { item: { prefix: string, imageForm: {
   image:PepperImages,
 },
 
@@ -31,4 +31,4 @@ const PepperCarouselItemImageForm = (carouselProps: { item: { prefix: string, im
   </>
 );
 
-export default PepperCarouselItemImageForm;
+export default PepperItemImageForm;

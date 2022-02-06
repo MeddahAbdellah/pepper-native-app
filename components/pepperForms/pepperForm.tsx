@@ -6,12 +6,12 @@ import React, { useState} from 'react';
 // import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { useNavigation } from '@react-navigation/native';
 
-import PepperCarouselItemAddableForm from "./pepperPages/pepperAddableForm";
+import PepperItemAddableForm from "./pepperPages/pepperAddableForm";
 import {
   IPageAddableForm,IPageImageForm,IPageQuestionForm,IProduct,PepperFormType
 } from "./Interface";
-import PepperCarouselItemQuestionsForm from "./pepperPages/pepperQuestionsForm";
-import PepperCarouselItemImageForm from "./pepperPages/pepperImageForm";
+import PepperItemQuestionsForm from "./pepperPages/pepperQuestionsForm";
+import PepperItemImageForm from "./pepperPages/pepperImageForm";
 
 
 const  PepperForm = (onBoardingProps: { pages: Array<IPageAddableForm|IPageQuestionForm|IPageImageForm>,
@@ -42,7 +42,7 @@ const  PepperForm = (onBoardingProps: { pages: Array<IPageAddableForm|IPageQuest
   const StaticPageSelector = (props:{item:IPageAddableForm|IPageQuestionForm|IPageImageForm}):JSX.Element=> <>
     {
       (props.item.typeForm ===PepperFormType.ImagesForm)?
-        <PepperCarouselItemImageForm item={ props.item as IPageImageForm} nextFormTrigger={goToNextForm}
+        <PepperItemImageForm item={ props.item as IPageImageForm} nextFormTrigger={goToNextForm}
 						 concatResults={(v:any)=>{
 							 concatResults(props.item.prefix,v);
 						 }} />:
@@ -51,7 +51,7 @@ const  PepperForm = (onBoardingProps: { pages: Array<IPageAddableForm|IPageQuest
 
     {
       (props.item.typeForm ===PepperFormType.QuestionsForm)?
-				 <PepperCarouselItemQuestionsForm item={ props.item as IPageQuestionForm } nextFormTrigger={goToNextForm}
+				 <PepperItemQuestionsForm item={ props.item as IPageQuestionForm } nextFormTrigger={goToNextForm}
 						 concatResults={(v:any)=>{
 							 concatResults(props.item.prefix,v);
 						 }} />:
@@ -60,7 +60,7 @@ const  PepperForm = (onBoardingProps: { pages: Array<IPageAddableForm|IPageQuest
 
     {
       (props.item.typeForm ===PepperFormType.AddableForm)?
-        <PepperCarouselItemAddableForm item={ props.item as IPageAddableForm } nextFormTrigger={goToNextForm}
+        <PepperItemAddableForm item={ props.item as IPageAddableForm } nextFormTrigger={goToNextForm}
 						 concatResults={(v:any)=>{
 							 concatResults(props.item.prefix,v);
 						 }} />:

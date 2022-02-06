@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {TouchableOpacity, View} from "react-native";
-import styles from "../styles";
+import styles from "../formStyles";
 import PepperImage, {PepperImages} from "../../pepperImage/pepperImage";
 import {pepper, space_unit,indigo} from "../../../styles/common";
 
@@ -16,16 +16,16 @@ const PepperGenderInput = (propsInput:{onChange:(gender:string)=>void,errorStyle
       setGender("Man");
       propsInput.onChange("Man");
     }}
-    style={{...styles.gender_image_holder,borderColor:(propsInput.errorStyle)?pepper:((gender=="Man")?indigo:"#CCCCCC")}}>
-      <PepperImage src={PepperImages.Man} style={styles.gender_image}/>
+    style={{...styles.genderImageHolder,borderColor:(propsInput.errorStyle)?pepper:((gender=="Man")?indigo:"#CCCCCC")}}>
+      <PepperImage src={PepperImages.Man} style={styles.genderImage}/>
     </TouchableOpacity>
 
     <TouchableOpacity
-      style={{...styles.gender_image_holder,borderColor:(propsInput.errorStyle)?pepper:((gender=="Woman")?indigo:"#CCCCCC")}} onPress={()=>{
+      style={{...styles.genderImageHolder,borderColor:(propsInput.errorStyle)?pepper:((gender=="Woman")?indigo:"#CCCCCC")}} onPress={()=>{
         setGender("Woman");
         propsInput.onChange("Woman");
       }}>
-      <PepperImage src={PepperImages.Woman} style={styles.gender_image}/>
+      <PepperImage src={PepperImages.Woman} style={styles.genderImage}/>
     </TouchableOpacity>
   </View>;
 };

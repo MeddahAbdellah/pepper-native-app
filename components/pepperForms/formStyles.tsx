@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 
   },
 
-  AddableFormContainer: {
+  addableFormContainer: {
     flexGrow: 1,
     padding:space_unit,
     flexDirection:'column',
@@ -24,12 +24,12 @@ const styles = StyleSheet.create({
     marginBottom: 4 * space_unit,
   },
 
-  bottom_image:
+  bottomImage:
 	{
 	  width:"100%",
 	  height:"100%",
 	},
-  bottom_image_holder:
+  bottomImageHolder:
 	{
 	  position:"absolute",
 	  bottom: 0,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 	  width:"80%",
 
 	},
-  NewItemAddName:
+  newItemAddName:
 	{
 	  borderRadius:6,
 	  borderWidth:1,
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
 	  marginRight:"6%"
 	},
 
-  NewItemButton:
+  newItemButton:
 	{
 	  color: '#dd24ce',
 	  fontSize:18,
@@ -66,22 +66,22 @@ const styles = StyleSheet.create({
 	  textDecorationLine: 'underline'
 	},
 
-  NewItemAddPrice:
-		{
-		  borderRadius:6,
-		  borderWidth:1,
-		  borderColor:"#CCCCCC",
-		  height:8*space_unit,
-		  padding:0.5*space_unit,
-		  paddingStart:2*space_unit,
-		  backgroundColor:"#FAFAFA",
-		  fontSize:20,
-		  // fontWeight:"bold",
-		  color:color("#595959",1),
-		  elevation:1,
-		  // fontFamily:'Sora'
-		  width:"20%",
-		},
+  newItemAddPrice:
+	{
+	  borderRadius:6,
+	  borderWidth:1,
+	  borderColor:"#CCCCCC",
+	  height:8*space_unit,
+	  padding:0.5*space_unit,
+	  paddingStart:2*space_unit,
+	  backgroundColor:"#FAFAFA",
+	  fontSize:20,
+	  // fontWeight:"bold",
+	  color:color("#595959",1),
+	  elevation:1,
+	  // fontFamily:'Sora'
+	  width:"20%",
+	},
 
   chipsContainer: {
     flexDirection: 'row',
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
 
-  full_line_field:
+  fullLineField:
 		{
 		  borderRadius:6,
 		  borderWidth:1,
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
 		  marginRight:"5%"
 		},
 
-  full_line_field_multiline:
+  fullLineFieldMultiline:
 		{
 		  borderRadius:6,
 		  borderWidth:1,
@@ -167,18 +167,18 @@ const styles = StyleSheet.create({
 		  marginRight:"5%"
 		},
 
-  container_input: {
+  containerInput: {
     flex: 1,
     backgroundColor: '#fff',
   },
 
-  gender_image:
+  genderImage:
 	{
 	  width:"100%",
 	  height:"100%",
 	},
 
-  gender_image_holder:
+  genderImageHolder:
 	{
 	  backgroundColor:"#FAFAFA",
 	  borderRadius:10,
@@ -189,7 +189,6 @@ const styles = StyleSheet.create({
 	  width:"42%",
 
 	}
-
 
 });
 

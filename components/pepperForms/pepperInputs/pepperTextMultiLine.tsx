@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {grey_2, pepper, space_unit} from "../../../styles/common";
 import {TextInput, View} from "react-native";
-import styles from "../styles";
+import styles from "../formStyles";
 
 
 const PepperTextMultiLine = (propsIn:{numberOfLines:number,
@@ -25,7 +25,7 @@ const PepperTextMultiLine = (propsIn:{numberOfLines:number,
         propsIn.onChange(val);
       }}
       numberOfLines={propsIn.numberOfLines}
-      style={{...styles.full_line_field_multiline,borderColor:(propsIn.errorStyle)?pepper:styles.full_line_field_multiline.borderColor}}
+      style={{...styles.fullLineFieldMultiline,borderColor:(propsIn.errorStyle)?pepper:styles.fullLineFieldMultiline.borderColor}}
       autoCapitalize="characters"
       placeholder={propsIn.placeHolder} // "Describe your event in few words ..."
       placeholderTextColor={grey_2}

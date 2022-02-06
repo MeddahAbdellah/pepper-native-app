@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {grey_2, pepper, space_unit} from "../../../styles/common";
 import {TextInput, View} from "react-native";
-import styles from "../styles";
+import styles from "../formStyles";
 
 
 const PepperDefaultInput = (propsIn:{placeholder:string, errorStyle?:boolean, onChange:(val:string)=>void}):JSX.Element =>{
@@ -10,7 +10,7 @@ const PepperDefaultInput = (propsIn:{placeholder:string, errorStyle?:boolean, on
 
   return <View style={{ flexDirection:'row',backgroundColor:"#fff",paddingBottom:space_unit*2 }}>
     <TextInput
-      style={{...styles.full_line_field,borderColor:propsIn.errorStyle?pepper:styles.full_line_field_multiline.borderColor}}
+      style={{...styles.fullLineField,borderColor:propsIn.errorStyle?pepper:styles.fullLineFieldMultiline.borderColor}}
       autoCapitalize="characters"
       value={val}
       onChangeText={(str)=>{

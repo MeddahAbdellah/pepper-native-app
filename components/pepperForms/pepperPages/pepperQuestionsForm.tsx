@@ -1,7 +1,7 @@
 import {IField, PepperInputType} from "../Interface";
 import PepperImage, {PepperImages} from "../../pepperImage/pepperImage";
 import {ScrollView, View} from "react-native";
-import styles from "../styles";
+import styles from "../formStyles";
 import React  from "react";
 import {indigo, pepper, space_unit} from "../../../styles/common";
 import PepperRoundButton from "../../pepperRoundButton/pepperRoundButton";
@@ -12,7 +12,7 @@ import PepperDefaultInput from "../pepperInputs/pepperDefaultInput";
 import Toast from "react-native-root-toast";
 
 
-const PepperCarouselItemQuestionsForm = (carouselProps: { item: { prefix:string,  questionsForm: {
+const PepperItemQuestionsForm = (carouselProps: { item: { prefix:string,  questionsForm: {
   questions: IField[],
   topImage?:PepperImages,
 },
@@ -80,7 +80,7 @@ const PepperCarouselItemQuestionsForm = (carouselProps: { item: { prefix:string,
     }
 
     {(props.input.type === PepperInputType.EventDate) ?
-      <PepperDateInput style={styles.full_line_field} initialDate={toDayDate()} onChange={(_e) => {
+      <PepperDateInput style={styles.fullLineField} initialDate={toDayDate()} onChange={(_e) => {
         allInputs[props.input.id] = _e;
       }}/> :
 	  null
@@ -89,14 +89,14 @@ const PepperCarouselItemQuestionsForm = (carouselProps: { item: { prefix:string,
   </>;
   return (
     <>
-      <ScrollView style={styles.container_input} keyboardShouldPersistTaps={"always"}>
+      <ScrollView style={styles.containerInput} keyboardShouldPersistTaps={"always"}>
 
         {(carouselProps.item.questionsForm.topImage !== undefined)?
           (<View
             style={{
               alignSelf:"flex-end",height:18*space_unit,backgroundColor:"#fff", width:"50%"
             }}>
-            <PepperImage src={carouselProps.item.questionsForm.topImage} style={styles.bottom_image}/>
+            <PepperImage src={carouselProps.item.questionsForm.topImage} style={styles.bottomImage}/>
           </View>) :
 		  null}
         {(carouselProps.item.questionsForm.topImage === undefined)?
@@ -133,4 +133,4 @@ const PepperCarouselItemQuestionsForm = (carouselProps: { item: { prefix:string,
     </>);
 };
 
-export default PepperCarouselItemQuestionsForm;
+export default PepperItemQuestionsForm;

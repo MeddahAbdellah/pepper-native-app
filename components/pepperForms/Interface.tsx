@@ -8,9 +8,9 @@ export enum PepperFormType {
 
 export enum PepperInputType {
   GenderChoice = 'gender_choice',
-  EventDate = 'event_data',
-  RegularField = 'string_field',
-  MultiLineField = 'text_filed',
+  EventDate = 'eventData',
+  RegularField = 'stringField',
+  MultiLineField = 'textFiled',
 
 }
 

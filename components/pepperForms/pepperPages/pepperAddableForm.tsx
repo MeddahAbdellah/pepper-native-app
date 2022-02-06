@@ -3,7 +3,7 @@ import PepperImage, {PepperImages} from "../../pepperImage/pepperImage";
 import {
   ScrollView, Text, TextInput, TouchableOpacity, View
 } from "react-native";
-import styles from "../styles";
+import styles from "../formStyles";
 import {
   grey_2, indigo,pepper, space_unit
 } from "../../../styles/common";
@@ -13,7 +13,7 @@ import PepperRoundButton from "../../pepperRoundButton/pepperRoundButton";
 import PepperIcon from "../../pepperIcon/pepperIcon";
 import Toast from "react-native-root-toast";
 
-const PepperCarouselItemAddableForm = (carouselProps: { item: { prefix:string, typeForm: PepperFormType, addableForm: {
+const PepperItemAddableForm = (carouselProps: { item: { prefix:string, typeForm: PepperFormType, addableForm: {
   bottomImage:PepperImages,
   productCategory : string,
 }
@@ -57,18 +57,18 @@ const PepperCarouselItemAddableForm = (carouselProps: { item: { prefix:string, t
   return (
     <>
 
-      <ScrollView style={styles.AddableFormContainer}>
+      <ScrollView style={styles.addableFormContainer}>
 
         <View
           style={{height:18*space_unit, width:"100%",}}>
-          <PepperImage src={carouselProps.item.addableForm.bottomImage} style={styles.bottom_image}/>
+          <PepperImage src={carouselProps.item.addableForm.bottomImage} style={styles.bottomImage}/>
         </View>
 
         {StaticMenuList(productList)}
 
         <View style={{ flexDirection:'row',paddingTop:3*space_unit }}>
           <TextInput
-            style={styles.NewItemAddName}
+            style={styles.newItemAddName}
             value={name}
             onChangeText={(text)=>{setName(text);}}
             autoCapitalize="characters"
@@ -77,7 +77,7 @@ const PepperCarouselItemAddableForm = (carouselProps: { item: { prefix:string, t
           />
 
           <TextInput
-            style={styles.NewItemAddPrice}
+            style={styles.newItemAddPrice}
             value={price}
             placeholder={"€"}
             keyboardType="decimal-pad"
@@ -109,7 +109,7 @@ const PepperCarouselItemAddableForm = (carouselProps: { item: { prefix:string, t
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-              <Text style={styles.NewItemButton}>Add {carouselProps.item.addableForm.productCategory}</Text>
+              <Text style={styles.newItemButton}>Add {carouselProps.item.addableForm.productCategory}</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -130,4 +130,4 @@ const PepperCarouselItemAddableForm = (carouselProps: { item: { prefix:string, t
   );
 };
 
-export default PepperCarouselItemAddableForm;
+export default PepperItemAddableForm;
