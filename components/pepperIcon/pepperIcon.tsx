@@ -1,5 +1,5 @@
 import React from 'react';
-import AppLoading from 'expo-app-loading';
+import { Text } from 'react-native';
 import { useFonts } from 'expo-font';
 import { createIconSetFromIcoMoon } from '@expo/vector-icons';
 import { black } from '../../styles/common';
@@ -16,7 +16,8 @@ const PepperIcon = (iconProps: { name: string, size: number, color?: string, sty
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const [fontsLoaded] = useFonts({ IcoMoon: require('../../assets/fonts/icomoon.ttf') });
   if (!fontsLoaded) {
-    return <AppLoading />;
+    // TODO: put default icon
+    return <><Text>Loading...</Text></>;
   }
 
   return (

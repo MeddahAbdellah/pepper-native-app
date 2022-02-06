@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet, Text, View, Modal, TouchableOpacity 
 } from 'react-native';
@@ -11,20 +11,29 @@ import PepperImage, { imagesPepperSources, PepperImages } from '../pepperImage/p
 import PepperIcon from '../pepperIcon/pepperIcon';
 import PepperQrCodeScanner from './pepperQRCodeScanner';
 import { BarCodeScanningResult } from 'expo-camera';
+import { usePepperUser } from '../../hooks/user.hooks';
+import { fetchUser, addMatch } from '../../features/user/userActions';
+import { usePepperDispatch } from '../../hooks/store.hooks';
 
 enum QRcodeModalMode {
   Scan = 'scan',
   Display = 'display'
 }
-
+// TODO: prevent this component from showing if user is not logged in
 const PepperQRCodeModal = (modalProps: { show: boolean, onRequestClose: () => void }): JSX.Element => {
   const [mode, setMode] = useState(QRcodeModalMode.Display);
   const [qrCodeScanned, setQrCodeScanned] = useState(false);
-
+  const storeDispatch = usePepperDispatch();
+  // Fetch user on load
+  useEffect(() => { storeDispatch(fetchUser()); }, []);
+  const currentUser = usePepperUser();
+  
   const handleBarCodeScanned = (result: BarCodeScanningResult): void => {
     // Keeping console log until implmentation
     // eslint-disable-next-line no-console
     console.log(`Bar code with type ${result.type} and data ${result.data} has been scanned!`);
+
+    storeDispatch(addMatch({ matchId: Number(result.data) }));
     modalProps.onRequestClose();
     setQrCodeScanned(true);
   };
@@ -67,10 +76,13 @@ const PepperQRCodeModal = (modalProps: { show: boolean, onRequestClose: () => vo
                 <Text style={{fontSize: fontSizeBody, marginBottom: 3 * space_unit}}>Ask someone to scan me!</Text>
                 <View style={styles.qrCodeContainer}>
                   <QRCode 
-                    value="http://awesome.link.qr" 
+                    // TODO: add totp userID for security
+                    value={`${currentUser.user.id}`} 
                     size={styles.qrCodeContainer.height} 
                     logoSize={.3 * styles.qrCodeContainer.height}
-                    logo={imagesPepperSources.chiliPepperBlack}/>
+                    logo={imagesPepperSources.chiliPepperBlack}
+                    // eslint-disable-next-line no-console
+                    onError={() => console.log('TODO: handle QR code error')}/>
                 </View>
                 <TouchableOpacity onPress={() => setMode(QRcodeModalMode.Scan) }>
                   <Text style={{fontSize: fontSizeBody, marginTop: 5 * space_unit}}>Scan</Text>

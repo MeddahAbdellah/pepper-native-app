@@ -14,7 +14,7 @@ enum HttpMethod {
 }
 
 export default class ApiService {
-  private static _baseUrl: string = `http://localhost:7550/api`;
+  private static _baseUrl: string = `http://192.168.43.75:7550/api`;
   
 
   public static async get(resource: string, params?: any): Promise<any> {

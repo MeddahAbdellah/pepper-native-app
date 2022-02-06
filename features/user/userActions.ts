@@ -12,6 +12,11 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async() => {
   return { ...userInfo.user, matches, parties };
 });
 
+export const addMatch = createAsyncThunk('user/addMatch', async(updatePayload: { matchId: number }) => {
+  const { matches } = await ApiService.post('user/matches', updatePayload);
+  return matches;
+});
+
 export const updateMatch = createAsyncThunk('user/updateMatch', async(updatePayload: { matchId: number, status: MatchStatus }) => {
   const { matches } = await ApiService.put('user/matches', updatePayload);
   return matches;

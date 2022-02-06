@@ -1,17 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IUser, Gender, StoreStatus } from '../../models/types';
 import {
-  fetchUser, updateMatch, updateParty, deleteMatch 
+  IUser, Gender, StoreStatus, IUserStore 
+} from '../../models/types';
+import {
+  fetchUser, updateMatch, updateParty, deleteMatch, deleteParty, addMatch 
 } from './userActions';
-
-interface IUserStore {
-  user: IUser;
-  fetchStatus: StoreStatus;
-  updateMatchStatus: StoreStatus;
-  deleteMatchStatus: StoreStatus;
-  updatePartyStatus: StoreStatus;
-  error: any;
-}
 
 const emptyUser: IUser = {
   id: 0,
@@ -30,9 +23,11 @@ const emptyUser: IUser = {
 const initialState: IUserStore = {
   user: emptyUser,
   fetchStatus: StoreStatus.Idle,
+  addMatchStatus: StoreStatus.Idle,
   updateMatchStatus: StoreStatus.Idle,
   deleteMatchStatus: StoreStatus.Idle,
   updatePartyStatus: StoreStatus.Idle,
+  deletePartyStatus: StoreStatus.Idle,
   error: null,
 };
 
@@ -51,6 +46,17 @@ export const userSlice = createSlice({
       })
       .addCase(fetchUser.rejected, (state, action) => {
         state.fetchStatus = StoreStatus.Rejected;
+        state.error = action.error.message;
+      })
+      .addCase(addMatch.pending, (state) => {
+        state.addMatchStatus = StoreStatus.Pending;
+      })
+      .addCase(addMatch.fulfilled, (state, action) => {
+        state.addMatchStatus = StoreStatus.Fulfilled;
+        state.user.matches = action.payload;
+      })
+      .addCase(addMatch.rejected, (state, action) => {
+        state.addMatchStatus = StoreStatus.Rejected;
         state.error = action.error.message;
       })
       .addCase(updateMatch.pending, (state) => {
@@ -84,6 +90,17 @@ export const userSlice = createSlice({
       })
       .addCase(updateParty.rejected, (state, action) => {
         state.updatePartyStatus = StoreStatus.Rejected;
+        state.error = action.error.message;
+      })
+      .addCase(deleteParty.pending, (state) => {
+        state.deletePartyStatus = StoreStatus.Pending;
+      })
+      .addCase(deleteParty.fulfilled, (state, action) => {
+        state.deletePartyStatus = StoreStatus.Fulfilled;
+        state.user.parties = action.payload;
+      })
+      .addCase(deleteParty.rejected, (state, action) => {
+        state.deletePartyStatus = StoreStatus.Rejected;
         state.error = action.error.message;
       });
   }

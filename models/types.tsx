@@ -53,3 +53,14 @@ export enum StoreStatus {
   Fulfilled = 'fulfilled',
   Rejected = 'rejected',
 };
+
+export interface IUserStore {
+  user: IUser;
+  fetchStatus: StoreStatus;
+  addMatchStatus: StoreStatus;
+  updateMatchStatus: StoreStatus;
+  deleteMatchStatus: StoreStatus;
+  updatePartyStatus: StoreStatus;
+  deletePartyStatus: StoreStatus;
+  error: any;
+}
