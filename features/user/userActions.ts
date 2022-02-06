@@ -22,7 +22,12 @@ export const deleteMatch = createAsyncThunk('user/deleteMatch', async(deletePayl
   return matches;
 });
 
-export const updateParty = createAsyncThunk('user/updateParty', async() => {
+export const updateParty = createAsyncThunk('user/updateParty', async(updatePayload: { partyId: number }) => {
+  const { parties } = await ApiService.post('user/parties', updatePayload);
+  return parties;
+});
+
+export const deleteParty = createAsyncThunk('user/deleteParty', async() => {
   const response = await fakeFetch({ parties: fakeParties }, 2000);
   return response.parties;
 });

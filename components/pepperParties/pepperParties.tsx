@@ -14,6 +14,8 @@ import { usePepperDispatch } from '../../hooks/store.hooks';
 import { usePepperParties } from '../../hooks/parties.hooks';
 import { fetchParties } from '../../features/parties/partiesActions';
 import { PepperStackRoutes } from '../../models/routes';
+import { updateParty } from '../../features/user/userActions';
+import moment from 'moment';
 
 const PepperParties = (): JSX.Element => {
   // The push method is not present in the types while it does exist thats we we cast navigation as any
@@ -41,7 +43,7 @@ const PepperParties = (): JSX.Element => {
           <View style={styles.descriptionContainer}> 
             <Text style={{...styles.description, fontSize: fontSizeHeader}}>{party.title}</Text>
             <Text style={{...styles.description, fontSize: fontSizeSubHeader}}>{party.theme}</Text>
-            <Text style={{...styles.description, marginBottom: 2 * space_unit}}>{party.date}</Text>
+            <Text style={{...styles.description, marginBottom: 2 * space_unit}}>{moment(party.date).format("YYYY MM DD")}</Text>
             <View style={styles.tagsContainer}>
               <PepperTag iconName="pepper-dancing" text={attendeesTag(party)} firstGradientColor={pepper} secondGradientColor={pepper_2} style={styles.tags}/>
             </View>
@@ -67,7 +69,8 @@ const PepperParties = (): JSX.Element => {
               renderCard={StaticCard}
               // disabling linter for console for now until these are implemented
               // eslint-disable-next-line no-console
-              onSwiped={(cardIndex) => {console.log(cardIndex);}}
+              onSwipedRight={(cardIndex) => storeDispatch(updateParty({ partyId: currentParties.parties[cardIndex].id })) }
+              onSwipedTop={(cardIndex) => storeDispatch(updateParty({ partyId: currentParties.parties[cardIndex].id })) }
               // eslint-disable-next-line no-console
               onSwipedAll={() => {console.log('onSwipedAll');}}
               backgroundColor={white}

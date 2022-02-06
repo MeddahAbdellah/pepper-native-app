@@ -12,6 +12,7 @@ import { usePepperDispatch } from '../../hooks/store.hooks';
 import { fetchUser } from '../../features/user/userActions';
 import { PepperStackRoutes } from '../../models/routes';
 import { keyExtractor } from '../../helpers/flatListHelper';
+import moment from 'moment';
 
 const PepperUserParties = (): JSX.Element => {
   // The push method is not present in the types while it does exist thats we we cast navigation as any
@@ -26,10 +27,8 @@ const PepperUserParties = (): JSX.Element => {
       <Image source={party.imgs[0]} style={styles.partyImage}/>
       <View style={{ flex: 1 }}>
         <Text style={{ fontSize: fontSizeSubHeader }}>{party.title}</Text>
-        <View style={styles.themeAndDateContainer}>
-          <Text style={{ fontSize: fontSizeRegular }}>{party.theme}</Text>
-          <Text style={{ fontSize: fontSizeRegular }}>{party.date}</Text>
-        </View>
+        <Text style={{ fontSize: fontSizeRegular }}>{party.theme}</Text>
+        <Text style={{ fontSize: fontSizeRegular }}>{moment(party.date).format("YYYY MM DD")}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -60,11 +59,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     marginVertical: 1 * space_unit,
-  },
-  themeAndDateContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
   partyImage: {
     width: 10 * space_unit,

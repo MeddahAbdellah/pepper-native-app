@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fakeFetch, fakeParties } from "../../services/fake";
+import ApiService from "../../services/api";
 
 export const fetchParties = createAsyncThunk('user/fetchParties', async() => {
-  const response = await fakeFetch({ parties: fakeParties }, 2000);
-  return response.parties;
+  const { parties } = await ApiService.get('party');
+  return parties;
 });

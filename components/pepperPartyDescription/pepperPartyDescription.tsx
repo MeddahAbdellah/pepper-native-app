@@ -8,6 +8,7 @@ import {
 } from '../../styles/common';
 import PepperDescriptionCarousel from '../pepperDescriptionCarousel/pepperDescriptionCarousel';
 import PepperTag from '../pepperTags/pepperTags';
+import moment from 'moment';
 
 
 const PepperPartyDescription = (descriptionProps: { route: { params: IParty } }): JSX.Element => {
@@ -42,7 +43,7 @@ const PepperPartyDescription = (descriptionProps: { route: { params: IParty } })
         <View style={styles.detailsContainer}> 
           <Text style={{fontSize: fontSizeHeader}}>{party.title}</Text>
           <Text style={{fontSize: fontSizeSubHeader}}>{party.theme}</Text>
-          <Text style={styles.details}>{party.date}</Text>
+          <Text style={styles.details}>{moment(party.date).format("YYYY MM DD")}</Text>
           <Text style={styles.details}>{party.location}</Text>
           <View style={styles.tagsContainer}>
             <PepperTag iconName="pepper-dancing" text={attendeesTag(party)} firstGradientColor={pepper} secondGradientColor={pepper_2} style={styles.tags}/>
@@ -87,6 +88,7 @@ const styles = StyleSheet.create({
   details: {
     fontSize: fontSizeRegular,
     color: black,
+    marginTop: 1 * space_unit,
   },
   description: {
     fontSize: fontSizeRegular,
