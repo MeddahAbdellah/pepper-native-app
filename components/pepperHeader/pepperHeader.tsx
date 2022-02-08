@@ -22,11 +22,13 @@ export const PepperQrCode = (): JSX.Element => {
 
   // Show Qr code button only when user is logged in
   useEffect( () => {
+    let isMounted = true;
     (async() => {
       // TODO: break this loop
       const loggedIn = await LoginService.isLoggedin();
-      setIsLoggedIn(loggedIn);
+      if(isMounted) { setIsLoggedIn(loggedIn); }
     })();
+    return () => { isMounted = false; };
   }, [currentUser]);
   
   return (

@@ -8,10 +8,12 @@ const PepperQrCodeScanner = (scannerProp: { onBarCodeScanned: (result: BarCodeSc
   const [hasPermission, setHasPermission] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
     (async() => {
       const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === 'granted');
+      if(isMounted) { setHasPermission(status === 'granted'); }
     })();
+    return () => { isMounted = false; };
   }, []);
 
   if (hasPermission === null) {

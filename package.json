@@ -27,6 +27,7 @@
     "expo-linear-gradient": "~10.0.3",
     "expo-secure-store": "~11.0.3",
     "expo-status-bar": "~1.1.0",
+    "expo-updates": "~0.10.15",
     "moment": "^2.29.1",
     "nanoid": "^3.1.31",
     "node-fetch": "^2.6.7",

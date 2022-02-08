@@ -19,7 +19,6 @@ enum QRcodeModalMode {
   Scan = 'scan',
   Display = 'display'
 }
-// TODO: prevent this component from showing if user is not logged in
 const PepperQRCodeModal = (modalProps: { show: boolean, onRequestClose: () => void }): JSX.Element => {
   const [mode, setMode] = useState(QRcodeModalMode.Display);
   const [qrCodeScanned, setQrCodeScanned] = useState(false);

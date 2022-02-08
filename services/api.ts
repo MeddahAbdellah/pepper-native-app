@@ -3,6 +3,7 @@
 // any is a valid type as we want to be able to send any object
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import * as SecureStore from 'expo-secure-store';
+import { UtilService } from './util';
 
 export const secureStoryTokenKey = 'token';
 
@@ -19,7 +20,7 @@ export default class ApiService {
   public static async get(resource: string, params?: any): Promise<any> {
     const queryString = params ? Object.keys(params).map(key => `${key}=${params[key]}`).join('&') : '';
     const headers = await this.getHeaders();
-    return fetch(`${this._baseUrl}/${resource}?${queryString}`, { headers }).then((res) => res.json()).catch(this.errorHandler);
+    return fetch(`${this._baseUrl}/${resource}?${queryString}`, { headers }).then((res) => res.json()).catch(this._errorHandler);
   }
 
   public static async post(resource: string, body: any): Promise<any> {
@@ -42,12 +43,12 @@ export default class ApiService {
       headers,
       body: JSON.stringify(body),
     }
-    ).then((res) => res.json()).catch(this.errorHandler);
+    ).then((res) => res.json()).catch(this._errorHandler);
     return response;
   }
 
   private static async getHeaders(): Promise<any> {
-    const authorization = await SecureStore.getItemAsync(secureStoryTokenKey).catch((error) => { throw error; });;
+    const authorization = await SecureStore.getItemAsync(secureStoryTokenKey).catch(this._errorHandler);;
     const headers = {
       'Content-Type': 'application/json; charset=utf-8',
       ...( authorization ? { 'Authorization' : authorization } : {}),
@@ -56,14 +57,22 @@ export default class ApiService {
   }
 
   public static async setToken(token: string | null): Promise<void> {
-    await SecureStore.setItemAsync(secureStoryTokenKey, token || '').catch((error) => { throw error; });
+    if(!token)  {
+      await SecureStore.deleteItemAsync(secureStoryTokenKey);
+      return;
+    }
+    await SecureStore.setItemAsync(secureStoryTokenKey, token).catch(this._errorHandler);
   }
 
   public static async getToken(): Promise<string | null> {
-    return SecureStore.getItemAsync(secureStoryTokenKey).catch((error) => { throw error; });
+    const token = await SecureStore.getItemAsync(secureStoryTokenKey).catch(this._errorHandler);
+    return token || null;
   }
 
-  private static errorHandler(error: any): void {
-    console.error('HTTP Request error', error);
+  private static async _errorHandler(error: any): Promise<void> {
+    const oldError = await SecureStore.getItemAsync('error');
+    if (oldError) { return; }
+    await SecureStore.setItemAsync('error', error.toString());
+    UtilService.reloadApp();
   }
 }

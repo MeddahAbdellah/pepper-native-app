@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    height: '50%',
+    height: '40%',
     marginBottom: 4 * space_unit,
   },
   chipsContainer: {
