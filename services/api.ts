@@ -14,8 +14,7 @@ enum HttpMethod {
 }
 
 export default class ApiService {
-  private static _baseUrl: string = `http://192.168.43.75:7550/api`;
-  
+  private static _baseUrl: string = `http://localhost:7550/api`;
 
   public static async get(resource: string, params?: any): Promise<any> {
     const queryString = params ? Object.keys(params).map(key => `${key}=${params[key]}`).join('&') : '';
@@ -48,7 +47,7 @@ export default class ApiService {
   }
 
   private static async getHeaders(): Promise<any> {
-    const authorization = await SecureStore.getItemAsync(secureStoryTokenKey);
+    const authorization = await SecureStore.getItemAsync(secureStoryTokenKey).catch((error) => { throw error; });;
     const headers = {
       'Content-Type': 'application/json; charset=utf-8',
       ...( authorization ? { 'Authorization' : authorization } : {}),
@@ -56,12 +55,12 @@ export default class ApiService {
     return headers;
   }
 
-  public static async setToken(token: string): Promise<void> {
-    await SecureStore.setItemAsync(secureStoryTokenKey, token);
+  public static async setToken(token: string | null): Promise<void> {
+    await SecureStore.setItemAsync(secureStoryTokenKey, token || '').catch((error) => { throw error; });
   }
 
   public static async getToken(): Promise<string | null> {
-    return SecureStore.getItemAsync(secureStoryTokenKey);
+    return SecureStore.getItemAsync(secureStoryTokenKey).catch((error) => { throw error; });
   }
 
   private static errorHandler(error: any): void {

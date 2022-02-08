@@ -24,7 +24,7 @@ const PepperParties = (): JSX.Element => {
   const currentParties = usePepperParties();
   // Fetch user on load
   useEffect(() => { storeDispatch(fetchParties()); }, []);
-
+  // TODO: images loader
   const StaticCard = (party: IParty): JSX.Element => {
     const attendeesTag = (attendees: { people: number, minAge: number, maxAge: number }): string => `${attendees.people} people (${attendees.minAge}yo - ${attendees.maxAge}yo)`;
 

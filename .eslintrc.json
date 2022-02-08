@@ -140,7 +140,7 @@
     "import/no-restricted-paths": "off",
     "import/no-unresolved": "off",
 
-    "id-blacklist": ["error"], // TODO add more "data", "err", "e", "cb", "callback", "delete"
+    "id-blacklist": ["error", "data"], // TODO add more "data", "err", "e", "cb", "callback", "delete"
     "max-classes-per-file": "off", // can be changed
     "no-console": ["error", { "allow": ["warn", "error", "table"] }],
     "no-confusing-arrow": ["error", {"allowParens": true}],
