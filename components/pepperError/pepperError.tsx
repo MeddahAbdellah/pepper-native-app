@@ -3,7 +3,7 @@ import {
   View, Text, Button, StyleSheet 
 } from 'react-native';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
-import { space_unit, fontSizeRegular } from '../../styles/common';
+import { space_unit, fontSizeRegular, raven } from '../../styles/common';
 import * as SecureStore from 'expo-secure-store';
 import { UtilService } from '../../services/util';
 
@@ -36,5 +36,6 @@ const styles = StyleSheet.create({
     width: '80%',
     textAlign: 'center',
     fontSize: fontSizeRegular,
+    color: raven,
   },
 });

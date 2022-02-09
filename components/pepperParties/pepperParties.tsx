@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, View, Text, ImageBackground, TouchableOpacity, ActivityIndicator 
+  StyleSheet, View, Text, ImageBackground, TouchableOpacity, ActivityIndicator, Button 
 } from 'react-native';
 import {
-  space_unit, white, black, color, fontSizeHeader, fontSizeSubHeader, sun_2, sun, indigo_2, fire, fire_2, indigo_3, fontSizeRegular, pepper, pepper_2 
+  space_unit, white, black, color, fontSizeHeader, fontSizeSubHeader, sun_2, sun, indigo_2, fire, fire_2, indigo_3, fontSizeRegular, pepper, pepper_2, grey_1, raven
 } from '../../styles/common';
 import Swiper from 'react-native-deck-swiper';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -16,8 +16,10 @@ import { fetchParties } from '../../features/parties/partiesActions';
 import { PepperStackRoutes } from '../../models/routes';
 import { updateParty } from '../../features/user/userActions';
 import moment from 'moment';
+import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 
 const PepperParties = (): JSX.Element => {
+  const [hasSwipedAll, setHasSwipedAll] = useState(false);
   // The push method is not present in the types while it does exist thats we we cast navigation as any
   const navigation = useNavigation<any>();
   const storeDispatch = usePepperDispatch();
@@ -58,32 +60,42 @@ const PepperParties = (): JSX.Element => {
     );
   };
 
+  const StaticRefreshParties = (): JSX.Element => (<>
+    <PepperImage src={PepperImages.Work} style={styles.refreshPageImage}></PepperImage>
+    <Text style={styles.refreshPageDescription}> Wow! you checked all the parties!</Text>
+    <Text style={styles.refreshPageDescription}> We're working on creating more!</Text>
+    <Text style={{ ...styles.refreshPageDescription, marginBottom: 4 * space_unit }}> Maybe there is a cool party you missed!</Text>
+    <Button title="Refresh" onPress={ async() => { storeDispatch(fetchParties()).then(() => setHasSwipedAll(false)); }}/>
+  </>);
+
   return (
     <View style={styles.container}>
-      <View style={styles.cardContainer}>
-        {
-          currentParties.status !== StoreStatus.Fulfilled ?
-            <ActivityIndicator size="large" color={pepper} /> :
-            <Swiper
-              cards={currentParties.parties}
-              renderCard={StaticCard}
-              // disabling linter for console for now until these are implemented
-              // eslint-disable-next-line no-console
-              onSwipedRight={(cardIndex) => storeDispatch(updateParty({ partyId: currentParties.parties[cardIndex].id })) }
-              onSwipedTop={(cardIndex) => storeDispatch(updateParty({ partyId: currentParties.parties[cardIndex].id })) }
-              // eslint-disable-next-line no-console
-              onSwipedAll={() => {console.log('onSwipedAll');}}
-              backgroundColor={white}
-              cardVerticalMargin={0}
-              cardHorizontalMargin={0}
-              stackSeparation={0}
-              stackSize={3}
-              cardStyle={styles.swiper}>
-            </Swiper>
-        }
-      </View>
-    </View>
-  );
+      { hasSwipedAll ?
+        <StaticRefreshParties/> :
+        <View style={styles.cardContainer}>
+          {
+            currentParties.status !== StoreStatus.Fulfilled ?
+              <ActivityIndicator size="large" color={pepper} /> :
+              <Swiper
+                cards={currentParties.parties}
+                renderCard={StaticCard}
+                // disabling linter for console for now until these are implemented
+                // eslint-disable-next-line no-console
+                onSwipedRight={(cardIndex) => storeDispatch(updateParty({ partyId: currentParties.parties[cardIndex].id })) }
+                onSwipedTop={(cardIndex) => storeDispatch(updateParty({ partyId: currentParties.parties[cardIndex].id })) }
+                // eslint-disable-next-line no-console
+                onSwipedAll={() => { setHasSwipedAll(true); }}
+                backgroundColor={white}
+                cardVerticalMargin={0}
+                cardHorizontalMargin={0}
+                stackSeparation={0}
+                stackSize={3}
+                cardStyle={styles.swiper}>
+              </Swiper>
+          }
+        </View>
+      }
+    </View>);
 };
 
 export default PepperParties;
@@ -111,7 +123,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
+  refreshPageImage: {
+    height: '30%',
+    marginBottom: 4 * space_unit,
+  },
   image: {
+    backgroundColor: grey_1,
     position: 'absolute',
     width: '100%',
     height: '100%',
@@ -129,6 +146,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 2 * space_unit,
     justifyContent: 'flex-end',
+  },
+  refreshPageDescription: {
+    width: '80%',
+    textAlign: 'center',
+    fontSize: fontSizeRegular,
+    color: raven,
+    marginBottom: space_unit,
   },
   description: {
     fontSize: fontSizeRegular,

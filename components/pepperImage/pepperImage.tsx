@@ -22,6 +22,7 @@ export enum PepperImages {
   Weirdo = 'weirdo',
   Wellness = 'wellness',
   Woman = 'woman',
+  Work = 'work',
 }
 export const imagesPepperSources: { [keyof in PepperImages]: ImageSourcePropType } = {
   bar: require(`../../assets/bar.png`),
@@ -44,6 +45,7 @@ export const imagesPepperSources: { [keyof in PepperImages]: ImageSourcePropType
   weirdo: require(`../../assets/weirdo.png`),
   wellness: require(`../../assets/wellness.png`),
   woman: require(`../../assets/woman.png`),
+  work: require(`../../assets/work.png`),
 };
 
 const PepperImage = (props: { src: PepperImages, style?: any }): JSX.Element => (

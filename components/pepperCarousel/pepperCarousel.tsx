@@ -5,7 +5,7 @@ import {
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import {
-  white, space_unit, grey_2, indigo, pepper, fontSizeBody 
+  white, space_unit, grey_2, indigo, pepper, fontSizeBody, raven 
 } from '../../styles/common';
 import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { useNavigation } from '@react-navigation/native';
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     width: '80%',
     textAlign: 'center',
     fontSize: fontSizeBody,
+    color: raven,
   },
   dot: {
     width: 1.5 * space_unit,
