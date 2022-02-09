@@ -20,23 +20,23 @@ export interface IField {
   /**
 	 * Unique key to distinguish between the result of different inputs
 	 * */
-  id:string,
-  type:PepperInputType,
-  placeHolder?:string,
-  linesNumber?:number,
+  id: string,
+  type: PepperInputType,
+  placeHolder?: string,
+  linesNumber?: number,
 }
 
 export interface IPageAddableForm{
   prefix:string,
   typeForm: PepperFormType.AddableForm,
   addableForm: {
-    bottomImage:PepperImages,
-    productCategory : string,
+    bottomImage: PepperImages,
+    productCategory: string,
   }
 }
 
 export interface IPageImageForm{
-  prefix:string,
+  prefix: string,
   typeForm: PepperFormType.ImagesForm,
   imageForm: {
     image:PepperImages,
@@ -45,17 +45,17 @@ export interface IPageImageForm{
 
 
 export interface IPageQuestionForm{
-  prefix:string,
+  prefix: string,
   typeForm: PepperFormType.QuestionsForm,
   questionsForm: {
     questions: IField[],
-    topImage?:PepperImages,
+    topImage?: PepperImages,
   },
 }
 
 
 export interface IProduct {
-  name:string,
-  price:number
+  name: string,
+  price: number
 }
 

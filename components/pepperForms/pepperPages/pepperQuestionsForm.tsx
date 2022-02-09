@@ -1,7 +1,8 @@
 import {IField, PepperInputType} from "../Interface";
 import PepperImage, {PepperImages} from "../../pepperImage/pepperImage";
 import {ScrollView, View} from "react-native";
-import styles from "../formStyles";
+import {StyleSheet} from "react-native";
+import styles from '../formStyles';
 import React  from "react";
 import {indigo, pepper, space_unit} from "../../../styles/common";
 import PepperRoundButton from "../../pepperRoundButton/pepperRoundButton";
@@ -12,16 +13,16 @@ import PepperDefaultInput from "../pepperInputs/pepperDefaultInput";
 import Toast from "react-native-root-toast";
 
 
-const PepperItemQuestionsForm = (carouselProps: { item: { prefix:string,  questionsForm: {
+const PepperItemQuestionsForm = (questionsProps: { item: { prefix:string,  questionsForm: {
   questions: IField[],
-  topImage?:PepperImages,
+  topImage?: PepperImages,
 },
-}, nextFormTrigger:()=>void, concatResults: (data:{[key: string]:Date|number|string})=>void, }):JSX.Element => {
+}, nextFormTrigger:()=>void, onDataSubmitted: (data:{[key: string]:Date|number|string})=>void, }):JSX.Element => {
 
 
   let allInputs: {[key: string]: string|Date|number} = {};
 
-  carouselProps.item.questionsForm??{questions:Array<IField>()}.questions.forEach((question)=>{
+  questionsProps.item.questionsForm.questions.forEach((question)=>{
     switch (question.type){
       case PepperInputType.EventDate:
         allInputs[question.id] = toDayDate();
@@ -34,7 +35,7 @@ const PepperItemQuestionsForm = (carouselProps: { item: { prefix:string,  questi
 
   const checkAndSetErrors = ():boolean =>{
     let correct = true;
-    carouselProps.item.questionsForm?.questions.forEach((key)=>{
+    questionsProps.item.questionsForm.questions.forEach((key)=>{
       if((allInputs[key.id] === undefined) || (allInputs[key.id] === "")){
         correct = false;
       }
@@ -80,7 +81,7 @@ const PepperItemQuestionsForm = (carouselProps: { item: { prefix:string,  questi
     }
 
     {(props.input.type === PepperInputType.EventDate) ?
-      <PepperDateInput style={styles.fullLineField} initialDate={toDayDate()} onChange={(_e) => {
+      <PepperDateInput style={localStyles.fullLineField} initialDate={toDayDate()} onChange={(_e) => {
         allInputs[props.input.id] = _e;
       }}/> :
 	  null
@@ -89,24 +90,22 @@ const PepperItemQuestionsForm = (carouselProps: { item: { prefix:string,  questi
   </>;
   return (
     <>
-      <ScrollView style={styles.containerInput} keyboardShouldPersistTaps={"always"}>
+      <ScrollView style={localStyles.containerInput} keyboardShouldPersistTaps={"always"}>
 
-        {(carouselProps.item.questionsForm.topImage !== undefined)?
+        {(questionsProps.item.questionsForm.topImage !== undefined)?
           (<View
-            style={{
-              alignSelf:"flex-end",height:18*space_unit,backgroundColor:"#fff", width:"50%"
-            }}>
-            <PepperImage src={carouselProps.item.questionsForm.topImage} style={styles.bottomImage}/>
+            style={localStyles.imageHolder}>
+            <PepperImage src={questionsProps.item.questionsForm.topImage} style={{width:"100%", height:"100%"}}/>
           </View>) :
 		  null}
-        {(carouselProps.item.questionsForm.topImage === undefined)?
+        {(questionsProps.item.questionsForm.topImage === undefined)?
           (<View
-            style={{alignSelf:"flex-end",height:8*space_unit,backgroundColor:"#fff"}}>
+            style={localStyles.imageReplacement}>
           </View>) :
 		  null}
 
 
-        {StaticItemsQuestions(carouselProps.item.questionsForm.questions)}
+        {StaticItemsQuestions(questionsProps.item.questionsForm.questions)}
 
       </ScrollView>
       <PepperRoundButton
@@ -116,8 +115,8 @@ const PepperItemQuestionsForm = (carouselProps: { item: { prefix:string,  questi
         iconName="pepper-arrowRight"
         onPress={() => {
           if(checkAndSetErrors()) {
-            carouselProps.concatResults(allInputs);
-            carouselProps.nextFormTrigger();
+            questionsProps.onDataSubmitted(allInputs);
+            questionsProps.nextFormTrigger();
           } else {
             Toast.show('Please fill all fields', {
               duration: Toast.durations.LONG,
@@ -134,3 +133,45 @@ const PepperItemQuestionsForm = (carouselProps: { item: { prefix:string,  questi
 };
 
 export default PepperItemQuestionsForm;
+
+
+const localStyles = StyleSheet.create({
+
+  fullLineField: {
+    borderRadius:6,
+    borderWidth:1,
+    borderColor:"#CCCCCC",
+    height:8*space_unit,
+    padding:0.5*space_unit,
+    paddingStart:2*space_unit,
+    backgroundColor:"#FAFAFA",
+    fontSize:20,
+    fontWeight:"normal",
+    color:"#595959",
+    elevation:1,
+    // fontFamily:'Sora'
+    marginLeft:"5%",
+    width:"90%",
+    marginRight:"5%"
+  },
+
+  containerInput:{
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+
+  imageHolder:{
+    alignSelf:"flex-end",
+    height:18*space_unit,
+    backgroundColor:"#fff",
+    width:"50%"
+  },
+
+  imageReplacement:{
+    alignSelf:"flex-end",
+    height:8*space_unit,
+    backgroundColor:"#fff"
+  }
+
+
+});

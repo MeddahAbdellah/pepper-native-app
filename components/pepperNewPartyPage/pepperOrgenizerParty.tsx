@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import PepperForm from '../pepperForms/pepperForm';
 import {PepperImages} from '../pepperImage/pepperImage';
 import {PepperStackRoutes} from '../../models/routes';
-import {IProduct, PepperFormType, PepperInputType} from "../pepperForms/Interface";
+import { IProduct, PepperFormType, PepperInputType} from "../pepperForms/Interface";
 
 const PepperNewPartyForm = (): JSX.Element=>(
   <View style={styles.container}>
@@ -44,7 +44,7 @@ const PepperNewPartyForm = (): JSX.Element=>(
     ]}
     nextStep={PepperStackRoutes.Tutorial}
 
-    resultData={(_data:{ [key : string]:IProduct[]|{[key : string]:string|Date|number} })=>{
+    onDataSubmitted={(_data:{ [key : string]:IProduct[]|{[key : string]:string|Date|number} })=>{
       //  console.log(_data);
     }}
     />

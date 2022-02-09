@@ -1,9 +1,9 @@
 import PepperImage, {PepperImages} from "../../pepperImage/pepperImage";
-// import {strict as assert} from "assert";
 import {
   ScrollView, Text, TextInput, TouchableOpacity, View
 } from "react-native";
-import styles from "../formStyles";
+import {StyleSheet} from "react-native";
+import styles from '../formStyles';
 import {
   grey_2, indigo,pepper, space_unit
 } from "../../../styles/common";
@@ -17,7 +17,7 @@ const PepperItemAddableForm = (carouselProps: { item: { prefix:string, typeForm:
   bottomImage:PepperImages,
   productCategory : string,
 }
-}, nextFormTrigger:()=>void, concatResults:(data: any)=>void}):JSX.Element => {
+}, nextFormTrigger:()=>void, onDataSubmitted:(data: any)=>void}):JSX.Element => {
 
   useEffect(()=>{
     setProductList([]);
@@ -44,7 +44,7 @@ const PepperItemAddableForm = (carouselProps: { item: { prefix:string, typeForm:
   const capitalizeFirstLetter = (str:string):string => str.charAt(0).toUpperCase() + str.slice(1);
 
   const StaticMenuList = (items: IProduct[]):JSX.Element[] => items.map((item) => (
-    <View key={item.name} style={styles.menuDescriptionIn}>
+    <View key={item.name} style={localStyles.menuDescriptionIn}>
       <Text style={{fontSize:20,flex:40,color:"#6c6c6c"}}>{capitalizeFirstLetter(item.name)}</Text>
       <Text style={{fontSize:20,flex:10,color:"#6c6c6c"}}>{`${item.price}€`}</Text>
       <TouchableOpacity onPress={() =>{removeProduct(item.name);}}>
@@ -57,18 +57,18 @@ const PepperItemAddableForm = (carouselProps: { item: { prefix:string, typeForm:
   return (
     <>
 
-      <ScrollView style={styles.addableFormContainer}>
+      <ScrollView style={localStyles.addableFormContainer}>
 
         <View
           style={{height:18*space_unit, width:"100%",}}>
-          <PepperImage src={carouselProps.item.addableForm.bottomImage} style={styles.bottomImage}/>
+          <PepperImage src={carouselProps.item.addableForm.bottomImage} style={localStyles.bottomImage}/>
         </View>
 
         {StaticMenuList(productList)}
 
         <View style={{ flexDirection:'row',paddingTop:3*space_unit }}>
           <TextInput
-            style={styles.newItemAddName}
+            style={localStyles.newItemAddName}
             value={name}
             onChangeText={(text)=>{setName(text);}}
             autoCapitalize="characters"
@@ -77,7 +77,7 @@ const PepperItemAddableForm = (carouselProps: { item: { prefix:string, typeForm:
           />
 
           <TextInput
-            style={styles.newItemAddPrice}
+            style={localStyles.newItemAddPrice}
             value={price}
             placeholder={"€"}
             keyboardType="decimal-pad"
@@ -85,9 +85,7 @@ const PepperItemAddableForm = (carouselProps: { item: { prefix:string, typeForm:
             onChangeText={(text)=>{setPrice(text);}}
           />
         </View>
-        <View style={{
-          flexDirection:'row',paddingTop:3*space_unit,paddingLeft:"10%",paddingBottom:space_unit*10 
-        }}>
+        <View style={localStyles.inputHolder}>
 
           <TouchableOpacity onPress={() => {
             if(name === "") {
@@ -109,7 +107,7 @@ const PepperItemAddableForm = (carouselProps: { item: { prefix:string, typeForm:
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-              <Text style={styles.newItemButton}>Add {carouselProps.item.addableForm.productCategory}</Text>
+              <Text style={localStyles.newItemButton}>Add {carouselProps.item.addableForm.productCategory}</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -122,7 +120,7 @@ const PepperItemAddableForm = (carouselProps: { item: { prefix:string, typeForm:
         colors={[indigo, pepper]}
         iconName="pepper-arrowRight"
         onPress={() => {
-          carouselProps.concatResults(productList);
+          carouselProps.onDataSubmitted(productList);
           carouselProps.nextFormTrigger();
         }}
       />
@@ -131,3 +129,84 @@ const PepperItemAddableForm = (carouselProps: { item: { prefix:string, typeForm:
 };
 
 export default PepperItemAddableForm;
+
+
+const localStyles = StyleSheet.create({
+  addableFormContainer: {
+    flexGrow: 1,
+    padding:space_unit,
+    flexDirection:'column',
+  },
+
+  inputHolder:{
+    flexDirection:'row',
+    paddingTop:3*space_unit,
+    paddingLeft:"10%",
+    paddingBottom:space_unit*10 
+  },
+
+  bottomImage: {
+	  width:"100%",
+	  height:"100%",
+  },
+
+  bottomImageHolder: {
+	  position:"absolute",
+	  bottom: 0,
+	  left: 0,
+	  height:"25%",
+	  width:"80%",
+  },
+
+  newItemAddName: {
+	  borderRadius:6,
+	  borderWidth:1,
+	  borderColor:"#CCCCCC",
+	  height:8*space_unit,
+	  padding:0.5*space_unit,
+	  paddingStart:2*space_unit,
+	  backgroundColor:"#FAFAFA",
+	  fontSize:20,
+	  fontWeight:"normal",
+	  color:"#595959",
+	  elevation:1,
+	  marginLeft:"5%",
+	  width:"65%",
+	  marginRight:"6%"
+  },
+
+  newItemButton: {
+	  color: '#dd24ce',
+	  fontSize:18,
+	  fontWeight:"normal",
+	  textDecorationLine: 'underline'
+  },
+
+  newItemAddPrice: {
+	  borderRadius:6,
+	  borderWidth:1,
+	  borderColor:"#CCCCCC",
+	  height:8*space_unit,
+	  padding:0.5*space_unit,
+	  paddingStart:2*space_unit,
+	  backgroundColor:"#FAFAFA",
+	  fontSize:20,
+	  // fontWeight:"bold",
+	  color:"#595959",
+	  elevation:1,
+	  // fontFamily:'Sora'
+	  width:"20%",
+  },
+
+  menuDescriptionIn: {
+	  marginTop: 3 * space_unit,
+	  paddingHorizontal: 2*space_unit,
+	  paddingStart:4*space_unit,
+	  flex: 1,
+	  flexDirection: 'row',
+	  justifyContent: 'space-between',
+	  textAlign:"left",
+	  display:"flex",
+  },
+  
+});

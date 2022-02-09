@@ -1,5 +1,4 @@
 import PepperImage, {PepperImages} from "../../pepperImage/pepperImage";
-// import {strict as assert} from "assert";
 import { Text, View} from "react-native";
 import styles from "../formStyles";
 import React from "react";
@@ -11,7 +10,7 @@ const PepperItemImageForm = (carouselProps: { item: { prefix: string, imageForm:
 },
 
 
-},nextFormTrigger:()=>void, concatResults:(data:any)=>void }):JSX.Element => (
+},nextFormTrigger:()=>void, onDataSubmitted:(data:any)=>void }):JSX.Element => (
   <>
     <View style={{...styles.container}}>
       <PepperImage src={carouselProps.item.imageForm.image} style={styles.image}/>
