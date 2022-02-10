@@ -11,7 +11,7 @@ import { usePepperUser } from '../../hooks/user.hooks';
 import { usePepperDispatch } from '../../hooks/store.hooks';
 import { fetchUser } from '../../features/user/userActions';
 import { PepperStackRoutes } from '../../models/routes';
-import { keyExtractor } from '../../helpers/flatListHelper';
+import { keyExtractor } from '../../helpers/uiHelper';
 import moment from 'moment';
 
 const PepperUserParties = (): JSX.Element => {

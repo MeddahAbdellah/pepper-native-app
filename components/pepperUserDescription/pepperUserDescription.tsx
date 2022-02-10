@@ -9,6 +9,7 @@ import PepperDescriptionCarousel from '../pepperDescriptionCarousel/pepperDescri
 import { IUser } from '../../models/types';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import PepperTag from '../pepperTags/pepperTags';
+import { limitTextLength } from '../../helpers/uiHelper';
 
 const PepperUserDescription = (descriptionProps: { route: { params: IUser } }): JSX.Element => {
   const { width } = Dimensions.get("window");
@@ -44,11 +45,11 @@ const PepperUserDescription = (descriptionProps: { route: { params: IUser } }): 
           </View>
           <View style={styles.details}>
             <PepperImage src={PepperImages.OldPhone} style={styles.detailImages}></PepperImage>
-            <Text style={styles.detailText}>{user.address}</Text>
+            <Text style={styles.detailText}>{user.phoneNumber}</Text>
           </View>
           <View style={styles.details}>
             <PepperImage src={PepperImages.House} style={styles.detailImages}></PepperImage>
-            <Text style={styles.detailText}>{user.phoneNumber}</Text>
+            <Text style={styles.detailText}>{limitTextLength(user.address, 35)}</Text>
           </View>
           <View style={styles.tagsContainer}>{StaticInterestTags()}</View>
           <Text style={styles.description}>{user.description}</Text>

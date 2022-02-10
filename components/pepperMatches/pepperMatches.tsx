@@ -15,7 +15,7 @@ import { usePepperUser } from '../../hooks/user.hooks';
 import { usePepperDispatch } from '../../hooks/store.hooks';
 import { fetchUser, updateMatch, deleteMatch } from '../../features/user/userActions';
 import { PepperStackRoutes } from '../../models/routes';
-import { keyExtractor } from '../../helpers/flatListHelper';
+import { keyExtractor, limitTextLength } from '../../helpers/uiHelper';
 
 const PepperMatches = (): JSX.Element => {
   const navigation = useNavigation<any>();
@@ -86,9 +86,9 @@ const PepperMatches = (): JSX.Element => {
     <TouchableOpacity style={styles.matchItemContainer} onPress={() => checkMatch(match)}>
       <Image source={match.imgs[0]} style={styles.matchImage}/>
       <View style={{ flex: 1 }}>
-        <Text style={{ fontSize: fontSizeSubHeader }}>{match.name}</Text>
+        <Text style={{ fontSize: fontSizeSubHeader }}>{limitTextLength(match.name)}</Text>
         <View style={styles.themeAndDateContainer}>
-          <Text style={{ fontSize: fontSizeRegular }}>{match.job}</Text>
+          <Text style={{ fontSize: fontSizeRegular }}>{limitTextLength(match.job)}</Text>
           <StaticStatusTag status={match.status} matchName={match.name}></StaticStatusTag>
         </View>
       </View>
