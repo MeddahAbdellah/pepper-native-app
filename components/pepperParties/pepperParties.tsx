@@ -69,7 +69,7 @@ const PepperParties = (): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      { hasSwipedAll ?
+      { hasSwipedAll || !currentParties.parties.length ?
         <StaticRefreshParties/> :
         <View style={styles.cardContainer}>
           {

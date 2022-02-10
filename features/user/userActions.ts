@@ -1,7 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  fakeFetch, fakeParties 
-} from "../../services/fake";
 import ApiService from "../../services/api";
 import { MatchStatus } from "../../models/types";
 
@@ -32,7 +29,7 @@ export const updateParty = createAsyncThunk('user/updateParty', async(updatePayl
   return parties;
 });
 
-export const deleteParty = createAsyncThunk('user/deleteParty', async() => {
-  const response = await fakeFetch({ parties: fakeParties }, 2000);
-  return response.parties;
+export const deleteParty = createAsyncThunk('user/deleteParty', async(deletePayload: { partyId: number }) => {
+  const { parties } = await ApiService.delete('user/parties', deletePayload);
+  return parties;
 });

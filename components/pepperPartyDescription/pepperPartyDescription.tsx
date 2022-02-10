@@ -1,21 +1,29 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet, View, Text, ScrollView, Dimensions 
+  StyleSheet, View, Text, ScrollView, Dimensions, TouchableOpacity, Modal 
 } from 'react-native';
 import { IParty } from '../../models/types';
 import {
-  space_unit, white, fontSizeRegular, fontSizeHeader, fontSizeSubHeader, pepper, pepper_2, sun, sun_2, fire, fire_2, indigo_2, indigo_3, black 
+  space_unit, white, fontSizeRegular, fontSizeHeader, fontSizeSubHeader, pepper, pepper_2, sun, sun_2, fire, fire_2, indigo_2, indigo_3, black, fontSizeBody, sea, raven, grey_3 
 } from '../../styles/common';
 import PepperDescriptionCarousel from '../pepperDescriptionCarousel/pepperDescriptionCarousel';
 import PepperTag from '../pepperTags/pepperTags';
 import moment from 'moment';
+import { BlurView } from 'expo-blur';
+import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
+import { usePepperDispatch } from '../../hooks/store.hooks';
+import { deleteParty } from '../../features/user/userActions';
+import { useNavigation } from '@react-navigation/native';
 
 
 const PepperPartyDescription = (descriptionProps: { route: { params: IParty } }): JSX.Element => {
   // TODO: fix location, make it open google maps or something
   const { width } = Dimensions.get("window");
   const [carouselWidth, setCarouselWidth] = useState(width);
+  const [cancelPartyModalVisible, setCancelPartyModalVisible] = useState(false);
   const party = descriptionProps.route.params;
+  const storeDispatch = usePepperDispatch();
+  const navigation = useNavigation();
 
   const attendeesTag = (attendees: { people: number, minAge: number, maxAge: number }): string => `${attendees.people} people (${attendees.minAge}yo - ${attendees.maxAge}yo)`;
 
@@ -34,8 +42,39 @@ const PepperPartyDescription = (descriptionProps: { route: { params: IParty } })
     </View>
   ));
 
+  const StaticCancelPartyModal = (): JSX.Element => (
+    <Modal
+      animationType="fade"
+      visible={cancelPartyModalVisible}
+      transparent={true}
+      onRequestClose={() => setCancelPartyModalVisible(false)}>
+      <BlurView tint="dark" style={styles.modalContainer}>
+        <View style={styles.modalContent}>
+          <PepperImage src={PepperImages.Sleep} style={styles.modalImage}></PepperImage>
+          <Text style={styles.modalDescription}>
+            You don't want to go to this party anymore ?
+          </Text>
+          <View style={styles.modalButtonsContainer}>
+            <TouchableOpacity onPress={() => setCancelPartyModalVisible(false) }>
+              <Text style={{ fontSize: fontSizeBody, color: sea }}>No</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+              storeDispatch(deleteParty({ partyId: party.id })).then(() => {
+                setCancelPartyModalVisible(false);
+                navigation.goBack();
+              });
+            } }>
+              <Text style={{ fontSize: fontSizeBody, color: grey_3 }}>Yes</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </BlurView>
+    </Modal>
+  );
+
   return (
     <ScrollView style={{backgroundColor: white}}>
+      <StaticCancelPartyModal/>
       <View style={styles.container} onLayout={onLayout}>
         <View style={styles.imageCarouselContainer}>
           <PepperDescriptionCarousel carouselWidth={carouselWidth} carouselImgs={party.imgs}/>
@@ -59,6 +98,12 @@ const PepperPartyDescription = (descriptionProps: { route: { params: IParty } })
           <Text style={styles.menuTitle}>Foods</Text>
           {StaticMenuList(party.foods)}
         </View>
+
+        <TouchableOpacity style={styles.cancelButton}
+          onPress={() => setCancelPartyModalVisible(true)}
+        >
+          <Text style={styles.cancelButtonText}>Cancel</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -87,12 +132,12 @@ const styles = StyleSheet.create({
   },
   details: {
     fontSize: fontSizeRegular,
-    color: black,
+    color: raven,
     marginTop: 1 * space_unit,
   },
   description: {
     fontSize: fontSizeRegular,
-    color: black,
+    color: raven,
     width: '100%',
     marginVertical: 2 * space_unit,
   },
@@ -110,6 +155,7 @@ const styles = StyleSheet.create({
     fontSize: fontSizeSubHeader,
     marginTop: space_unit,
     marginBottom: .5 * space_unit,
+    color: raven,
   },
   menuDescription: {
     marginTop: .5 * space_unit,
@@ -117,5 +163,54 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    color: raven,
+  },
+  cancelButton: {
+    flexDirection: 'row',
+    backgroundColor: pepper,
+    marginTop: 6 * space_unit,
+    borderRadius: 1 * space_unit,
+  },
+  cancelButtonText: {
+    width: '80%',
+    textAlign: 'center',
+    color: white,
+    paddingVertical: 2 * space_unit,
+  },
+  modalContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    width: '95%',
+    backgroundColor: white,
+    borderRadius: 2 * space_unit,
+    padding: 3 * space_unit,
+    alignItems: 'center',
+    textAlign: 'center',
+    shadowColor: black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalImage: {
+    height: 22 * space_unit,
+  },
+  modalButtonsContainer: {
+    marginTop: 2 * space_unit,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  modalDescription: {
+    textAlign: 'center',
+    marginVertical: 2 * space_unit,
+    fontSize: fontSizeRegular,
   }
 });
