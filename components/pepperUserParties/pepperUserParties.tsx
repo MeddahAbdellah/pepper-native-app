@@ -38,7 +38,7 @@ const PepperUserParties = (): JSX.Element => {
     <View style={styles.goSwipeContainer}>
       <PepperImage src={PepperImages.Meet} style={styles.goSwipeImage}></PepperImage>
       <Text style={styles.goSwipeDescription}> Dare to go to a pepper party! </Text>
-      <Text style={styles.goSwipeDescription}> Nobody finds love in there pyjamas </Text>
+      <Text style={styles.goSwipeDescription}> Nobody finds love in their pyjamas </Text>
     </View>
   );
 
