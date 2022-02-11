@@ -4,4 +4,5 @@ export enum PepperStackRoutes {
   Main = 'main',
   PartyDescription = 'partyDescription',
   UserDescription = 'userDescription',
+  OrganizerForms = 'OrganizerForms',
 }

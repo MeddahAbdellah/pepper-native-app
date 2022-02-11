@@ -11,7 +11,7 @@ const PepperIntro = (): JSX.Element => (
       { image: PepperImages.Bar, text: 'Pepper Parties are the best place to meet awesome guys/girls' },
       { image: PepperImages.Bracelets, text: 'You will all have the same bracelets so talking to strangers will be much easier' },
     ]}
-    nextStep={PepperStackRoutes.Tutorial}
+    nextStep={PepperStackRoutes.OrganizerForms}
     ></PepperCarousel>
   </View>
 );
