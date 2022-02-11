@@ -126,6 +126,13 @@ const styles = StyleSheet.create({
     height: '30%',
     marginBottom: 4 * space_unit,
   },
+  refreshPageDescription: {
+    width: '80%',
+    textAlign: 'center',
+    fontSize: fontSizeRegular,
+    color: raven,
+    marginBottom: space_unit,
+  },
   image: {
     backgroundColor: grey_1,
     position: 'absolute',
@@ -145,13 +152,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 2 * space_unit,
     justifyContent: 'flex-end',
-  },
-  refreshPageDescription: {
-    width: '80%',
-    textAlign: 'center',
-    fontSize: fontSizeRegular,
-    color: raven,
-    marginBottom: space_unit,
   },
   description: {
     fontSize: fontSizeRegular,

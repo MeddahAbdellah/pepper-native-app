@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, View, Image, FlatList, TouchableOpacity, Modal
 } from 'react-native';
 import {
-  space_unit, fontSizeSubHeader, white, fontSizeRegular, heaven, pepper_2, sea, grey_3, black, fontSizeBody, pepper 
+  space_unit, fontSizeSubHeader, white, fontSizeRegular, heaven, pepper_2, sea, grey_3, black, fontSizeBody, pepper, raven 
 } from '../../styles/common';
 import {
   IMatch, MatchStatus, Gender, StoreStatus 
@@ -161,18 +161,37 @@ const PepperMatches = (): JSX.Element => {
     </Modal>
   );
 
+  const StaticGoGetMatches = (): JSX.Element => (
+    currentUser.user.gender === Gender.MAN ? 
+      (<View style={styles.goGetMatchContainer}>
+        <PepperImage src={PepperImages.Sir} style={styles.goGetMatchImage}></PepperImage>
+        <Text style={styles.goGetMatchDescription}> Remember! </Text>
+        <Text style={styles.goGetMatchDescription}> Nobody likes mean people </Text>
+        <Text style={styles.goGetMatchDescription}> Always be gentleman </Text>
+      </View>) :
+      (<View style={styles.goGetMatchContainer}>
+        <PepperImage src={PepperImages.Madam} style={styles.goGetMatchImage}></PepperImage>
+        <Text style={styles.goGetMatchDescription}> Remember! </Text>
+        <Text style={styles.goGetMatchDescription}> Nobody likes mean people </Text>
+        <Text style={styles.goGetMatchDescription}> Always be lady </Text>
+      </View>)
+  );
+
   return (
     <View style={styles.listContainer}>
       <StaticPatienceModal/>
       <StaticCheckMatchModal/>
       <StaticCupidModal/>
-      <FlatList
-        data={currentUser.user.matches}
-        refreshing={currentUser.fetchStatus !== StoreStatus.Fulfilled}
-        onRefresh={() => storeDispatch(fetchUser())}
-        renderItem={(item) => matchItem(item.item) }
-        keyExtractor={(item) => keyExtractor(item.id) }
-      />
+      { !currentUser.user.matches.length ?
+        <StaticGoGetMatches/> : 
+        <FlatList
+          data={currentUser.user.matches}
+          refreshing={currentUser.fetchStatus !== StoreStatus.Fulfilled}
+          onRefresh={() => storeDispatch(fetchUser())}
+          renderItem={(item) => matchItem(item.item) }
+          keyExtractor={(item) => keyExtractor(item.id) }
+        />
+      }
     </View>
   );
 };
@@ -231,5 +250,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 2 * space_unit,
     fontSize: fontSizeRegular,
-  }
+  },
+  goGetMatchContainer: {
+    flex: 1,
+    backgroundColor: white,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  goGetMatchImage: {
+    height: '30%',
+    marginBottom: 4 * space_unit,
+  },
+  goGetMatchDescription: {
+    width: '80%',
+    textAlign: 'center',
+    fontSize: fontSizeRegular,
+    color: raven,
+    marginBottom: space_unit,
+  },
 });

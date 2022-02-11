@@ -15,7 +15,7 @@ const renderIcon = (route: { name: string }, color: string): JSX.Element => <Pep
 const PepperMain = (): JSX.Element => {
   // TODO: redirect on not logged in
   const [isLoggedin, setIsLoggedin] = useState(false);
-  LoginService.login('+33657601438', '000000').then(() => setIsLoggedin(true));
+  LoginService.login('+33647801337', '000000').then(() => setIsLoggedin(true));
 
   return !isLoggedin ?
     (<ActivityIndicator size="large" color={pepper} />) :
