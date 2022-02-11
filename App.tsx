@@ -12,6 +12,7 @@ import { PepperStackRoutes } from './models/routes';
 import PepperTutorial from './components/pepperTutorial/pepperTutorial';
 import PepperError from './components/pepperError/pepperError';
 import * as SecureStore from 'expo-secure-store';
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 const ReactStack = createNativeStackNavigator();
 
@@ -35,7 +36,7 @@ const PepperApp = (): JSX.Element => {
       {    
         !isErrorFree ?
           (<PepperError/>) :
-          (
+          (<RootSiblingParent>
             <Provider store={store}>
               <NavigationContainer>
                 <ReactStack.Navigator 
@@ -55,6 +56,7 @@ const PepperApp = (): JSX.Element => {
                 </ReactStack.Navigator>
               </NavigationContainer>
             </Provider>
+          </RootSiblingParent>
           )
       }
     </>

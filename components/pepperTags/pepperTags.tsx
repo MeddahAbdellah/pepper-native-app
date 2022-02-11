@@ -9,13 +9,14 @@ interface ITagProps {
   firstGradientColor: string,
   secondGradientColor: string,
   style?: any,
+  tagStyle?: any,
 }
 
 const PepperTag = (tagProps: ITagProps): JSX.Element => (
   <View style={{...styles.container , ...tagProps.style}}>
     <LinearGradient 
       colors={[tagProps.firstGradientColor, tagProps.secondGradientColor]}
-      style={styles.content}
+      style={{...styles.content, ...tagProps.tagStyle}}
       start={{
         x: 0,
         y: .5,

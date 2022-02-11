@@ -14,7 +14,10 @@ import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import { usePepperDispatch } from '../../hooks/store.hooks';
 import { deleteParty } from '../../features/user/userActions';
 import { useNavigation } from '@react-navigation/native';
-
+import { createOpenLink } from 'react-native-open-maps';
+import { limitTextLength } from '../../helpers/uiHelper';
+import * as Clipboard from 'expo-clipboard';
+import Toast from 'react-native-root-toast';
 
 const PepperPartyDescription = (descriptionProps: { route: { params: { party: IParty , canCancel: boolean } }}): JSX.Element => {
   // TODO: fix location, make it open google maps or something
@@ -83,8 +86,24 @@ const PepperPartyDescription = (descriptionProps: { route: { params: { party: IP
         <View style={styles.detailsContainer}> 
           <Text style={{fontSize: fontSizeHeader}}>{party.title}</Text>
           <Text style={{fontSize: fontSizeSubHeader}}>{party.theme}</Text>
-          <Text style={styles.details}>{moment(party.date).format("YYYY MM DD")}</Text>
-          <Text style={styles.details}>{party.location}</Text>
+          <Text style={styles.details}>{moment(party.date).format("YYYY MMM DD")}</Text>
+          <TouchableOpacity
+            onPress={createOpenLink({ query: party.location })}
+            onLongPress={() => {
+              Clipboard.setString(party.location);
+              Toast.show('Copied to clipboard', {
+                duration: Toast.durations.LONG,
+                hideOnPress: true,
+                opacity: .9,
+              });
+            }}>
+            <PepperTag
+              iconName="pepper-location" text={limitTextLength(party.location, 30)}
+              firstGradientColor={sea}
+              secondGradientColor={indigo_3}
+              style={styles.tags}
+              tagStyle={styles.locationTag}/>
+          </TouchableOpacity>
           <View style={styles.tagsContainer}>
             <PepperTag iconName="pepper-dancing" text={attendeesTag(party)} firstGradientColor={pepper} secondGradientColor={pepper_2} style={styles.tags}/>
           </View>
@@ -135,9 +154,9 @@ const styles = StyleSheet.create({
     marginTop: space_unit,
   },
   details: {
-    fontSize: fontSizeRegular,
+    fontSize: fontSizeBody,
     color: raven,
-    marginTop: 1 * space_unit,
+    marginVertical: 2 * space_unit,
   },
   description: {
     fontSize: fontSizeRegular,
@@ -150,6 +169,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
     marginTop: 1 * space_unit,
+  },
+  locationTag: {
+    paddingVertical: 1.5 * space_unit,
+    borderRadius: 1 * space_unit,
   },
   tags: {
     marginBottom: .3 * space_unit,
