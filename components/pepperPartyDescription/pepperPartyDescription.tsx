@@ -16,12 +16,13 @@ import { deleteParty } from '../../features/user/userActions';
 import { useNavigation } from '@react-navigation/native';
 
 
-const PepperPartyDescription = (descriptionProps: { route: { params: IParty } }): JSX.Element => {
+const PepperPartyDescription = (descriptionProps: { route: { params: { party: IParty , canCancel: boolean } }}): JSX.Element => {
   // TODO: fix location, make it open google maps or something
   const { width } = Dimensions.get("window");
   const [carouselWidth, setCarouselWidth] = useState(width);
   const [cancelPartyModalVisible, setCancelPartyModalVisible] = useState(false);
-  const party = descriptionProps.route.params;
+  const { party } = descriptionProps.route.params;
+  const { canCancel } = descriptionProps.route.params;
   const storeDispatch = usePepperDispatch();
   const navigation = useNavigation();
 
@@ -98,12 +99,15 @@ const PepperPartyDescription = (descriptionProps: { route: { params: IParty } })
           <Text style={styles.menuTitle}>Foods</Text>
           {StaticMenuList(party.foods)}
         </View>
-
-        <TouchableOpacity style={styles.cancelButton}
-          onPress={() => setCancelPartyModalVisible(true)}
-        >
-          <Text style={styles.cancelButtonText}>Cancel</Text>
-        </TouchableOpacity>
+        {
+          canCancel ? (
+            <TouchableOpacity style={styles.cancelButton}
+              onPress={() => setCancelPartyModalVisible(true)}>
+              <Text style={styles.cancelButtonText}>Cancel</Text>
+            </TouchableOpacity>
+          ) : 
+            null
+        }
       </View>
     </ScrollView>
   );

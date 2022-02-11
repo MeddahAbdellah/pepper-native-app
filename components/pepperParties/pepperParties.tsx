@@ -37,7 +37,7 @@ const PepperParties = (): JSX.Element => {
       <ImageBackground source={party.imgs[0]} style={styles.image} resizeMode="cover">
         <TouchableOpacity
           style={{...styles.imageMask, zIndex: styles.imageMask.zIndex + 1}}
-          onPress={() => navigation.push(PepperStackRoutes.PartyDescription, party)}
+          onPress={() => navigation.push(PepperStackRoutes.PartyDescription, { party , canCancel: false })}
         >
         </TouchableOpacity>
         <LinearGradient colors={['transparent', color(black, .7), black]} style={styles.imageMask}>
