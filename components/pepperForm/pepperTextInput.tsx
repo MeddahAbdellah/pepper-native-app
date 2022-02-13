@@ -15,8 +15,9 @@ interface ITextInput extends Omit<TextInputSchema, 'type'> {
 export const PepperTextInput = (textInputProps: ITextInput): JSX.Element => {
   const [error, setError] = useState('');
   const onChange = (value: string): void => {
-    setError(textInputProps.validator(value));
-    textInputProps.onSubmit({value, valid: _.isEmpty(error)});
+    const validation = textInputProps.validator(value);
+    setError(validation);
+    textInputProps.onSubmit({value, valid: _.isEmpty(validation)});
   };
 
   return (

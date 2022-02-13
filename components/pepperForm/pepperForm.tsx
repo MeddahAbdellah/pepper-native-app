@@ -17,9 +17,9 @@ export const PepperForm = (formProps: { schema: FormSchema, onSubmit: (result: a
   const schemaToErrorsArray = _.reduce(formProps.schema, (res, _value, key) => ({ ...res, [key]: true }), {});
   const [formErrors, setFormErrors] = useState(schemaToErrorsArray);
 
-  const onFieldSubmit = (key: string, results: { value: string, valid: boolean }): void => {
-    const newFormOutput = {...formOutput, [key]: results.value };
-    const newFormErrors = {...formErrors, [key]: !results.valid };
+  const onFieldSubmit = (key: string, result: { value: string, valid: boolean }): void => {
+    const newFormOutput = {...formOutput, [key]: result.value };
+    const newFormErrors = {...formErrors, [key]: !result.valid };
     setFormOutput(newFormOutput);
     setFormErrors(newFormErrors);
   };

@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 2 * space_unit,
+    marginVertical: 2 * space_unit,
     padding: 3 * space_unit,
     backgroundColor: color(grey_1, .4),
     borderColor: grey_2,
