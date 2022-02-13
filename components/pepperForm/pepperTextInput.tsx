@@ -9,14 +9,14 @@ import _ from 'lodash';
 import { TextInputSchema } from './formTypes';
 
 interface ITextInput extends Omit<TextInputSchema, 'type'> {
-  onSubmit: (value: string) => void,
+  onSubmit: (result: {value: string, valid: boolean}) => void,
 };
 
 export const PepperTextInput = (textInputProps: ITextInput): JSX.Element => {
   const [error, setError] = useState('');
   const onChange = (value: string): void => {
     setError(textInputProps.validator(value));
-    textInputProps.onSubmit(value);
+    textInputProps.onSubmit({value, valid: _.isEmpty(error)});
   };
 
   return (

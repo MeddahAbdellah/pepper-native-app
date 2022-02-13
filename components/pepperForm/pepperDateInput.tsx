@@ -12,7 +12,7 @@ import _ from 'lodash';
 import { BlurView } from 'expo-blur';
 
 interface IDateInput extends Omit<DateInputSchema, 'type'> {
-  onSubmit: (value: string) => void,
+  onSubmit: (result: {value: string, valid: boolean}) => void,
 };
 
 
@@ -27,8 +27,9 @@ export const PepperDateInput = (dateInputProps: IDateInput): JSX.Element => {
   const onDateChange = (newDate: Moment): void => {
     setIsModalVisible(false);
     setDate(newDate);
-    setError(dateInputProps.validator(newDate));
-    dateInputProps.onSubmit(newDate.toString());
+    const validation = dateInputProps.validator(newDate);
+    setError(validation);
+    dateInputProps.onSubmit({ value: newDate.toString(), valid: _.isEmpty(validation) });
   };
 
   const StaticDatePickerModal = (): JSX.Element => (

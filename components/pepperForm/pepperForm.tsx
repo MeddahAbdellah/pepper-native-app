@@ -12,18 +12,15 @@ import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { PepperDateInput } from './pepperDateInput';
 
 export const PepperForm = (formProps: { schema: FormSchema, onSubmit: (result: any) => void }): JSX.Element => {
-  const [canSubmit, setCanSubmit] = useState(false);
   const [formOutput, setFormOutput] = useState({});
+  const schemaToErrorsArray = _.reduce(formProps.schema, (res, _value, key) => ({ ...res, [key]: true }), {});
+  const [formErrors, setFormErrors] = useState(schemaToErrorsArray);
 
-  const onFieldSubmit = (key: string, value: string): void => {
-    setCanSubmit(false);
-    const newFormOutput = {...formOutput, [key]: value };
+  const onFieldSubmit = (key: string, results: { value: string, valid: boolean }): void => {
+    const newFormOutput = {...formOutput, [key]: results.value };
+    const newFormErrors = {...formErrors, [key]: !results.valid };
     setFormOutput(newFormOutput);
-    const allKeysExist = _.isEqual(_.keys(newFormOutput).sort(), _.keys(formProps.schema).sort());
-    const areKeysFilled = _.isEmpty(_.filter(_.values(newFormOutput), (value) => _.isEmpty(value) ));
-    if (allKeysExist && areKeysFilled) {
-      setCanSubmit(true);
-    }
+    setFormErrors(newFormErrors);
   };
 
   return (
@@ -34,19 +31,19 @@ export const PepperForm = (formProps: { schema: FormSchema, onSubmit: (result: a
             case FormType.Text: 
               return <PepperTextInput 
                 key={key}
-                onSubmit={(fieldOutput: string) => { onFieldSubmit(key, fieldOutput); }}
+                onSubmit={(fieldOutput: { value: string, valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
                 {..._.omit(schemaValue as TextInputSchema, 'type')}/>;
             case FormType.Date: 
               return <PepperDateInput 
                 key={key}
-                onSubmit={(fieldOutput: string) => { onFieldSubmit(key, fieldOutput); }}
+                onSubmit={(fieldOutput: { value: string, valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
                 {..._.omit(schemaValue as DateInputSchema, 'type')}/>;
             default: 
               return <Text>Missing field</Text>;
           }
         })
       }
-      { canSubmit ? 
+      { _.isEmpty(_.filter(formErrors)) ? 
         <PepperRoundButton
           size={7 * space_unit}
           style={styles.nextButton}
