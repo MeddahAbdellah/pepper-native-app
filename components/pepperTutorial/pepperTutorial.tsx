@@ -5,7 +5,7 @@ import { PepperImages } from '../pepperImage/pepperImage';
 import { PepperStackRoutes } from '../../models/routes';
 import { usePepperUser } from '../../hooks/user.hooks';
 import { Gender } from '../../models/types';
-import { pepper, indigo } from '../../styles/common';
+import { pepper, indigo, white } from '../../styles/common';
 
 const PepperTutorial = (): JSX.Element => {
   const currentUser = usePepperUser();
@@ -33,7 +33,7 @@ export default PepperTutorial;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: white,
     alignItems: 'center',
     justifyContent: 'center',
   },

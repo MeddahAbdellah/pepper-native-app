@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import PepperCarousel from '../pepperCarousel/pepperCarousel';
 import { PepperImages } from '../pepperImage/pepperImage';
 import { PepperStackRoutes } from '../../models/routes';
+import { white } from '../../styles/common';
 
 const PepperIntro = (): JSX.Element => (
   <View style={styles.container}>
@@ -21,7 +22,7 @@ export default PepperIntro;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: white,
     alignItems: 'center',
     justifyContent: 'center',
   },

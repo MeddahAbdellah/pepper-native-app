@@ -13,6 +13,7 @@ import PepperTutorial from './components/pepperTutorial/pepperTutorial';
 import PepperError from './components/pepperError/pepperError';
 import * as SecureStore from 'expo-secure-store';
 import { RootSiblingParent } from 'react-native-root-siblings';
+import PepperUserSubscription from './components/pepperUserSubscription/pepperUserSubscription';
 
 const ReactStack = createNativeStackNavigator();
 
@@ -48,6 +49,7 @@ const PepperApp = (): JSX.Element => {
                     headerLeft: () => (<PepperMenu />),
                     headerRight: () => (<PepperQrCode />),
                   }}>
+                  <ReactStack.Screen name={PepperStackRoutes.Subscription} component={PepperUserSubscription} />
                   <ReactStack.Screen name={PepperStackRoutes.Intro} component={PepperIntro} />
                   <ReactStack.Screen name={PepperStackRoutes.Tutorial} component={PepperTutorial} />
                   <ReactStack.Screen name={PepperStackRoutes.Main} component={PepperMain} />

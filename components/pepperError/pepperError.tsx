@@ -3,7 +3,9 @@ import {
   View, Text, Button, StyleSheet 
 } from 'react-native';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
-import { space_unit, fontSizeRegular, raven } from '../../styles/common';
+import {
+  space_unit, fontSizeRegular, raven, white 
+} from '../../styles/common';
 import * as SecureStore from 'expo-secure-store';
 import { UtilService } from '../../services/util';
 
@@ -24,7 +26,7 @@ export default PepperError;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: white,
     alignItems: 'center',
     justifyContent: 'center',
   },

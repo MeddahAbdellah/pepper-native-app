@@ -20,6 +20,7 @@ export const sun_2 = '#F09819';
 export const heaven = '#00C566';
 export const sea = '#006DD1';
 
+export const fontSizeTypo = 12;
 export const fontSizeRegular = 14;
 export const fontSizeBody = 16;
 export const fontSizeSubHeader = 22;
