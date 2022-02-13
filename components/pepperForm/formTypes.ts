@@ -4,6 +4,7 @@ export enum FormType {
   Text = 'text',
   Textarea = 'textarea',
   Date = 'date',
+  Gender = 'gender',
 }
 
 export interface TextInputSchema {
@@ -20,7 +21,10 @@ export interface DateInputSchema {
   validator: (value: Moment) => string,
 }
 
-export interface FormSchema {
-  [key: string]: TextInputSchema | DateInputSchema,
+export interface GenderInputSchema {
+  type: FormType.Gender
+}
 
+export interface FormSchema {
+  [key: string]: TextInputSchema | DateInputSchema | GenderInputSchema,
 }

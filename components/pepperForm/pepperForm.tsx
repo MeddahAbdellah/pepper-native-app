@@ -10,6 +10,7 @@ import {
 import { PepperTextInput } from './pepperTextInput';
 import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { PepperDateInput } from './pepperDateInput';
+import { PepperGenderInput } from './pepperGenderInput';
 
 export const PepperForm = (formProps: { schema: FormSchema, onSubmit: (result: any) => void }): JSX.Element => {
   const [formOutput, setFormOutput] = useState({});
@@ -38,6 +39,10 @@ export const PepperForm = (formProps: { schema: FormSchema, onSubmit: (result: a
                 key={key}
                 onSubmit={(fieldOutput: { value: string, valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
                 {..._.omit(schemaValue as DateInputSchema, 'type')}/>;
+            case FormType.Gender: 
+              return <PepperGenderInput 
+                key={key}
+                onSubmit={(fieldOutput: { value: string, valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}/>;
             default: 
               return <Text>Missing field</Text>;
           }

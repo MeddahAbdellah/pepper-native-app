@@ -13,6 +13,9 @@ const PepperUserSubscription = (): JSX.Element => {
       max: 20,
       validator: (value: string) => { if (_.isEmpty(value)) { return 'You must fill your name'; } return ''; },
     },
+    gender: {
+      type: FormType.Gender,
+    },
     address: {
       type: FormType.Text,
       label: 'Address',
