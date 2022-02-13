@@ -2,13 +2,12 @@ import { Moment } from "moment";
 
 export enum FormType {
   Text = 'text',
-  Textarea = 'textarea',
   Date = 'date',
   Gender = 'gender',
 }
 
 export interface TextInputSchema {
-  type: FormType.Text | FormType.Textarea,
+  type: FormType.Text,
   label: string,
   max: number,
   multiline?: boolean,

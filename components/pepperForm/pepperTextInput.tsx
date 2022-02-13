@@ -7,6 +7,7 @@ import {
 } from '../../styles/common';
 import _ from 'lodash';
 import { TextInputSchema } from './formTypes';
+import { sanitizeText } from '../../helpers/uiHelper';
 
 interface ITextInput extends Omit<TextInputSchema, 'type'> {
   onSubmit: (result: {value: string, valid: boolean}) => void,
@@ -15,9 +16,10 @@ interface ITextInput extends Omit<TextInputSchema, 'type'> {
 export const PepperTextInput = (textInputProps: ITextInput): JSX.Element => {
   const [error, setError] = useState('');
   const onChange = (value: string): void => {
-    const validation = textInputProps.validator(value);
+    const sanitizedValue = sanitizeText(value);
+    const validation = textInputProps.validator(sanitizedValue);
     setError(validation);
-    textInputProps.onSubmit({value, valid: _.isEmpty(validation)});
+    textInputProps.onSubmit({ value: sanitizedValue, valid: _.isEmpty(validation) });
   };
 
   return (
@@ -27,7 +29,11 @@ export const PepperTextInput = (textInputProps: ITextInput): JSX.Element => {
         multiline={textInputProps.multiline ?? false}
         maxLength={textInputProps.max}
         onChangeText={onChange}
-        style={{...styles.textInput, ...(_.isEmpty(error) ? {} : { shadowColor: pepper_2 })}}
+        style={{
+          ...styles.textInput,
+          ...(_.isEmpty(error) ? {} : { shadowColor: pepper_2 }),
+          ...(textInputProps.multiline ? { paddingTop: 2 * space_unit, maxHeight: 30 * space_unit } : {}),
+        }}
         editable
       />
       <Text style={styles.error}>{error}</Text>

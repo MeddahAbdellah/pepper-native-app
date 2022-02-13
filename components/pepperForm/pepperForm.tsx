@@ -12,7 +12,7 @@ import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { PepperDateInput } from './pepperDateInput';
 import { PepperGenderInput } from './pepperGenderInput';
 
-export const PepperForm = (formProps: { schema: FormSchema, onSubmit: (result: any) => void }): JSX.Element => {
+export const PepperForm = (formProps: { schema: FormSchema, onSubmit: (result: { [key: string]: string }) => void }): JSX.Element => {
   const [formOutput, setFormOutput] = useState({});
   const schemaToErrorsArray = _.reduce(formProps.schema, (res, _value, key) => ({ ...res, [key]: true }), {});
   const [formErrors, setFormErrors] = useState(schemaToErrorsArray);
