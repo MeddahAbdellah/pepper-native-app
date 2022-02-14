@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import _ from 'lodash';
-import { FormSchema } from './formTypes';
+import { FormSchema, MenuItem } from './formTypes';
 import { PepperForm } from './pepperForm';
 
-export const PepperFormStepper = (formProps: { schemas: FormSchema[], onDone: (result: { [key: string]: string }) => void }): JSX.Element => {
+export const PepperFormStepper = (formProps: {
+  schemas: FormSchema[],
+  onDone: (result: { [key: string]: string | MenuItem[] }) => void,
+}): JSX.Element => {
   const [stepperFormOutput, setStepperFormOutput] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const onFormSubmit = (output: { [key: string]: string }): void => {
+  const onFormSubmit = (output: { [key: string]: string | MenuItem[] }): void => {
     const newStepperOutput = { ...stepperFormOutput, ...output };
     setStepperFormOutput(newStepperOutput);
     if (currentIndex < (formProps.schemas.length - 1)) {

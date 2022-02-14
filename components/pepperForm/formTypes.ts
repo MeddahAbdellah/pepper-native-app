@@ -4,6 +4,7 @@ export enum FormType {
   Text = 'text',
   Date = 'date',
   Gender = 'gender',
+  Menu = 'menu',
 }
 
 export interface TextInputSchema {
@@ -24,6 +25,18 @@ export interface GenderInputSchema {
   type: FormType.Gender
 }
 
+export interface MenuItem {
+  name: string,
+  price: string,
+}
+
+export interface MenuInputSchema {
+  type: FormType.Menu,
+  label: string,
+  nameValidator: (name: string) => string,
+  priceValidator: (price: string) => string,
+}
+
 export interface FormSchema {
-  [key: string]: TextInputSchema | DateInputSchema | GenderInputSchema,
+  [key: string]: TextInputSchema | DateInputSchema | GenderInputSchema | MenuInputSchema,
 }

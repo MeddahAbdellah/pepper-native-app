@@ -5,19 +5,20 @@ import {
   space_unit, white, indigo, pepper,
 } from '../../styles/common';
 import {
-  FormSchema, FormType, TextInputSchema, DateInputSchema,
+  FormSchema, FormType, TextInputSchema, DateInputSchema, MenuItem, MenuInputSchema,
 } from './formTypes';
 import { PepperTextInput } from './pepperTextInput';
 import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { PepperDateInput } from './pepperDateInput';
 import { PepperGenderInput } from './pepperGenderInput';
+import { PepperMenuInput } from './pepperMenuInput';
 
-export const PepperForm = (formProps: { schema: FormSchema, onSubmit: (result: { [key: string]: string }) => void }): JSX.Element => {
+export const PepperForm = (formProps: { schema: FormSchema, onSubmit: (result: { [key: string]: string | MenuItem[] }) => void }): JSX.Element => {
   const [formOutput, setFormOutput] = useState({});
   const schemaToErrorsArray = _.reduce(formProps.schema, (res, _value, key) => ({ ...res, [key]: true }), {});
   const [formErrors, setFormErrors] = useState(schemaToErrorsArray);
 
-  const onFieldSubmit = (key: string, result: { value: string, valid: boolean }): void => {
+  const onFieldSubmit = (key: string, result: { value: string | MenuItem[], valid: boolean }): void => {
     const newFormOutput = { ...formOutput, [key]: result.value };
     const newFormErrors = { ...formErrors, [key]: !result.valid };
     setFormOutput(newFormOutput);
@@ -43,6 +44,11 @@ export const PepperForm = (formProps: { schema: FormSchema, onSubmit: (result: {
               return <PepperGenderInput
                 key={key}
                 onSubmit={(fieldOutput: { value: string, valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}/>;
+            case FormType.Menu:
+              return <PepperMenuInput
+                key={key}
+                onSubmit={(fieldOutput: { value: MenuItem[], valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
+                {..._.omit(schemaValue as MenuInputSchema, 'type')}/>;
             default:
               return <Text>Missing field</Text>;
           }

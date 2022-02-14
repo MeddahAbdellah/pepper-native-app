@@ -7,6 +7,13 @@ export const nameValidator = (text: string): string => {
   return '';
 };
 
+export const numberValidator = (text: string): string => {
+  if (!(/^[0-9]+$/.test(text))) {
+    return 'A number is required';
+  }
+  return '';
+};
+
 export const legalAgeValidator = (date: Moment): string => {
   const eighteenYearsAgo = moment().subtract(18, 'years').startOf('year');
   const validDateOfBirth = moment(date).isSameOrBefore(eighteenYearsAgo);

@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { white } from '../../styles/common';
 import { FormSchema, FormType } from '../pepperForm';
 import {
-  legalAgeValidator, nameValidator, cityValidator, alwaysValidValidator,
+  legalAgeValidator, nameValidator, cityValidator, alwaysValidValidator, numberValidator,
 } from '../pepperForm/validators';
 import { PepperFormStepper } from '../pepperForm/pepperFormStepper';
 import { useNavigation } from '@react-navigation/native';
@@ -11,6 +11,14 @@ import { PepperStackRoutes } from '../../models/routes';
 
 const PepperUserSubscription = (): JSX.Element => {
   const schemas: FormSchema[] = [
+    {
+      foods: {
+        type: FormType.Menu,
+        label: 'Food',
+        nameValidator,
+        priceValidator: numberValidator,
+      }
+    },
     {
       name: {
         type: FormType.Text,
