@@ -15,7 +15,7 @@ export const PepperGenderInput = (genderInputProps: IGenderInput): JSX.Element =
   const [gender, setGender] = useState<Gender | null>(null);
   const onChange = (value: Gender): void => {
     setGender(value);
-    genderInputProps.onSubmit({value, valid: true });
+    genderInputProps.onSubmit({ value, valid: true });
   };
 
   return (
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   genderContainer: {
     width: '48%',
-    overflow: "hidden",
+    overflow: 'hidden',
     aspectRatio: 1,
     justifyContent: 'center',
     alignItems: 'center',

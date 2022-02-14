@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 // any is a valid type as we want to be able to send any object
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+// TODO: any is a valid type as we want to be able to send any object
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as SecureStore from 'expo-secure-store';
 import { UtilService } from './util';
 
@@ -51,13 +53,13 @@ export default class ApiService {
     const authorization = await SecureStore.getItemAsync(secureStoryTokenKey).catch(this._errorHandler);;
     const headers = {
       'Content-Type': 'application/json; charset=utf-8',
-      ...( authorization ? { 'Authorization' : authorization } : {}),
+      ...( authorization ? { 'Authorization': authorization } : {}),
     };
     return headers;
   }
 
   public static async setToken(token: string | null): Promise<void> {
-    if(!token)  {
+    if (!token) {
       await SecureStore.deleteItemAsync(secureStoryTokenKey);
       return;
     }

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import _ from 'lodash';
 import {
-  space_unit, white, indigo, pepper 
+  space_unit, white, indigo, pepper,
 } from '../../styles/common';
 import {
-  FormSchema, FormType, TextInputSchema, DateInputSchema 
+  FormSchema, FormType, TextInputSchema, DateInputSchema,
 } from './formTypes';
 import { PepperTextInput } from './pepperTextInput';
 import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
@@ -18,8 +18,8 @@ export const PepperForm = (formProps: { schema: FormSchema, onSubmit: (result: {
   const [formErrors, setFormErrors] = useState(schemaToErrorsArray);
 
   const onFieldSubmit = (key: string, result: { value: string, valid: boolean }): void => {
-    const newFormOutput = {...formOutput, [key]: result.value };
-    const newFormErrors = {...formErrors, [key]: !result.valid };
+    const newFormOutput = { ...formOutput, [key]: result.value };
+    const newFormErrors = { ...formErrors, [key]: !result.valid };
     setFormOutput(newFormOutput);
     setFormErrors(newFormErrors);
   };
@@ -28,27 +28,27 @@ export const PepperForm = (formProps: { schema: FormSchema, onSubmit: (result: {
     <View style={styles.container}>
       {
         _.map(formProps.schema, (schemaValue, key) => {
-          switch(schemaValue.type) {
-            case FormType.Text: 
-              return <PepperTextInput 
+          switch (schemaValue.type) {
+            case FormType.Text:
+              return <PepperTextInput
                 key={key}
                 onSubmit={(fieldOutput: { value: string, valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
                 {..._.omit(schemaValue as TextInputSchema, 'type')}/>;
-            case FormType.Date: 
-              return <PepperDateInput 
+            case FormType.Date:
+              return <PepperDateInput
                 key={key}
                 onSubmit={(fieldOutput: { value: string, valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
                 {..._.omit(schemaValue as DateInputSchema, 'type')}/>;
-            case FormType.Gender: 
-              return <PepperGenderInput 
+            case FormType.Gender:
+              return <PepperGenderInput
                 key={key}
                 onSubmit={(fieldOutput: { value: string, valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}/>;
-            default: 
+            default:
               return <Text>Missing field</Text>;
           }
         })
       }
-      { _.isEmpty(_.filter(formErrors)) ? 
+      { _.isEmpty(_.filter(formErrors)) ?
         <PepperRoundButton
           size={7 * space_unit}
           style={styles.nextButton}
@@ -61,11 +61,11 @@ export const PepperForm = (formProps: { schema: FormSchema, onSubmit: (result: {
     </View>
   );
 };
-  
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
+    width: '100%',
     padding: 4 * space_unit,
     backgroundColor: white,
     justifyContent: 'flex-start',

@@ -8,15 +8,17 @@ interface ITagProps {
   iconName?: string, text: string,
   firstGradientColor: string,
   secondGradientColor: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   style?: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   tagStyle?: any,
 }
 
 const PepperTag = (tagProps: ITagProps): JSX.Element => (
-  <View style={{...styles.container , ...tagProps.style}}>
-    <LinearGradient 
+  <View style={{ ...styles.container, ...tagProps.style }}>
+    <LinearGradient
       colors={[tagProps.firstGradientColor, tagProps.secondGradientColor]}
-      style={{...styles.content, ...tagProps.tagStyle}}
+      style={{ ...styles.content, ...tagProps.tagStyle }}
       start={{
         x: 0,
         y: .5,
@@ -26,7 +28,10 @@ const PepperTag = (tagProps: ITagProps): JSX.Element => (
         y: .5,
       }}>
       <Text style={styles.tagDescription}>{tagProps.text}</Text>
-      { tagProps.iconName ? <PepperIcon name={tagProps.iconName} color={white} size={3.5 * space_unit} style={{ marginLeft: 1 * space_unit }} /> : null }
+      { tagProps.iconName ?
+        <PepperIcon name={tagProps.iconName} color={white} size={3.5 * space_unit} style={{ marginLeft: 1 * space_unit }} /> :
+        null
+      }
     </LinearGradient>
   </View>
 

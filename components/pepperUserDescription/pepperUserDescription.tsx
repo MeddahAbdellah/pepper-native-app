@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet, Text, View, ScrollView, Dimensions 
+  StyleSheet, Text, View, ScrollView, Dimensions,
 } from 'react-native';
 import {
-  white, space_unit, fontSizeRegular, black, fontSizeHeader, sun, sun_2, fire, fire_2, indigo_2, indigo, grey_3, color 
+  white, space_unit, fontSizeRegular, black, fontSizeHeader, sun, sun_2, fire, fire_2, indigo_2, indigo, grey_3, color,
 } from '../../styles/common';
 import PepperDescriptionCarousel from '../pepperDescriptionCarousel/pepperDescriptionCarousel';
 import { IUser } from '../../models/types';
@@ -12,7 +12,7 @@ import PepperTag from '../pepperTags/pepperTags';
 import { limitTextLength } from '../../helpers/uiHelper';
 
 const PepperUserDescription = (descriptionProps: { route: { params: IUser } }): JSX.Element => {
-  const { width } = Dimensions.get("window");
+  const { width } = Dimensions.get('window');
   const [carouselWidth, setCarouselWidth] = useState(width);
   const user = descriptionProps.route.params;
 
@@ -23,7 +23,7 @@ const PepperUserDescription = (descriptionProps: { route: { params: IUser } }): 
 
   const StaticInterestTags = (): JSX.Element[] => user.interests.map((interest, index) => {
     const tagColors = [[sun, sun_2], [fire, fire_2], [indigo, indigo_2]];
-    return (<PepperTag 
+    return (<PepperTag
       key={interest}
       text={interest}
       firstGradientColor={tagColors[index][0]}
@@ -32,13 +32,13 @@ const PepperUserDescription = (descriptionProps: { route: { params: IUser } }): 
   });
 
   return (
-    <ScrollView style={{backgroundColor: white}}>
+    <ScrollView style={{ backgroundColor: white }}>
       <View style={styles.container} onLayout={onLayout}>
         <View style={styles.imageCarouselContainer}>
           <PepperDescriptionCarousel carouselWidth={carouselWidth} carouselImgs={user.imgs}/>
         </View>
-        <View style={styles.detailsContainer}> 
-          <Text style={{fontSize: fontSizeHeader}}>{user.name}</Text>
+        <View style={styles.detailsContainer}>
+          <Text style={{ fontSize: fontSizeHeader }}>{user.name}</Text>
           <View style={styles.details}>
             <PepperImage src={PepperImages.Briefcase} style={styles.detailImages}></PepperImage>
             <Text style={styles.detailText}>{user.job}</Text>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     paddingBottom: 4 * space_unit,
   },
   imageCarouselContainer: {
-    borderRadius:  .75 * space_unit,
+    borderRadius: .75 * space_unit,
     overflow: 'hidden',
     backgroundColor: white,
     height: 57 * space_unit,

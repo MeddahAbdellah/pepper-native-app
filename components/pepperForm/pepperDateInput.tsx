@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet, View, Modal, TextInput, Text, TouchableOpacity, Dimensions 
+  StyleSheet, View, Modal, TextInput, Text, TouchableOpacity, Dimensions,
 } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment, { Moment } from 'moment';
 import {
-  fontSizeRegular, space_unit, grey_3, pepper_2, color, grey_1, grey_2, white, black, pepper, fontSizeTypo, raven, indigo_3, indigo_2, fontSizeBody 
+  fontSizeRegular, space_unit, grey_3, pepper_2, color, grey_1, grey_2, white, black, pepper, fontSizeTypo, raven, indigo_3, indigo_2, fontSizeBody,
 } from '../../styles/common';
 import { DateInputSchema } from './formTypes';
 import _ from 'lodash';
@@ -18,12 +18,12 @@ interface IDateInput extends Omit<DateInputSchema, 'type'> {
 
 export const PepperDateInput = (dateInputProps: IDateInput): JSX.Element => {
   // date picker width must be calculated dynamically as the library does not adapt to parent width
-  const datePickerWidth = (Dimensions.get("window").width * .95) - (2 * space_unit);
+  const datePickerWidth = (Dimensions.get('window').width * .95) - (2 * space_unit);
 
-  const [isModalVisible, setIsModalVisible ] = useState(false);
-  const [date, setDate ] = useState(moment());
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [date, setDate] = useState(moment());
   const [error, setError] = useState('');
-   
+
   const onDateChange = (newDate: Moment): void => {
     setIsModalVisible(false);
     setDate(newDate);
@@ -64,7 +64,7 @@ export const PepperDateInput = (dateInputProps: IDateInput): JSX.Element => {
       }}>
         <TextInput
           value={date.format('YYYY MMM DD')}
-          style={{...styles.dateInput, ...(_.isEmpty(error) ? {} : { shadowColor: pepper_2 })}}
+          style={{ ...styles.dateInput, ...(_.isEmpty(error) ? {} : { shadowColor: pepper_2 }) }}
           pointerEvents="none"
         />
       </TouchableOpacity>

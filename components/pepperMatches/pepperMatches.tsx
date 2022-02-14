@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet, Text, View, Image, FlatList, TouchableOpacity, Modal
+  StyleSheet, Text, View, Image, FlatList, TouchableOpacity, Modal,
 } from 'react-native';
 import {
-  space_unit, fontSizeSubHeader, white, fontSizeRegular, heaven, pepper_2, sea, grey_3, black, fontSizeBody, pepper, raven 
+  space_unit, fontSizeSubHeader, white, fontSizeRegular, heaven, pepper_2, sea, grey_3, black, fontSizeBody, pepper, raven,
 } from '../../styles/common';
 import {
-  IMatch, MatchStatus, Gender, StoreStatus 
+  IMatch, MatchStatus, Gender, StoreStatus,
 } from '../../models/types';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import { BlurView } from 'expo-blur';
@@ -18,6 +18,8 @@ import { PepperStackRoutes } from '../../models/routes';
 import { keyExtractor, limitTextLength } from '../../helpers/uiHelper';
 
 const PepperMatches = (): JSX.Element => {
+  // TODO: Library does not provide a type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const navigation = useNavigation<any>();
   const [patienceModalVisible, setPatienceModalVisible] = useState<boolean>(false);
   const [cupidModalVisible, setCupidModalVisible] = useState<boolean>(false);
@@ -29,20 +31,20 @@ const PepperMatches = (): JSX.Element => {
   const currentUser = usePepperUser();
 
   const StaticStatusTag = (statusProps: { status: MatchStatus, matchName: string }): JSX.Element => {
-    switch(statusProps.status) {
+    switch (statusProps.status) {
       case MatchStatus.ACCEPTED:
         return <Text style={{ fontSize: fontSizeRegular, color: heaven }}>Check her profile</Text>;
       case MatchStatus.WAITING:
         return <Text style={{ fontSize: fontSizeRegular, color: grey_3 }}>Didn't check you yet</Text>;
       case MatchStatus.UNCHECKED:
         return <Text style={{ fontSize: fontSizeRegular, color: sea }}>How was {statusProps.matchName}?</Text>;
-      default: 
-        return <Text style={{ fontSize: fontSizeRegular, color: pepper_2 }}>Too Early to text her!</Text>; 
+      default:
+        return <Text style={{ fontSize: fontSizeRegular, color: pepper_2 }}>Too Early to text her!</Text>;
     }
   };
 
   const checkMatch = (match: IMatch): void => {
-    switch(match.status) {
+    switch (match.status) {
       case MatchStatus.ACCEPTED:
         navigation.push(PepperStackRoutes.UserDescription, match);
         break;
@@ -54,7 +56,7 @@ const PepperMatches = (): JSX.Element => {
         setSelectedMatch(match);
         setEvaluationModalVisible(true);
         break;
-      default: 
+      default:
         break;
     }
   };
@@ -108,7 +110,7 @@ const PepperMatches = (): JSX.Element => {
             In life there is time for work and time for love. {selectedMatch?.gender === Gender.MAN ? 'He' : 'She' }’s probably busy working!
           </Text>
           <TouchableOpacity onPress={() => closeModalAndResetSelection() }>
-            <Text style={{fontSize: fontSizeBody}}>Okey</Text>
+            <Text style={{ fontSize: fontSizeBody }}>Okey</Text>
           </TouchableOpacity>
         </View>
       </BlurView>
@@ -124,11 +126,11 @@ const PepperMatches = (): JSX.Element => {
       <BlurView tint="dark" style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <PepperImage src={PepperImages.Cupid} style={styles.modalImage}></PepperImage>
-          <Text style={{...styles.modalDescription, color: pepper}}>
+          <Text style={{ ...styles.modalDescription, color: pepper }}>
             Cupid has heard your wish!
           </Text>
           <TouchableOpacity onPress={() => setCupidModalVisible(false) }>
-            <Text style={{fontSize: fontSizeBody}}>Okey</Text>
+            <Text style={{ fontSize: fontSizeBody }}>Okey</Text>
           </TouchableOpacity>
         </View>
       </BlurView>
@@ -148,13 +150,15 @@ const PepperMatches = (): JSX.Element => {
             How was {selectedMatch?.name} ?
           </Text>
           <TouchableOpacity onPress={() => (selectedMatch ? validateMatch(selectedMatch.id) : null) }>
-            <Text style={{ marginVertical: 1.5 * space_unit, color: heaven, fontSize: fontSizeBody}}>Awesome I wanna see {selectedMatch?.gender === Gender.MAN ? 'him' : 'her' } again!</Text>
+            <Text style={{ marginVertical: 1.5 * space_unit, color: heaven, fontSize: fontSizeBody }}>
+              Awesome I wanna see {selectedMatch?.gender === Gender.MAN ? 'him' : 'her' } again!
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => (selectedMatch ? discardMatch(selectedMatch.id) : null) }>
-            <Text style={{ marginVertical: 1.5 * space_unit, color: sea, fontSize: fontSizeBody}}>Cool but not my type</Text>
+            <Text style={{ marginVertical: 1.5 * space_unit, color: sea, fontSize: fontSizeBody }}>Cool but not my type</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => (selectedMatch ? reportMatch(selectedMatch.id) : null) }>
-            <Text style={{ marginVertical: 1.5 * space_unit, color: pepper_2, fontSize: fontSizeBody}}>Don’t wanna meet again</Text>
+            <Text style={{ marginVertical: 1.5 * space_unit, color: pepper_2, fontSize: fontSizeBody }}>Don’t wanna meet again</Text>
           </TouchableOpacity>
         </View>
       </BlurView>
@@ -162,7 +166,7 @@ const PepperMatches = (): JSX.Element => {
   );
 
   const StaticGoGetMatches = (): JSX.Element => (
-    currentUser.user.gender === Gender.MAN ? 
+    currentUser.user.gender === Gender.MAN ?
       (<View style={styles.goGetMatchContainer}>
         <PepperImage src={PepperImages.Sir} style={styles.goGetMatchImage}></PepperImage>
         <Text style={styles.goGetMatchDescription}> Remember! </Text>
@@ -183,7 +187,7 @@ const PepperMatches = (): JSX.Element => {
       <StaticCheckMatchModal/>
       <StaticCupidModal/>
       { !currentUser.user.matches.length ?
-        <StaticGoGetMatches/> : 
+        <StaticGoGetMatches/> :
         <FlatList
           data={currentUser.user.matches}
           refreshing={currentUser.fetchStatus !== StoreStatus.Fulfilled}

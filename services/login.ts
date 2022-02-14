@@ -1,12 +1,13 @@
-import ApiService from "./api";
+import ApiService from './api';
 import * as SecureStore from 'expo-secure-store';
-import { UtilService } from "./util";
+import { UtilService } from './util';
 
 export default class LoginService {
   public static async login(phoneNumber: string, code: string): Promise<void> {
     const { token } = await ApiService.post('user/login', { phoneNumber, code });
     await ApiService.setToken(token).catch(this._errorHandler);
   }
+
   public static async logout(): Promise<void> {
     await ApiService.setToken(null).catch(this._errorHandler);
   }
@@ -15,7 +16,9 @@ export default class LoginService {
     const currentToken = await ApiService.getToken().catch(this._errorHandler);
     return !!currentToken;
   }
-  
+
+  // any is a valid type as we want to be able to send any object
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private static async _errorHandler(error: any): Promise<void> {
     const oldError = await SecureStore.getItemAsync('error');
     if (oldError) { return; }

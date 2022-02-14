@@ -10,6 +10,8 @@ const ReactIcon = createIconSetFromIcoMoon(
   'icomoon.ttf'
 );
 
+// This is a generic component and style can actually be anything
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const PepperIcon = (iconProps: { name: string, size: number, color?: string, style?: any}): JSX.Element => {
   // Load the icon font before using it
   // disabling lint as it is an external library that forces the use of PascalCase

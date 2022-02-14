@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { white } from '../../styles/common';
 import { FormSchema, FormType } from '../pepperForm';
 import {
-  legalAgeValidator, nameValidator, cityValidator, alwaysValidValidator 
+  legalAgeValidator, nameValidator, cityValidator, alwaysValidValidator,
 } from '../pepperForm/validators';
 import { PepperFormStepper } from '../pepperForm/pepperFormStepper';
 import { useNavigation } from '@react-navigation/native';
@@ -50,6 +50,8 @@ const PepperUserSubscription = (): JSX.Element => {
     }
   ];
 
+  // TODO: Library does not provide a type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const navigation = useNavigation<any>();
 
   return (

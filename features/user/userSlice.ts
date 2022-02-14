@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  IUser, Gender, StoreStatus, IUserStore 
+  IUser, Gender, StoreStatus, IUserStore,
 } from '../../models/types';
 import {
-  fetchUser, updateMatch, updateParty, deleteMatch, deleteParty, addMatch 
+  fetchUser, updateMatch, updateParty, deleteMatch, deleteParty, addMatch,
 } from './userActions';
 
 const emptyUser: IUser = {

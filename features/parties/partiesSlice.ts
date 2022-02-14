@@ -1,3 +1,5 @@
+// TODO: Library does not provide a type
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from '@reduxjs/toolkit';
 import { IParty, StoreStatus } from '../../models/types';
 import { fetchParties } from './partiesActions';
@@ -19,7 +21,7 @@ const rejectedReducer = (state: any, action: any): void => {
 };
 
 export const partiesSlice = createSlice({
-  name: 'parties' ,
+  name: 'parties',
   initialState,
   reducers: {},
   extraReducers: (builder) => {

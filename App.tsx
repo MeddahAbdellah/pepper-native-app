@@ -34,17 +34,17 @@ const PepperApp = (): JSX.Element => {
 
   return (
     <>
-      {    
+      {
         !isErrorFree ?
           (<PepperError/>) :
           (<RootSiblingParent>
             <Provider store={store}>
               <NavigationContainer>
-                <ReactStack.Navigator 
-                  screenOptions={{ 
+                <ReactStack.Navigator
+                  screenOptions={{
                     headerShadowVisible: false,
                     gestureEnabled: false,
-                    headerBackVisible:false,
+                    headerBackVisible: false,
                     headerTitle: () => (<PepperTitle/>),
                     headerLeft: () => (<PepperMenu />),
                     headerRight: () => (<PepperQrCode />),

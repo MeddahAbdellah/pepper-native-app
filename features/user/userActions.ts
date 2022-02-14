@@ -1,6 +1,6 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import ApiService from "../../services/api";
-import { MatchStatus } from "../../models/types";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import ApiService from '../../services/api';
+import { MatchStatus } from '../../models/types';
 
 export const fetchUser = createAsyncThunk('user/fetchUser', async() => {
   const userInfo = await ApiService.get('user/info');

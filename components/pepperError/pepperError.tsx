@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  View, Text, Button, StyleSheet 
+  View, Text, Button, StyleSheet,
 } from 'react-native';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import {
-  space_unit, fontSizeRegular, raven, white 
+  space_unit, fontSizeRegular, raven, white,
 } from '../../styles/common';
 import * as SecureStore from 'expo-secure-store';
 import { UtilService } from '../../services/util';

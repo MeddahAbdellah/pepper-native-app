@@ -26,11 +26,11 @@ export const PepperQrCode = (): JSX.Element => {
     (async() => {
       // TODO: break this loop
       const loggedIn = await LoginService.isLoggedin();
-      if(isMounted) { setIsLoggedIn(loggedIn); }
+      if (isMounted) { setIsLoggedIn(loggedIn); }
     })();
     return () => { isMounted = false; };
   }, [currentUser]);
-  
+
   return (
     <>
       <PepperQRCodeModal show={showQrCodeModal} onRequestClose={() => setShowQrCodeModal(false)}/>

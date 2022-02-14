@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet, Text, View, TextInput 
+  StyleSheet, Text, View, TextInput,
 } from 'react-native';
 import {
   space_unit, grey_1, grey_2, pepper_2, grey_3, fontSizeRegular, color,

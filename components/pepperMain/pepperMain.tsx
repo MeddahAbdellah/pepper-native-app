@@ -19,8 +19,8 @@ const PepperMain = (): JSX.Element => {
 
   return !isLoggedin ?
     (<ActivityIndicator size="large" color={pepper} />) :
-    (<ReactTab.Navigator 
-      screenOptions={({ route }) => ({ 
+    (<ReactTab.Navigator
+      screenOptions={({ route }) => ({
         headerShown: false,
         tabBarShowLabel: false,
         tabBarInactiveTintColor: grey_3,

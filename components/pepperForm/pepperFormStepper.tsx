@@ -22,7 +22,7 @@ export const PepperFormStepper = (formProps: { schemas: FormSchema[], onDone: (r
     <View style={styles.container}>
       {
         _.map(formProps.schemas, (schema, index) => (
-          index === currentIndex ? 
+          index === currentIndex ?
             <PepperForm key={_.first(_.keys(schema))} schema={schema} onSubmit={onFormSubmit}/> :
             null
         ))
@@ -30,10 +30,10 @@ export const PepperFormStepper = (formProps: { schemas: FormSchema[], onDone: (r
     </View>
   );
 };
-  
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
+    width: '100%',
   },
 });
