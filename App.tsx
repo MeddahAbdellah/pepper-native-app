@@ -49,8 +49,8 @@ const PepperApp = (): JSX.Element => {
                     headerLeft: () => (<PepperMenu />),
                     headerRight: () => (<PepperQrCode />),
                   }}>
-                  <ReactStack.Screen name={PepperStackRoutes.Subscription} component={PepperUserSubscription} />
                   <ReactStack.Screen name={PepperStackRoutes.Intro} component={PepperIntro} />
+                  <ReactStack.Screen name={PepperStackRoutes.Subscription} component={PepperUserSubscription} />
                   <ReactStack.Screen name={PepperStackRoutes.Tutorial} component={PepperTutorial} />
                   <ReactStack.Screen name={PepperStackRoutes.Main} component={PepperMain} />
                   <ReactStack.Screen name={PepperStackRoutes.PartyDescription} component={PepperPartyDescription} />

@@ -6,6 +6,8 @@ import {
   legalAgeValidator, nameValidator, cityValidator, alwaysValidValidator 
 } from '../pepperForm/validators';
 import { PepperFormStepper } from '../pepperForm/pepperFormStepper';
+import { useNavigation } from '@react-navigation/native';
+import { PepperStackRoutes } from '../../models/routes';
 
 const PepperUserSubscription = (): JSX.Element => {
   const schemas: FormSchema[] = [
@@ -48,11 +50,14 @@ const PepperUserSubscription = (): JSX.Element => {
     }
   ];
 
+  const navigation = useNavigation<any>();
+
   return (
     <View style={styles.container}>
       <PepperFormStepper schemas={schemas} onDone={(value) => {
         // eslint-disable-next-line no-console
         console.log('submit', value);
+        navigation.navigate(PepperStackRoutes.Tutorial);
       }}/>
     </View>
   );
