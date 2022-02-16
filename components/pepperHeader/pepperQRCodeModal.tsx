@@ -24,7 +24,11 @@ const PepperQRCodeModal = (modalProps: { show: boolean, onRequestClose: () => vo
   const [qrCodeScanned, setQrCodeScanned] = useState(false);
   const storeDispatch = usePepperDispatch();
   // Fetch user on load
-  useEffect(() => { storeDispatch(fetchUser()); }, []);
+  useEffect(() => {
+    if (modalProps.show) {
+      storeDispatch(fetchUser());
+    }
+  }, [modalProps.show]);
   const currentUser = usePepperUser();
 
   const handleBarCodeScanned = (result: BarCodeScanningResult): void => {

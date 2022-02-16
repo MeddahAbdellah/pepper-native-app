@@ -6,7 +6,7 @@ const limitTextLength = (text: string, maxLength: number = 10): string => (text.
 
 const sanitizeText = (text: string): string => text.
   replace(/\r?\n|\r/g, ' ').
-  replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, ' ').
+  replace(/[`~!@#$%^&*()_|\-=?;:'",.<>\{\}\[\]\\\/]/gi, ' ').
   replace(/\s{2,}/g, ' ');
 
 export { keyExtractor, limitTextLength, sanitizeText };

@@ -14,6 +14,20 @@ export const numberValidator = (text: string): string => {
   return '';
 };
 
+export const phoneNumberValidator = (text: string): string => {
+  if (!(/^0033[6-7][0-9]{8}$/.test(text))) {
+    return 'Phone number must be in this format 0033760208022';
+  }
+  return '';
+};
+
+export const codeValidator = (text: string): string => {
+  if (!(/^[0-9]{6}$/.test(text))) {
+    return 'The code must have 6 numbers';
+  }
+  return '';
+};
+
 export const legalAgeValidator = (date: Moment): string => {
   const eighteenYearsAgo = moment().subtract(18, 'years').startOf('year');
   const validDateOfBirth = moment(date).isSameOrBefore(eighteenYearsAgo);

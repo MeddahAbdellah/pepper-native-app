@@ -3,21 +3,23 @@ import { View, StyleSheet } from 'react-native';
 import { white } from '../../styles/common';
 import { FormSchema, FormType } from '../pepperForm';
 import {
-  legalAgeValidator, nameValidator, cityValidator, alwaysValidValidator, numberValidator,
-} from '../pepperForm/validators';
+  legalAgeValidator, nameValidator, cityValidator, alwaysValidValidator, phoneNumberValidator, codeValidator,
+} from '../pepperForm';
 import { PepperFormStepper } from '../pepperForm/pepperFormStepper';
 import { useNavigation } from '@react-navigation/native';
 import { PepperStackRoutes } from '../../models/routes';
+import LoginService from '../../services/login';
+import { Gender } from '../../models/types';
 
 const PepperUserSubscription = (): JSX.Element => {
   const schemas: FormSchema[] = [
     {
-      foods: {
-        type: FormType.Menu,
-        label: 'Food',
-        nameValidator,
-        priceValidator: numberValidator,
-      }
+      phoneNumber: {
+        type: FormType.Text,
+        label: 'Confirm your phone number',
+        max: 13,
+        validator: phoneNumberValidator,
+      },
     },
     {
       name: {
@@ -42,7 +44,7 @@ const PepperUserSubscription = (): JSX.Element => {
         max: 20,
         validator: nameValidator,
       },
-      ville: {
+      address: {
         type: FormType.Text,
         label: 'Ville',
         max: 30,
@@ -55,6 +57,14 @@ const PepperUserSubscription = (): JSX.Element => {
         max: 200,
         validator: alwaysValidValidator,
       },
+    },
+    {
+      code: {
+        type: FormType.Text,
+        label: 'Enter the code received by sms',
+        max: 6,
+        validator: codeValidator,
+      },
     }
   ];
 
@@ -64,9 +74,27 @@ const PepperUserSubscription = (): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <PepperFormStepper schemas={schemas} onDone={(value) => {
-        // eslint-disable-next-line no-console
-        console.log('submit', value);
+      <PepperFormStepper schemas={schemas} onDone={async(subscriptionFormOutput) => {
+        // FIX: fix type inferance
+        const {
+          phoneNumber,
+          code,
+          name,
+          gender,
+          address,
+          description,
+          job,
+        } = subscriptionFormOutput;
+
+        await LoginService.subscribe(
+          phoneNumber as string,
+          code as string,
+          name as string,
+          gender as Gender,
+          address as string,
+          description as string,
+          job as string,
+        );
         navigation.navigate(PepperStackRoutes.Tutorial);
       }}/>
     </View>

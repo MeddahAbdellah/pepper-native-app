@@ -5,4 +5,6 @@ export enum PepperStackRoutes {
   Main = 'main',
   PartyDescription = 'partyDescription',
   UserDescription = 'userDescription',
+  CodeLogin = 'Codelogin',
+  LoginRouter = 'LoginRouter',
 }

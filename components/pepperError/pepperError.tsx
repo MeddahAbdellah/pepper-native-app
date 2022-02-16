@@ -6,7 +6,6 @@ import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import {
   space_unit, fontSizeRegular, raven, white,
 } from '../../styles/common';
-import * as SecureStore from 'expo-secure-store';
 import { UtilService } from '../../services/util';
 
 const PepperError = (): JSX.Element => (
@@ -15,8 +14,7 @@ const PepperError = (): JSX.Element => (
     <Text style={styles.description}> The app is on fire!!</Text>
     <Text style={{ ...styles.description, marginBottom: 4 * space_unit }}> we're calling the firemen </Text>
     <Button title="Reload" onPress={ async() => {
-      await SecureStore.deleteItemAsync('error');
-      UtilService.reloadApp();
+      await UtilService.clearErrors();
     }}/>
   </View>
 );
