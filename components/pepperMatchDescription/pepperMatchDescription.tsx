@@ -1,39 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-  StyleSheet, Text, View, ScrollView, Dimensions, TouchableOpacity,
+  StyleSheet, Text, View, ScrollView, Dimensions,
 } from 'react-native';
 import {
-  white, space_unit, fontSizeRegular, black, fontSizeHeader, sun, sun_2, fire, fire_2, indigo_2, indigo, grey_3, color, pepper,
+  white, space_unit, fontSizeRegular, black, fontSizeHeader, sun, sun_2, fire, fire_2, indigo_2, indigo, grey_3, color,
 } from '../../styles/common';
 import PepperDescriptionCarousel from '../pepperDescriptionCarousel/pepperDescriptionCarousel';
+import { IUser } from '../../models/types';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import PepperTag from '../pepperTags/pepperTags';
 import { limitTextLength } from '../../helpers/uiHelper';
-import LoginService from '../../services/login';
-import { usePepperDispatch } from '../../hooks/store.hooks';
-import { fetchUser, resetUser } from '../../features/user/userActions';
-import { usePepperUser } from '../../hooks/user.hooks';
-import { useNavigation } from '@react-navigation/native';
-import { PepperStackRoutes } from '../../models/routes';
 
-const PepperUserDescription = (): JSX.Element => {
+const PepperMatchDescription = (descriptionProps: { route: { params: IUser } }): JSX.Element => {
   const { width } = Dimensions.get('window');
   const [carouselWidth, setCarouselWidth] = useState(width);
-  const storeDispatch = usePepperDispatch();
-  // Fetch user on load
-  useEffect(() => { storeDispatch(fetchUser()); }, []);
-  const currentUser = usePepperUser();
-
-  // TODO: Library does not provide a type
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const navigation = useNavigation<any>();
+  const user = descriptionProps.route.params;
 
   const onLayout = (event: {nativeEvent: { layout: { width: number } } }): void => {
     const { width } = event.nativeEvent.layout;
     setCarouselWidth(.97 * width);
   };
 
-  const StaticInterestTags = (): JSX.Element[] => currentUser.user.interests.map((interest, index) => {
+  const StaticInterestTags = (): JSX.Element[] => user.interests.map((interest, index) => {
     const tagColors = [[sun, sun_2], [fire, fire_2], [indigo, indigo_2]];
     return (<PepperTag
       key={interest}
@@ -47,39 +35,31 @@ const PepperUserDescription = (): JSX.Element => {
     <ScrollView style={{ backgroundColor: white }}>
       <View style={styles.container} onLayout={onLayout}>
         <View style={styles.imageCarouselContainer}>
-          <PepperDescriptionCarousel carouselWidth={carouselWidth} carouselImgs={currentUser.user.imgs}/>
+          <PepperDescriptionCarousel carouselWidth={carouselWidth} carouselImgs={user.imgs}/>
         </View>
         <View style={styles.detailsContainer}>
-          <Text style={{ fontSize: fontSizeHeader }}>{currentUser.user.name}</Text>
+          <Text style={{ fontSize: fontSizeHeader }}>{user.name}</Text>
           <View style={styles.details}>
             <PepperImage src={PepperImages.Briefcase} style={styles.detailImages}></PepperImage>
-            <Text style={styles.detailText}>{currentUser.user.job}</Text>
+            <Text style={styles.detailText}>{user.job}</Text>
           </View>
           <View style={styles.details}>
             <PepperImage src={PepperImages.OldPhone} style={styles.detailImages}></PepperImage>
-            <Text style={styles.detailText}>{currentUser.user.phoneNumber}</Text>
+            <Text style={styles.detailText}>{user.phoneNumber}</Text>
           </View>
           <View style={styles.details}>
             <PepperImage src={PepperImages.House} style={styles.detailImages}></PepperImage>
-            <Text style={styles.detailText}>{limitTextLength(currentUser.user.address, 35)}</Text>
+            <Text style={styles.detailText}>{limitTextLength(user.address, 35)}</Text>
           </View>
           <View style={styles.tagsContainer}>{StaticInterestTags()}</View>
-          <Text style={styles.description}>{currentUser.user.description}</Text>
+          <Text style={styles.description}>{user.description}</Text>
         </View>
-        <TouchableOpacity style={styles.logoutButton}
-          onPress={async() => {
-            await LoginService.logout();
-            storeDispatch(resetUser());
-            navigation.navigate(PepperStackRoutes.LoginRouter);
-          }}>
-          <Text style={styles.logoutButtonText}>Logout</Text>
-        </TouchableOpacity>
       </View>
     </ScrollView>
   );
 };
 
-export default PepperUserDescription;
+export default PepperMatchDescription;
 
 const styles = StyleSheet.create({
   container: {
@@ -130,17 +110,5 @@ const styles = StyleSheet.create({
     color: black,
     width: '100%',
     marginVertical: 2 * space_unit,
-  },
-  logoutButton: {
-    flexDirection: 'row',
-    backgroundColor: pepper,
-    marginTop: 6 * space_unit,
-    borderRadius: 1 * space_unit,
-  },
-  logoutButtonText: {
-    width: '80%',
-    textAlign: 'center',
-    color: white,
-    paddingVertical: 2 * space_unit,
-  },
+  }
 });

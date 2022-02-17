@@ -1,10 +1,26 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import ApiService from '../../services/api';
-import { MatchStatus } from '../../models/types';
+import { MatchStatus, IUser, Gender } from '../../models/types';
 import { UtilService } from '../../services/util';
 
+export const emptyUser: IUser = {
+  id: 0,
+  name: '',
+  gender: Gender.MAN,
+  phoneNumber: '',
+  address: '',
+  description: '',
+  job: '',
+  imgs: [],
+  interests: [],
+  matches: [],
+  parties: [],
+};
+
+export const resetUser = createAsyncThunk('user/resetUser', async() => emptyUser);
+
 export const fetchUser = createAsyncThunk('user/fetchUser', async() => {
-  const userInfo = await ApiService.get('user/info').catch(async(error) => UtilService.throwError(error));
+  const userInfo = await ApiService.get('user').catch(async(error) => UtilService.throwError(error));
   const { matches } = await ApiService.get('user/matches').catch(async(error) => UtilService.throwError(error));
   const { parties } = await ApiService.get('user/parties').catch(async(error) => UtilService.throwError(error));
   return { ...userInfo.user, matches, parties };

@@ -46,7 +46,7 @@ const PepperMatches = (): JSX.Element => {
   const checkMatch = (match: IMatch): void => {
     switch (match.status) {
       case MatchStatus.ACCEPTED:
-        navigation.push(PepperStackRoutes.UserDescription, match);
+        navigation.push(PepperStackRoutes.MatchDescription, match);
         break;
       case MatchStatus.WAITING:
         setSelectedMatch(match);

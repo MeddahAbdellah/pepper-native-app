@@ -1,24 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  IUser, Gender, StoreStatus, IUserStore,
+  StoreStatus, IUserStore,
 } from '../../models/types';
 import {
-  fetchUser, updateMatch, updateParty, deleteMatch, deleteParty, addMatch,
+  fetchUser, updateMatch, updateParty, deleteMatch, deleteParty, addMatch, emptyUser, resetUser,
 } from './userActions';
-
-const emptyUser: IUser = {
-  id: 0,
-  name: '',
-  gender: Gender.MAN,
-  phoneNumber: '',
-  address: '',
-  description: '',
-  job: '',
-  imgs: [],
-  interests: [],
-  matches: [],
-  parties: [],
-};
 
 const initialState: IUserStore = {
   user: emptyUser,
@@ -37,6 +23,10 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // resetUser cannot fail as it is just a simple assignation
+      .addCase(resetUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
       .addCase(fetchUser.pending, (state) => {
         state.fetchStatus = StoreStatus.Pending;
       })

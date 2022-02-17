@@ -218,6 +218,8 @@
     "no-continue": ["off"],
     "no-process-exit": ["error"],
     "comma-spacing": [2, {"before": false, "after": true}],
+    "max-depth": ["error", 2],
+    "max-lines-per-function": ["error", 200],
     "quotes": [
         "error",
         "single",
