@@ -1,7 +1,8 @@
+/* eslint-disable max-len */
 import {
-  IMatch, Gender, MatchStatus, IParty, IUser 
-} from "../models/types";
-import { loremIpsium } from "../styles/common";
+  IMatch, Gender, MatchStatus, IParty, IUser,
+} from '../models/types';
+import { loremIpsium } from '../styles/common';
 
 export const fakeFetch = <T>(response: T, delay: number): Promise<T> => new Promise((resolve) => {
   setTimeout(() => { resolve(response); }, delay);

@@ -56,6 +56,8 @@ export const imagesPepperSources: { [keyof in PepperImages]: ImageSourcePropType
   work: require(`../../assets/work.png`),
 };
 
+// This is a generic component and style can actually be anything
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const PepperImage = (props: { src: PepperImages, style?: any }): JSX.Element => (
   <Image source={imagesPepperSources[props.src]} style={props.style} resizeMode="contain"/>
 );

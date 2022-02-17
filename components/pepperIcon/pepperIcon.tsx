@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from 'react-native';
 import { useFonts } from 'expo-font';
 import { createIconSetFromIcoMoon } from '@expo/vector-icons';
-import { black } from '../../styles/common';
+import { raven } from '../../styles/common';
 
 const ReactIcon = createIconSetFromIcoMoon(
   require('../../assets/selection.json'),
@@ -10,6 +10,8 @@ const ReactIcon = createIconSetFromIcoMoon(
   'icomoon.ttf'
 );
 
+// This is a generic component and style can actually be anything
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const PepperIcon = (iconProps: { name: string, size: number, color?: string, style?: any}): JSX.Element => {
   // Load the icon font before using it
   // disabling lint as it is an external library that forces the use of PascalCase
@@ -21,7 +23,7 @@ const PepperIcon = (iconProps: { name: string, size: number, color?: string, sty
   }
 
   return (
-    <ReactIcon name={iconProps.name} size={iconProps.size} color={iconProps.color ? iconProps.color : black} style={iconProps.style} />
+    <ReactIcon name={iconProps.name} size={iconProps.size} color={iconProps.color ? iconProps.color : raven} style={iconProps.style} />
   );
 };
 

@@ -3,7 +3,7 @@ import { StyleSheet, View, ImageBackground } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
-  color, black, space_unit, white, pepper, indigo 
+  color, black, space_unit, white, pepper, indigo,
 } from '../../styles/common';
 import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { useNavigation } from '@react-navigation/native';
@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carouselImgs: Array<{ uri: string }> }): JSX.Element => {
   const [activeIndex, setActiveIndex] = useState(0);
   const navigation = useNavigation();
-  
+
   const StaticDescriptionImgs = (partyImg: {item: { uri: string } } ): JSX.Element => (
     <ImageBackground source={partyImg.item} style={styles.image} resizeMode="cover">
       <LinearGradient colors={['transparent', color(black, .7)]} style={styles.imageMask}>
@@ -22,14 +22,14 @@ const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carou
   return (
     <>
       <Carousel
-        layout={"default"}
+        layout={'default'}
         data={carouselProps.carouselImgs}
         sliderWidth={carouselProps.carouselWidth}
         itemWidth={carouselProps.carouselWidth}
         activeSlideOffset={.1 * carouselProps.carouselWidth}
         swipeThreshold={.1 * carouselProps.carouselWidth}
         enableMomentum={true}
-        contentContainerCustomStyle={{ height: styles.image.height}}
+        contentContainerCustomStyle={{ height: styles.image.height }}
         inactiveSlideScale={1}
         renderItem={StaticDescriptionImgs}
         onBeforeSnapToItem={(index) => { setActiveIndex(index); } } />
@@ -50,7 +50,7 @@ const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carou
           containerStyle={{ paddingVertical: 2 * space_unit }}
         />
       </View>
-    </> 
+    </>
   );
 };
 

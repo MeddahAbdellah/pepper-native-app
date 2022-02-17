@@ -16,20 +16,23 @@ import moment from 'moment';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 
 const PepperUserParties = (): JSX.Element => {
-  // The push method is not present in the types while it does exist thats we we cast navigation as any
+  // TODO: Library does not provide a type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const navigation = useNavigation<any>();
   const storeDispatch = usePepperDispatch();
   // Fetch user on load
   useEffect(() => { storeDispatch(fetchUser()); }, []);
   const currentUser = usePepperUser();
-  
+
   const partyItem = (party: IParty): JSX.Element => (
-    <TouchableOpacity style={styles.partyItemContainer} onPress={() => navigation.push(PepperStackRoutes.PartyDescription, { party , canCancel: true })}>
+    <TouchableOpacity
+      style={styles.partyItemContainer}
+      onPress={() => navigation.push(PepperStackRoutes.PartyDescription, { party, canCancel: true })}>
       <Image source={party.imgs[0]} style={styles.partyImage}/>
       <View style={{ flex: 1 }}>
         <Text style={{ fontSize: fontSizeSubHeader }}>{party.title}</Text>
         <Text style={{ fontSize: fontSizeRegular }}>{party.theme}</Text>
-        <Text style={{ fontSize: fontSizeRegular }}>{moment(party.date).format("YYYY MM DD")}</Text>
+        <Text style={{ fontSize: fontSizeRegular }}>{moment(party.date).format('YYYY MM DD')}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -45,7 +48,7 @@ const PepperUserParties = (): JSX.Element => {
   return (
     <View style={styles.listContainer}>
       { !currentUser.user.parties.length ?
-        <StaticGoSwipe/> : 
+        <StaticGoSwipe/> :
         <FlatList
           data={currentUser.user.parties}
           refreshing={currentUser.fetchStatus !== StoreStatus.Fulfilled}

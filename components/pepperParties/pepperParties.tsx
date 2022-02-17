@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, View, Text, ImageBackground, TouchableOpacity, ActivityIndicator, Button 
+  StyleSheet, View, Text, ImageBackground, TouchableOpacity, ActivityIndicator, Button,
 } from 'react-native';
 import {
-  space_unit, white, black, color, fontSizeHeader, fontSizeSubHeader, sun_2, sun, indigo_2, fire, fire_2, indigo_3, fontSizeRegular, pepper, pepper_2, grey_1, raven
+  space_unit, white, color, fontSizeHeader, fontSizeSubHeader, sun_2, sun,
+  indigo_2, fire, fire_2, indigo_3, fontSizeRegular, pepper, pepper_2, grey_1, raven, black,
 } from '../../styles/common';
 import Swiper from 'react-native-deck-swiper';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -20,38 +21,63 @@ import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 
 const PepperParties = (): JSX.Element => {
   const [hasSwipedAll, setHasSwipedAll] = useState(false);
-  // The push method is not present in the types while it does exist thats we we cast navigation as any
+  // TODO: Library does not provide a type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const navigation = useNavigation<any>();
   const storeDispatch = usePepperDispatch();
   const currentParties = usePepperParties();
   // Fetch user on load
   useEffect(() => { storeDispatch(fetchParties()); }, []);
   const StaticCard = (party: IParty): JSX.Element => {
-    const attendeesTag = (attendees: { people: number, minAge: number, maxAge: number }): string => `${attendees.people} people (${attendees.minAge}yo - ${attendees.maxAge}yo)`;
+    const attendeesTag = (attendees: {
+      people: number,
+      minAge: number,
+      maxAge: number,
+    }): string => `${attendees.people} people (${attendees.minAge}yo - ${attendees.maxAge}yo)`;
 
-    const miniFoodPrice = (): string =>  `${Math.min(...party.foods.map((food) => food.price))}$`;
-    const miniDrinkPrice = (): string =>  `${Math.min(...party.drinks.map((food) => food.price))}$`;
-    const partyPrice = (): string =>  (party.price !== 0 ? `${party.price}$` : 'Free');
+    const miniFoodPrice = (): string => `${Math.min(...party.foods.map((food) => food.price))}$`;
+    const miniDrinkPrice = (): string => `${Math.min(...party.drinks.map((food) => food.price))}$`;
+    const partyPrice = (): string => (party.price !== 0 ? `${party.price}$` : 'Free');
 
     return (
       <ImageBackground source={party.imgs[0]} style={styles.image} resizeMode="cover">
         <TouchableOpacity
-          style={{...styles.imageMask, zIndex: styles.imageMask.zIndex + 1}}
-          onPress={() => navigation.push(PepperStackRoutes.PartyDescription, { party , canCancel: false })}
+          style={{ ...styles.imageMask, zIndex: styles.imageMask.zIndex + 1 }}
+          onPress={() => navigation.push(PepperStackRoutes.PartyDescription, { party, canCancel: false })}
         >
         </TouchableOpacity>
         <LinearGradient colors={['transparent', color(black, .7), black]} style={styles.imageMask}>
-          <View style={styles.descriptionContainer}> 
-            <Text style={{...styles.description, fontSize: fontSizeHeader}}>{party.title}</Text>
-            <Text style={{...styles.description, fontSize: fontSizeSubHeader}}>{party.theme}</Text>
-            <Text style={{...styles.description, marginBottom: 2 * space_unit}}>{moment(party.date).format("YYYY MM DD")}</Text>
+          <View style={styles.descriptionContainer}>
+            <Text style={{ ...styles.description, fontSize: fontSizeHeader }}>{party.title}</Text>
+            <Text style={{ ...styles.description, fontSize: fontSizeSubHeader }}>{party.theme}</Text>
+            <Text style={{ ...styles.description, marginBottom: 2 * space_unit }}>{moment(party.date).format('YYYY MM DD')}</Text>
             <View style={styles.tagsContainer}>
-              <PepperTag iconName="pepper-dancing" text={attendeesTag(party)} firstGradientColor={pepper} secondGradientColor={pepper_2} style={styles.tags}/>
+              <PepperTag
+                iconName="pepper-dancing"
+                text={attendeesTag(party)}
+                firstGradientColor={pepper}
+                secondGradientColor={pepper_2}
+                style={styles.tags}/>
             </View>
             <View style={styles.tagsContainer}>
-              <PepperTag iconName="pepper-beer" text={miniDrinkPrice()} firstGradientColor={sun} secondGradientColor={sun_2} style={styles.tags}/>
-              <PepperTag iconName="pepper-burger" text={miniFoodPrice()} firstGradientColor={fire} secondGradientColor={fire_2} style={styles.tags}/>
-              <PepperTag iconName="pepper-partyPopper" text={partyPrice()} firstGradientColor={indigo_2} secondGradientColor={indigo_3} style={styles.tags}/>
+              <PepperTag
+                iconName="pepper-beer"
+                text={miniDrinkPrice()}
+                firstGradientColor={sun}
+                secondGradientColor={sun_2}
+                style={styles.tags}/>
+              <PepperTag
+                iconName="pepper-burger"
+                text={miniFoodPrice()}
+                firstGradientColor={fire}
+                secondGradientColor={fire_2}
+                style={styles.tags}/>
+              <PepperTag
+                iconName="pepper-partyPopper"
+                text={partyPrice()}
+                firstGradientColor={indigo_2}
+                secondGradientColor={indigo_3}
+                style={styles.tags}/>
             </View>
           </View>
         </LinearGradient>
@@ -110,7 +136,7 @@ const styles = StyleSheet.create({
     height: '98%',
     width: '97%',
     overflow: 'hidden',
-    borderRadius:  .75 * space_unit,
+    borderRadius: .75 * space_unit,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -139,7 +165,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     zIndex: 1,
-    borderRadius:  .75 * space_unit,
+    borderRadius: .75 * space_unit,
     overflow: 'hidden',
   },
   imageMask: {

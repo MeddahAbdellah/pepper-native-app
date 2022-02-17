@@ -1,27 +1,29 @@
 
-import React, { useState, useEffect } from "react";
-import { Camera, BarCodeScanningResult } from "expo-camera";
-import { fontSizeBody, space_unit, raven } from "../../styles/common";
-import { StyleSheet, View, Text } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { Camera, BarCodeScanningResult } from 'expo-camera';
+import { fontSizeBody, space_unit, raven } from '../../styles/common';
+import { StyleSheet, View, Text } from 'react-native';
 
 const PepperQrCodeScanner = (scannerProp: { onBarCodeScanned: (result: BarCodeScanningResult) => void }): JSX.Element => {
   const [hasPermission, setHasPermission] = useState(false);
 
   useEffect(() => {
-    let isMounted = true;
+    const abortController = new AbortController();
+
     (async() => {
       const { status } = await Camera.requestCameraPermissionsAsync();
-      if(isMounted) { setHasPermission(status === 'granted'); }
+      setHasPermission(status === 'granted');
     })();
-    return () => { isMounted = false; };
+
+    return () => { abortController.abort(); };
   }, []);
 
   if (hasPermission === null) {
-    return (<Text style={{fontSize: fontSizeBody, paddingVertical: 8 * space_unit}}>Requesting for camera permission</Text>);
+    return (<Text style={{ fontSize: fontSizeBody, paddingVertical: 8 * space_unit }}>Requesting for camera permission</Text>);
   }
 
   if (hasPermission === false) {
-    return (<Text style={{fontSize: fontSizeBody, paddingVertical: 8 * space_unit}}>No access to camera</Text>);
+    return (<Text style={{ fontSize: fontSizeBody, paddingVertical: 8 * space_unit }}>No access to camera</Text>);
   }
 
   return (

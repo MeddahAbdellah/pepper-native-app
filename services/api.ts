@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 // any is a valid type as we want to be able to send any object
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+// TODO: any is a valid type as we want to be able to send any object
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as SecureStore from 'expo-secure-store';
 import { UtilService } from './util';
 
@@ -14,13 +16,16 @@ enum HttpMethod {
   DELETE = 'delete',
 }
 
+const HTTP_OK = 200;
+
 export default class ApiService {
   private static _baseUrl: string = `http://localhost:7550/api`;
 
   public static async get(resource: string, params?: any): Promise<any> {
     const queryString = params ? Object.keys(params).map(key => `${key}=${params[key]}`).join('&') : '';
     const headers = await this.getHeaders();
-    return fetch(`${this._baseUrl}/${resource}?${queryString}`, { headers }).then((res) => res.json()).catch(this._errorHandler);
+    return fetch(`${this._baseUrl}/${resource}?${queryString}`, { headers })
+      .then(this._responseFormatter);
   }
 
   public static async post(resource: string, body: any): Promise<any> {
@@ -43,36 +48,36 @@ export default class ApiService {
       headers,
       body: JSON.stringify(body),
     }
-    ).then((res) => res.json()).catch(this._errorHandler);
+    ).then(this._responseFormatter);
     return response;
   }
 
   private static async getHeaders(): Promise<any> {
-    const authorization = await SecureStore.getItemAsync(secureStoryTokenKey).catch(this._errorHandler);;
+    const authorization = await SecureStore.getItemAsync(secureStoryTokenKey).catch(async(error) => UtilService.throwError(error));
     const headers = {
       'Content-Type': 'application/json; charset=utf-8',
-      ...( authorization ? { 'Authorization' : authorization } : {}),
+      ...( authorization ? { 'Authorization': authorization } : {}),
     };
     return headers;
   }
 
   public static async setToken(token: string | null): Promise<void> {
-    if(!token)  {
+    if (!token) {
       await SecureStore.deleteItemAsync(secureStoryTokenKey);
       return;
     }
-    await SecureStore.setItemAsync(secureStoryTokenKey, token).catch(this._errorHandler);
+    await SecureStore.setItemAsync(secureStoryTokenKey, token).catch(async(error) => UtilService.throwError(error));
   }
 
   public static async getToken(): Promise<string | null> {
-    const token = await SecureStore.getItemAsync(secureStoryTokenKey).catch(this._errorHandler);
+    const token = await SecureStore.getItemAsync(secureStoryTokenKey).catch(async(error) => UtilService.throwError(error));
     return token || null;
   }
 
-  private static async _errorHandler(error: any): Promise<void> {
-    const oldError = await SecureStore.getItemAsync('error');
-    if (oldError) { return; }
-    await SecureStore.setItemAsync('error', error.toString());
-    UtilService.reloadApp();
-  }
+  private static _responseFormatter(response: any): any {
+    if (response.status !== HTTP_OK) {
+      throw response;
+    }
+    return response.json();
+  };
 }

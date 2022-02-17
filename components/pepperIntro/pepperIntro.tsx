@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import PepperCarousel from '../pepperCarousel/pepperCarousel';
 import { PepperImages } from '../pepperImage/pepperImage';
 import { PepperStackRoutes } from '../../models/routes';
+import { white } from '../../styles/common';
 
 const PepperIntro = (): JSX.Element => (
   <View style={styles.container}>
@@ -11,7 +12,7 @@ const PepperIntro = (): JSX.Element => (
       { image: PepperImages.Bar, text: 'Pepper Parties are the best place to meet awesome guys/girls' },
       { image: PepperImages.Bracelets, text: 'You will all have the same bracelets so talking to strangers will be much easier' },
     ]}
-    nextStep={PepperStackRoutes.Tutorial}
+    nextStep={PepperStackRoutes.Subscription}
     ></PepperCarousel>
   </View>
 );
@@ -21,7 +22,7 @@ export default PepperIntro;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: white,
     alignItems: 'center',
     justifyContent: 'center',
   },

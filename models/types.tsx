@@ -62,5 +62,7 @@ export interface IUserStore {
   deleteMatchStatus: StoreStatus;
   updatePartyStatus: StoreStatus;
   deletePartyStatus: StoreStatus;
+  // TODO: Library does not provide a type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error: any;
 }

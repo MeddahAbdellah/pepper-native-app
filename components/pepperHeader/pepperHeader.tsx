@@ -6,6 +6,8 @@ import PepperQRCodeModal from './pepperQRCodeModal';
 import { TouchableOpacity } from 'react-native';
 import LoginService from '../../services/login';
 import { usePepperUser } from '../../hooks/user.hooks';
+import { UtilService } from '../../services/util';
+import { PepperStackRoutes } from '../../models/routes';
 
 export const PepperTitle = (): JSX.Element => (
   <PepperImage src={PepperImages.PepperTitle} style={
@@ -13,7 +15,36 @@ export const PepperTitle = (): JSX.Element => (
   }></PepperImage>
 );
 
-export const PepperMenu = (): JSX.Element => (<PepperIcon name="pepper-menu" color={black} size={4.5 * space_unit} />);
+export const PepperUserProfile = (userProfileProps: { navigation: { push: (route: string) => void } }): JSX.Element => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const currentUser = usePepperUser();
+
+  // Show Qr code button only when user is logged in
+  useEffect( () => {
+    const abortController = new AbortController();
+    (async() => {
+      try {
+        const loggedIn = await LoginService.isLoggedin();
+        setIsLoggedIn(loggedIn);
+      } catch (error) {
+        UtilService.throwError(error);
+      }
+    })();
+    return () => { abortController.abort(); };
+  }, [currentUser]);
+
+  return (
+    <>
+      { isLoggedIn ?
+        (
+          <TouchableOpacity onPress={ () => userProfileProps.navigation.push(PepperStackRoutes.UserDescription) }>
+            <PepperIcon name="pepper-menu" color={black} size={4.5 * space_unit} />
+          </TouchableOpacity>
+        ) : null
+      }
+    </>
+  );
+};
 
 export const PepperQrCode = (): JSX.Element => {
   const [showQrCodeModal, setShowQrCodeModal] = useState(false);
@@ -22,15 +53,18 @@ export const PepperQrCode = (): JSX.Element => {
 
   // Show Qr code button only when user is logged in
   useEffect( () => {
-    let isMounted = true;
+    const abortController = new AbortController();
     (async() => {
-      // TODO: break this loop
-      const loggedIn = await LoginService.isLoggedin();
-      if(isMounted) { setIsLoggedIn(loggedIn); }
+      try {
+        const loggedIn = await LoginService.isLoggedin();
+        setIsLoggedIn(loggedIn);
+      } catch (error) {
+        UtilService.throwError(error);
+      }
     })();
-    return () => { isMounted = false; };
+    return () => { abortController.abort(); };
   }, [currentUser]);
-  
+
   return (
     <>
       <PepperQRCodeModal show={showQrCodeModal} onRequestClose={() => setShowQrCodeModal(false)}/>

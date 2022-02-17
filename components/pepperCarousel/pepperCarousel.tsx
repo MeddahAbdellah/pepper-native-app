@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet, Text, View, Dimensions 
+  StyleSheet, Text, View, Dimensions,
 } from 'react-native';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import {
-  white, space_unit, grey_2, indigo, pepper, fontSizeBody, raven 
+  white, space_unit, grey_2, indigo, pepper, fontSizeBody, raven,
 } from '../../styles/common';
 import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { useNavigation } from '@react-navigation/native';
 
 const PepperCarousel = (onBoardingProps: { pages: Array<{ image: PepperImages, text: string | JSX.Element }>, nextStep: string }): JSX.Element => {
-  const carouselWidth = Dimensions.get("window").width;
-  
+  const carouselWidth = Dimensions.get('window').width;
+
   const [activeIndex, setActiveIndex] = useState(0);
+  // TODO: Library does not provide a type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const navigation = useNavigation<any>();
 
   const StaticCarouselItem = (carouselProps: { item: { image: PepperImages, text: string | JSX.Element }, index: number }): JSX.Element => (
@@ -26,7 +28,7 @@ const PepperCarousel = (onBoardingProps: { pages: Array<{ image: PepperImages, t
   return (
     <View>
       <Carousel
-        layout={"default"}
+        layout={'default'}
         data={onBoardingProps.pages}
         sliderWidth={carouselWidth}
         itemWidth={carouselWidth}
@@ -44,7 +46,7 @@ const PepperCarousel = (onBoardingProps: { pages: Array<{ image: PepperImages, t
         inactiveDotScale={0.8}
         containerStyle={{ marginBottom: 5 * space_unit }}
       />
-      { (activeIndex === onBoardingProps.pages.length - 1) ? 
+      { (activeIndex === onBoardingProps.pages.length - 1) ?
         <PepperRoundButton
           size={7 * space_unit}
           style={styles.nextButton}
@@ -63,7 +65,7 @@ export default PepperCarousel;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: white,
     alignItems: 'center',
     justifyContent: 'center',
   },
