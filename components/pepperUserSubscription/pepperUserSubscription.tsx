@@ -15,6 +15,7 @@ import { PepperStackRoutes } from '../../models/routes';
 import LoginService from '../../services/login';
 import { Gender } from '../../models/types';
 import { UtilService } from '../../services/util';
+import Toast from 'react-native-root-toast';
 
 const PepperUserSubscription = (): JSX.Element => {
   const schemas: FormSchema[] = [
@@ -92,7 +93,7 @@ const PepperUserSubscription = (): JSX.Element => {
         } = subscriptionFormOutput;
 
         try {
-          await LoginService.subscribe(
+          const subcribeSuccess = await LoginService.subscribe(
             phoneNumber as string,
             code as string,
             name as string,
@@ -101,8 +102,18 @@ const PepperUserSubscription = (): JSX.Element => {
             description as string,
             job as string,
           );
-          navigation.navigate(PepperStackRoutes.Tutorial);
+          if (subcribeSuccess) {
+            navigation.navigate(PepperStackRoutes.Tutorial);
+          }
         } catch (error) {
+          if (error.status === 401 ) {
+            Toast.show('The code is not valid', {
+              duration: Toast.durations.LONG,
+              hideOnPress: true,
+              opacity: .9,
+            });
+            return;
+          }
           UtilService.throwError(error);
         }
       }}/>

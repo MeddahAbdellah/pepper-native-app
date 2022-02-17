@@ -20,7 +20,7 @@ export default class LoginService {
     address: string,
     description: string,
     job: string,
-  ): Promise<void> {
+  ): Promise<boolean> {
     const { token } = await ApiService.put('user/login', {
       phoneNumber,
       code,
@@ -29,8 +29,12 @@ export default class LoginService {
       address,
       description,
       job,
-    }).catch(async(error) => UtilService.throwError(error));
-    await ApiService.setToken(token).catch(this._errorHandler);
+    });
+    if (token) {
+      await ApiService.setToken(token).catch(this._errorHandler);
+      return true;
+    }
+    return false;
   }
 
   public static async logout(): Promise<void> {

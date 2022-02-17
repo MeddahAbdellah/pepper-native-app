@@ -171,13 +171,13 @@ const PepperMatches = (): JSX.Element => {
         <PepperImage src={PepperImages.Sir} style={styles.goGetMatchImage}></PepperImage>
         <Text style={styles.goGetMatchDescription}> Remember! </Text>
         <Text style={styles.goGetMatchDescription}> Nobody likes mean people </Text>
-        <Text style={styles.goGetMatchDescription}> Always be gentleman </Text>
+        <Text style={styles.goGetMatchDescription}> Always be a gentleman </Text>
       </View>) :
       (<View style={styles.goGetMatchContainer}>
         <PepperImage src={PepperImages.Madam} style={styles.goGetMatchImage}></PepperImage>
         <Text style={styles.goGetMatchDescription}> Remember! </Text>
         <Text style={styles.goGetMatchDescription}> Nobody likes mean people </Text>
-        <Text style={styles.goGetMatchDescription}> Always be lady </Text>
+        <Text style={styles.goGetMatchDescription}> Always be a lady </Text>
       </View>)
   );
 
