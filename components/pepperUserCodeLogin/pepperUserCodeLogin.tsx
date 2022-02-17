@@ -6,6 +6,8 @@ import { codeValidator } from '../pepperForm/validators';
 import { useNavigation } from '@react-navigation/native';
 import { PepperStackRoutes } from '../../models/routes';
 import LoginService from '../../services/login';
+import Toast from 'react-native-root-toast';
+import { UtilService } from '../../services/util';
 
 const PepperUserCodeLogin = (loginProps: { route: { params: { phoneNumber: string } } }): JSX.Element => {
   const schemas: FormSchema = {
@@ -27,8 +29,22 @@ const PepperUserCodeLogin = (loginProps: { route: { params: { phoneNumber: strin
         const { phoneNumber } = loginProps.route.params;
         const { code } = loginFormOutput;
         // FIX: Type inference
-        await LoginService.login(phoneNumber, code as string);
-        navigation.navigate(PepperStackRoutes.Main);
+        try {
+          const loginSuccess = await LoginService.login(phoneNumber, code as string);
+          if (loginSuccess) {
+            navigation.navigate(PepperStackRoutes.Main);
+          }
+        } catch (error) {
+          if (error.status === 401 ) {
+            Toast.show('The code is not valid', {
+              duration: Toast.durations.LONG,
+              hideOnPress: true,
+              opacity: .9,
+            });
+            return;
+          }
+          UtilService.throwError(error);
+        }
       }}/>
     </View>
   );

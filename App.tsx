@@ -7,14 +7,18 @@ const PepperApp = (): JSX.Element => {
   const [isErrorFree, setIsErrorFree] = useState(true);
 
   useEffect(() => {
-    // FIX: fix memory leak
-    let isMounted = true;
-    SecureStore.getItemAsync('error').then((error) => {
-      if (!!error && isMounted) {
+    const abortController = new AbortController();
+    (async() => {
+      try {
+        const error = await SecureStore.getItemAsync('error');
+        if (!!error) {
+          setIsErrorFree(false);
+        }
+      } catch (error) {
         setIsErrorFree(false);
       }
-    });
-    return () => { isMounted = false; };
+    })();
+    return () => { abortController.abort();};
   }, []);
 
 

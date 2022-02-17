@@ -21,42 +21,39 @@ const HTTP_OK = 200;
 export default class ApiService {
   private static _baseUrl: string = `http://localhost:7550/api`;
 
-  public static async get(resource: string, params?: any, errorHandler?: (error: any) => void): Promise<any> {
+  public static async get(resource: string, params?: any): Promise<any> {
     const queryString = params ? Object.keys(params).map(key => `${key}=${params[key]}`).join('&') : '';
     const headers = await this.getHeaders();
     return fetch(`${this._baseUrl}/${resource}?${queryString}`, { headers })
-      .then(this._responseHandler)
-      .catch(errorHandler ? errorHandler : this._errorHandler);
+      .then(this._responseFormatter);
   }
 
-  public static async post(resource: string, body: any, errorHandler?: (error: any) => void): Promise<any> {
-    return this.postLikeRequest(HttpMethod.POST, resource, body, errorHandler);
+  public static async post(resource: string, body: any): Promise<any> {
+    return this.postLikeRequest(HttpMethod.POST, resource, body);
   }
 
-  public static async put(resource: string, body: any, errorHandler?: (error: any) => void): Promise<any> {
-    return this.postLikeRequest(HttpMethod.PUT, resource, body, errorHandler);
+  public static async put(resource: string, body: any): Promise<any> {
+    return this.postLikeRequest(HttpMethod.PUT, resource, body);
 
   }
 
-  public static async delete(resource: string, body: any, errorHandler?: (error: any) => void): Promise<any> {
-    return this.postLikeRequest(HttpMethod.DELETE, resource, body, errorHandler);
+  public static async delete(resource: string, body: any): Promise<any> {
+    return this.postLikeRequest(HttpMethod.DELETE, resource, body);
   }
 
-  private static async postLikeRequest(method: HttpMethod, resource: string, body: any, errorHandler?: (error: any) => void): Promise<any> {
+  private static async postLikeRequest(method: HttpMethod, resource: string, body: any): Promise<any> {
     const headers = await this.getHeaders();
     const response = await fetch(`${this._baseUrl}/${resource}`, {
       method,
       headers,
       body: JSON.stringify(body),
     }
-    )
-      .then(this._responseHandler)
-      .catch(errorHandler ? errorHandler : this._errorHandler);
+    ).then(this._responseFormatter);
     return response;
   }
 
   private static async getHeaders(): Promise<any> {
-    const authorization = await SecureStore.getItemAsync(secureStoryTokenKey).catch(this._errorHandler);;
+    const authorization = await SecureStore.getItemAsync(secureStoryTokenKey).catch(async(error) => UtilService.throwError(error));
     const headers = {
       'Content-Type': 'application/json; charset=utf-8',
       ...( authorization ? { 'Authorization': authorization } : {}),
@@ -69,21 +66,17 @@ export default class ApiService {
       await SecureStore.deleteItemAsync(secureStoryTokenKey);
       return;
     }
-    await SecureStore.setItemAsync(secureStoryTokenKey, token).catch(this._errorHandler);
+    await SecureStore.setItemAsync(secureStoryTokenKey, token).catch(async(error) => UtilService.throwError(error));
   }
 
   public static async getToken(): Promise<string | null> {
-    const token = await SecureStore.getItemAsync(secureStoryTokenKey).catch(this._errorHandler);
+    const token = await SecureStore.getItemAsync(secureStoryTokenKey).catch(async(error) => UtilService.throwError(error));
     return token || null;
   }
 
-  private static async _errorHandler(error: any): Promise<void> {
-    await UtilService.throwError(error);
-  }
-
-  private static _responseHandler(response: any): any {
+  private static _responseFormatter(response: any): any {
     if (response.status !== HTTP_OK) {
-      throw JSON.stringify(response);
+      throw response;
     }
     return response.json();
   };

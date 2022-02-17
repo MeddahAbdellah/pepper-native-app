@@ -1,6 +1,10 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { white } from '../../styles/common';
+import {
+  View, StyleSheet, Text, TouchableOpacity,
+} from 'react-native';
+import {
+  white, space_unit, indigo_3, fontSizeRegular,
+} from '../../styles/common';
 import { FormSchema, FormType } from '../pepperForm';
 import {
   legalAgeValidator, nameValidator, cityValidator, alwaysValidValidator, phoneNumberValidator, codeValidator,
@@ -10,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { PepperStackRoutes } from '../../models/routes';
 import LoginService from '../../services/login';
 import { Gender } from '../../models/types';
+import { UtilService } from '../../services/util';
 
 const PepperUserSubscription = (): JSX.Element => {
   const schemas: FormSchema[] = [
@@ -86,17 +91,24 @@ const PepperUserSubscription = (): JSX.Element => {
           job,
         } = subscriptionFormOutput;
 
-        await LoginService.subscribe(
-          phoneNumber as string,
-          code as string,
-          name as string,
-          gender as Gender,
-          address as string,
-          description as string,
-          job as string,
-        );
-        navigation.navigate(PepperStackRoutes.Tutorial);
+        try {
+          await LoginService.subscribe(
+            phoneNumber as string,
+            code as string,
+            name as string,
+            gender as Gender,
+            address as string,
+            description as string,
+            job as string,
+          );
+          navigation.navigate(PepperStackRoutes.Tutorial);
+        } catch (error) {
+          UtilService.throwError(error);
+        }
       }}/>
+      <TouchableOpacity style={styles.loginButton} onPress={() => { navigation.navigate(PepperStackRoutes.LoginRouter); }}>
+        <Text style={styles.loginText}>Already have an account?</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -110,4 +122,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  loginButton: {
+    position: 'absolute',
+    bottom: 5 * space_unit,
+    left: 3 * space_unit,
+    zIndex: 2,
+  },
+  loginText: {
+    fontSize: fontSizeRegular,
+    color: indigo_3,
+    textDecorationLine: 'underline'
+  }
 });

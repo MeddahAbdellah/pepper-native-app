@@ -15,13 +15,15 @@ interface IDateInput extends Omit<DateInputSchema, 'type'> {
   onSubmit: (result: {value: string, valid: boolean}) => void,
 };
 
+const MIN_AGE = 18;
+const MAX_AGE = 31;
 
 export const PepperDateInput = (dateInputProps: IDateInput): JSX.Element => {
   // date picker width must be calculated dynamically as the library does not adapt to parent width
   const datePickerWidth = (Dimensions.get('window').width * .95) - (2 * space_unit);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [date, setDate] = useState(moment());
+  const [date, setDate] = useState(moment().subtract(MIN_AGE, 'years').startOf('year'));
   const [error, setError] = useState('');
 
   const onDateChange = (newDate: Moment): void => {
@@ -43,6 +45,8 @@ export const PepperDateInput = (dateInputProps: IDateInput): JSX.Element => {
           <CalendarPicker
             selectedStartDate={date.toDate()}
             initialDate={date.toDate()}
+            minDate={moment().subtract(MAX_AGE, 'years').startOf('year').toDate()}
+            maxDate={moment().subtract(MIN_AGE, 'years').toDate()}
             selectedDayColor={pepper}
             selectedDayTextStyle={{ color: white }}
             textStyle={{ fontSize: fontSizeTypo, color: raven }}

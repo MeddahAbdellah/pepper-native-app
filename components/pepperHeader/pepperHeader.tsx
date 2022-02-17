@@ -6,6 +6,7 @@ import PepperQRCodeModal from './pepperQRCodeModal';
 import { TouchableOpacity } from 'react-native';
 import LoginService from '../../services/login';
 import { usePepperUser } from '../../hooks/user.hooks';
+import { UtilService } from '../../services/util';
 
 export const PepperTitle = (): JSX.Element => (
   <PepperImage src={PepperImages.PepperTitle} style={
@@ -22,13 +23,16 @@ export const PepperQrCode = (): JSX.Element => {
 
   // Show Qr code button only when user is logged in
   useEffect( () => {
-    let isMounted = true;
+    const abortController = new AbortController();
     (async() => {
-      // TODO: break this loop
-      const loggedIn = await LoginService.isLoggedin();
-      if (isMounted) { setIsLoggedIn(loggedIn); }
+      try {
+        const loggedIn = await LoginService.isLoggedin();
+        setIsLoggedIn(loggedIn);
+      } catch (error) {
+        UtilService.throwError(error);
+      }
     })();
-    return () => { isMounted = false; };
+    return () => { abortController.abort(); };
   }, [currentUser]);
 
   return (

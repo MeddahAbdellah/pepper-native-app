@@ -29,7 +29,7 @@ export const codeValidator = (text: string): string => {
 };
 
 export const legalAgeValidator = (date: Moment): string => {
-  const eighteenYearsAgo = moment().subtract(18, 'years').startOf('year');
+  const eighteenYearsAgo = moment().subtract(18, 'years');
   const validDateOfBirth = moment(date).isSameOrBefore(eighteenYearsAgo);
   if (!validDateOfBirth) { return 'The app is for people over 18'; } return '';
 };

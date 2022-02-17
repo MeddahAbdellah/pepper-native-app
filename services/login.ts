@@ -3,9 +3,13 @@ import { UtilService } from './util';
 import { Gender } from '../models/types';
 
 export default class LoginService {
-  public static async login(phoneNumber: string, code: string): Promise<void> {
+  public static async login(phoneNumber: string, code: string): Promise<boolean> {
     const { token } = await ApiService.post('user/login', { phoneNumber, code });
-    await ApiService.setToken(token).catch(this._errorHandler);
+    if (token) {
+      await ApiService.setToken(token).catch(this._errorHandler);
+      return true;
+    }
+    return false;
   }
 
   public static async subscribe(
@@ -25,7 +29,7 @@ export default class LoginService {
       address,
       description,
       job,
-    });
+    }).catch(async(error) => UtilService.throwError(error));
     await ApiService.setToken(token).catch(this._errorHandler);
   }
 
@@ -39,7 +43,7 @@ export default class LoginService {
   }
 
   public static async isSubscribedAndInitLogin(phoneNumber: string): Promise<boolean> {
-    const { userExists } = await ApiService.get('user/login', { phoneNumber });
+    const { userExists } = await ApiService.get('user/login', { phoneNumber }).catch(this._errorHandler);
     return userExists;
   }
 

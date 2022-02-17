@@ -7,6 +7,7 @@ import { pepper } from '../../styles/common';
 import {
   PepperForm, FormType, FormSchema, MenuItem, phoneNumberValidator,
 } from '../pepperForm';
+import { UtilService } from '../../services/util';
 
 const PepperLoginRouter = (): JSX.Element => {
   // TODO: Library does not provide a type
@@ -25,13 +26,17 @@ const PepperLoginRouter = (): JSX.Element => {
 
   useEffect(() => {
     (async() => {
-      await LoginService.logout();
-      const isLoggedin = await LoginService.isLoggedin();
-      if (isLoggedin) {
-        navigation.navigate(PepperStackRoutes.Main);
-        return;
+      try {
+        await LoginService.logout();
+        const isLoggedin = await LoginService.isLoggedin();
+        if (isLoggedin) {
+          navigation.navigate(PepperStackRoutes.Main);
+          return;
+        }
+        setIsPhoneFormShowing(true);
+      } catch (error) {
+        UtilService.throwError(error);
       }
-      setIsPhoneFormShowing(true);
     });
   }, []);
 

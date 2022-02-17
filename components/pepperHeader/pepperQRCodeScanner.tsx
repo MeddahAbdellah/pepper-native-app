@@ -8,12 +8,14 @@ const PepperQrCodeScanner = (scannerProp: { onBarCodeScanned: (result: BarCodeSc
   const [hasPermission, setHasPermission] = useState(false);
 
   useEffect(() => {
-    let isMounted = true;
+    const abortController = new AbortController();
+
     (async() => {
       const { status } = await Camera.requestCameraPermissionsAsync();
-      if (isMounted) { setHasPermission(status === 'granted'); }
+      setHasPermission(status === 'granted');
     })();
-    return () => { isMounted = false; };
+
+    return () => { abortController.abort(); };
   }, []);
 
   if (hasPermission === null) {
