@@ -8,13 +8,17 @@ import {
   PepperForm, FormType, FormSchema, MenuItem, phoneNumberValidator,
 } from '../pepperForm';
 import { UtilService } from '../../services/util';
+import { useFonts, Sora_400Regular } from '@expo-google-fonts/sora';
+import { setCustomText } from 'react-native-global-props';
 
 const PepperLoginRouter = (): JSX.Element => {
   // TODO: Library does not provide a type
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const navigation = useNavigation<any>();
   const [isPhoneFormShowing, setIsPhoneFormShowing] = useState(false);
-
+  // Font name must be equal to this
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  let [fontsLoaded] = useFonts({ Sora_400Regular });
   const schema: FormSchema = {
     phoneNumber: {
       type: FormType.Text,
@@ -25,6 +29,8 @@ const PepperLoginRouter = (): JSX.Element => {
   };
 
   useEffect(() => {
+    if (!fontsLoaded) { return; }
+    setCustomText({ style: { fontFamily: 'Sora_400Regular' } });
     (async() => {
       try {
         await LoginService.logout();
@@ -38,7 +44,7 @@ const PepperLoginRouter = (): JSX.Element => {
         UtilService.throwError(error);
       }
     });
-  }, []);
+  }, [fontsLoaded]);
 
   // FIX: fix typing
   const onPhoneSubmit = async(output: { [key: string]: string | MenuItem[] }): Promise<void> => {

@@ -20,11 +20,11 @@ export const sun_2 = '#F09819';
 export const heaven = '#00C566';
 export const sea = '#006DD1';
 
-export const fontSizeTypo = 12;
-export const fontSizeRegular = 14;
-export const fontSizeBody = 16;
-export const fontSizeSubHeader = 22;
-export const fontSizeHeader = 28;
+export const fontSizeTypo = 11;
+export const fontSizeRegular = 13;
+export const fontSizeBody = 14;
+export const fontSizeSubHeader = 20;
+export const fontSizeHeader = 24;
 
 
 export const color = (colorHex: string, opacity: number ): string => `rgba(${hexToRgb(colorHex)},${opacity})`;
