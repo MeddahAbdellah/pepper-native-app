@@ -58,7 +58,7 @@ const PepperUserSubscription = (): JSX.Element => {
       },
       description: {
         type: FormType.Text,
-        label: 'description',
+        label: 'Description',
         multiline: true,
         max: 200,
         validator: alwaysValidValidator,
@@ -93,6 +93,7 @@ const PepperUserSubscription = (): JSX.Element => {
         } = subscriptionFormOutput;
 
         try {
+          // TODO: remove phoneNumberInput
           const subcribeSuccess = await LoginService.subscribe(
             phoneNumber as string,
             code as string,

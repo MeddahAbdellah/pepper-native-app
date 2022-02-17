@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from 'react-native';
 import { useFonts } from 'expo-font';
 import { createIconSetFromIcoMoon } from '@expo/vector-icons';
-import { black } from '../../styles/common';
+import { raven } from '../../styles/common';
 
 const ReactIcon = createIconSetFromIcoMoon(
   require('../../assets/selection.json'),
@@ -23,7 +23,7 @@ const PepperIcon = (iconProps: { name: string, size: number, color?: string, sty
   }
 
   return (
-    <ReactIcon name={iconProps.name} size={iconProps.size} color={iconProps.color ? iconProps.color : black} style={iconProps.style} />
+    <ReactIcon name={iconProps.name} size={iconProps.size} color={iconProps.color ? iconProps.color : raven} style={iconProps.style} />
   );
 };
 

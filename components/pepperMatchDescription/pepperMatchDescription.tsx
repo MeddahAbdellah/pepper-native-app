@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, View, ScrollView, Dimensions,
 } from 'react-native';
 import {
-  white, space_unit, fontSizeRegular, black, fontSizeHeader, sun, sun_2, fire, fire_2, indigo_2, indigo, grey_3, color,
+  white, space_unit, fontSizeRegular, fontSizeHeader, sun, sun_2, fire, fire_2, indigo_2, indigo, grey_3, color, raven,
 } from '../../styles/common';
 import PepperDescriptionCarousel from '../pepperDescriptionCarousel/pepperDescriptionCarousel';
 import { IUser } from '../../models/types';
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   detailText: {
     fontSize: fontSizeRegular,
-    color: black,
+    color: raven,
     marginLeft: space_unit,
   },
   detailImages: {
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: fontSizeRegular,
-    color: black,
+    color: raven,
     width: '100%',
     marginVertical: 2 * space_unit,
   }

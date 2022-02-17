@@ -268,6 +268,7 @@ const styles = StyleSheet.create({
   goGetMatchDescription: {
     width: '80%',
     textAlign: 'center',
+    fontFamily: 'Sora_400Regular',
     fontSize: fontSizeRegular,
     color: raven,
     marginBottom: space_unit,

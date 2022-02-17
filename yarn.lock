@@ -1040,6 +1040,11 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@expo-google-fonts/sora@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/sora/-/sora-0.2.2.tgz#bfac5c9775c441b8393246e22cc208ed2912ad31"
+  integrity sha512-3OWeEbYFiKeK8gpvvpzRqCD32kJxrpjo+IfbXY+xKkph4p8IhIcGNmiNAdsoubshkbMkZiQt7aR3xJe4HF1Q5w==
+
 "@expo/config-plugins@3.1.0":
   version "3.1.0"
   resolved "https://registry.npmjs.org/@expo/config-plugins/-/config-plugins-3.1.0.tgz"

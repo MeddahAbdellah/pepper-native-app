@@ -3,8 +3,8 @@ import {
   StyleSheet, View, Text, ImageBackground, TouchableOpacity, ActivityIndicator, Button,
 } from 'react-native';
 import {
-  space_unit, white, black, color, fontSizeHeader, fontSizeSubHeader, sun_2, sun,
-  indigo_2, fire, fire_2, indigo_3, fontSizeRegular, pepper, pepper_2, grey_1, raven,
+  space_unit, white, color, fontSizeHeader, fontSizeSubHeader, sun_2, sun,
+  indigo_2, fire, fire_2, indigo_3, fontSizeRegular, pepper, pepper_2, grey_1, raven, black,
 } from '../../styles/common';
 import Swiper from 'react-native-deck-swiper';
 import { LinearGradient } from 'expo-linear-gradient';
