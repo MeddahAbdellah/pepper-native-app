@@ -58,5 +58,54 @@ password: 123pepper
 />
 ```
 
+## PepperForm
+```javascript
+const formSchema: FormSchema = {
+  phoneNumber: {
+    type: FormType.Text,
+    label: 'Enter your phone number',
+    max: 13,
+    validator: phoneNumberValidator,
+  },
+}
+
+<PepperForm
+  schema={formSchema}
+  onSubmit={(outputs) => void}
+/>
+```
+
+## PepperFormStepper
+```javascript
+ const schemas: FormSchema[] = [
+    {
+      phoneNumber: {
+        type: FormType.Text,
+        label: 'Confirm your phone number',
+        max: 13,
+        validator: phoneNumberValidator,
+      },
+    },
+    {
+      name: {
+        type: FormType.Text,
+        label: 'Name',
+        max: 20,
+        validator: nameValidator,
+      },
+    },
+    {
+      code: {
+        type: FormType.Text,
+        label: 'Enter the code received by sms',
+        max: 6,
+        validator: codeValidator,
+      },
+    }
+  ];
+
+<PepperFormStepper schemas={schemas} onDone={(outputs) => void}/>
+```
+
 ## Colors and constants
 Refer to the common.tsx file for the available colors and constants you may use
