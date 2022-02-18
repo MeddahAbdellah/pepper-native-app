@@ -16,6 +16,7 @@ import PepperUserCodeLogin from '../components/pepperUserCodeLogin/pepperUserCod
 import PepperLoginRouter from '../components/pepperLoginRouter/pepperLoginRouter';
 import PepperUserDescription from '../components/pepperUserDescription/pepperUserDescription';
 import { white } from '../styles/common';
+import PepperLandingPage from '../components/pepperLandingPage/pepperLandingPage';
 
 const ReactStack = createNativeStackNavigator();
 
@@ -33,6 +34,7 @@ const PepperUserApp = (): JSX.Element => (
             headerLeft: () => (<PepperUserProfile navigation={navigation}/>),
             headerRight: () => (<PepperQrCode />),
           })}>
+          <ReactStack.Screen name={PepperStackRoutes.LadingPage} component={PepperLandingPage} options={{ headerShown: false }}/>
           <ReactStack.Screen name={PepperStackRoutes.LoginRouter} component={PepperLoginRouter} />
           <ReactStack.Screen name={PepperStackRoutes.CodeLogin} component={PepperUserCodeLogin} />
           <ReactStack.Screen name={PepperStackRoutes.Intro} component={PepperIntro} />

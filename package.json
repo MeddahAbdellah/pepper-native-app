@@ -11,6 +11,7 @@
     "prepare": "npx husky install"
   },
   "dependencies": {
+    "@expo-google-fonts/architects-daughter": "^0.2.2",
     "@expo-google-fonts/sora": "^0.2.2",
     "@expo/vector-icons": "^12.0.0",
     "@react-navigation/bottom-tabs": "^6.0.9",

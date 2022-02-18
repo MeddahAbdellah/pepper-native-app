@@ -23,6 +23,7 @@ export const sea = '#006DD1';
 export const fontSizeTypo = 11;
 export const fontSizeRegular = 13;
 export const fontSizeBody = 14;
+export const fontSizeSubSubHeader = 16;
 export const fontSizeSubHeader = 20;
 export const fontSizeHeader = 24;
 
