@@ -6,7 +6,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { PepperStackRoutes } from '../../models/routes';
 import {
-  pepper, white, space_unit, fontSizeHeader, indigo, black, fontSizeRegular, color, grey_3, fontSizeSubSubHeader, indigo_3, fontSizeTypo,
+  pepper, white, space_unit, fontSizeHeader, indigo, black, fontSizeRegular, color, fontSizeSubSubHeader, indigo_3, fontSizeTypo, raven,
 } from '../../styles/common';
 import { UtilService } from '../../services/util';
 import { useFonts, Sora_400Regular, Sora_700Bold } from '@expo-google-fonts/sora';
@@ -39,7 +39,7 @@ const PepperLandingPage = (): JSX.Element => {
       } catch (error) {
         UtilService.throwError(error);
       }
-    });
+    })();
   }, [fontsLoaded]);
 
   const onGo = (): void => {
@@ -47,7 +47,6 @@ const PepperLandingPage = (): JSX.Element => {
   };
 
   return isLangingPageShowing ?
-    <ActivityIndicator size="large" color={pepper} /> :
     (
       <LinearGradient
         colors={[indigo, indigo_3, pepper]}
@@ -70,7 +69,10 @@ const PepperLandingPage = (): JSX.Element => {
           <Text style={styles.foundersText}> Meddah Tchoulak Houamel </Text>
         </View>
       </LinearGradient>
-    );
+    ) :
+    (<View style={styles.container}>
+      <ActivityIndicator size="large" color={pepper} />
+    </View>);
 };
 
 export default PepperLandingPage;
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
   },
   goButton: {
     color: white,
-    backgroundColor: color(grey_3, .8),
+    backgroundColor: color(raven, .9),
     width: '100%',
     paddingVertical: 2 * space_unit,
     justifyContent: 'center',

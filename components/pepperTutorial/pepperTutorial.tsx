@@ -27,7 +27,7 @@ const PepperTutorial = (): JSX.Element => {
   return (
     <View style={styles.container}>
       <PepperCarousel pages={[
-        { image: PepperImages.QrCode, text: 'Here is your QR code! The people you meet will want to scan it to see your profile' },
+        { image: PepperImages.QrCode, text: 'Everyone has a QR code! The people you meet will want to scan it to see your profile' },
         { image: PepperImages.Romance, text: 'When you’ll get to the event you will probably meet some lovely people' },
         { image: PepperImages.ScanQr, text: 'If you hit it off with someone scan their QR code or show them yours' },
         {
