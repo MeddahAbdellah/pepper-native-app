@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, View, TextInput,
 } from 'react-native';
 import {
-  space_unit, grey_1, grey_2, pepper_2, grey_3, fontSizeRegular, color,
+  space_unit, grey_1, grey_2, grey_3, fontSizeRegular, color, indigo,
 } from '../../styles/common';
 import _ from 'lodash';
 import { TextInputSchema } from './formTypes';
@@ -31,7 +31,7 @@ export const PepperTextInput = (textInputProps: ITextInput): JSX.Element => {
         onChangeText={onChange}
         style={{
           ...styles.textInput,
-          ...(_.isEmpty(error) ? {} : { shadowColor: pepper_2 }),
+          ...(_.isEmpty(error) ? {} : { shadowColor: indigo }),
           ...(textInputProps.multiline ? { paddingTop: 2 * space_unit, maxHeight: 30 * space_unit } : {}),
         }}
         editable
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   error: {
     marginTop: space_unit,
     marginLeft: space_unit,
-    color: pepper_2,
+    color: indigo,
   },
   textInput: {
     padding: 2 * space_unit,

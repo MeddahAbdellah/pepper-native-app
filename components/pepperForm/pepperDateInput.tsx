@@ -5,7 +5,8 @@ import {
 import CalendarPicker from 'react-native-calendar-picker';
 import moment, { Moment } from 'moment';
 import {
-  fontSizeRegular, space_unit, grey_3, pepper_2, color, grey_1, grey_2, white, black, pepper, fontSizeTypo, raven, indigo_3, indigo_2, fontSizeBody,
+  fontSizeRegular, space_unit, grey_3, color, grey_1, grey_2, white, black, pepper,
+  fontSizeTypo, raven, indigo_3, indigo_2, fontSizeBody, indigo,
 } from '../../styles/common';
 import { DateInputSchema } from './formTypes';
 import _ from 'lodash';
@@ -68,7 +69,7 @@ export const PepperDateInput = (dateInputProps: IDateInput): JSX.Element => {
       }}>
         <TextInput
           value={date.format('YYYY MMM DD')}
-          style={{ ...styles.dateInput, ...(_.isEmpty(error) ? {} : { shadowColor: pepper_2 }) }}
+          style={{ ...styles.dateInput, ...(_.isEmpty(error) ? {} : { shadowColor: indigo }) }}
           pointerEvents="none"
         />
       </TouchableOpacity>
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
   error: {
     marginTop: space_unit,
     marginLeft: space_unit,
-    color: pepper_2,
+    color: indigo,
   },
   dateInput: {
     padding: 2 * space_unit,

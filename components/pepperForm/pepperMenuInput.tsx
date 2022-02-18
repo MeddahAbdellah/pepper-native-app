@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, View, TextInput, TouchableOpacity,
 } from 'react-native';
 import {
-  space_unit, grey_1, grey_2, pepper_2, grey_3, fontSizeRegular, color, indigo_3, fontSizeBody,
+  space_unit, grey_1, grey_2, grey_3, fontSizeRegular, color, indigo_3, fontSizeBody, indigo,
 } from '../../styles/common';
 import _ from 'lodash';
 import { MenuInputSchema, MenuItem } from './formTypes';
@@ -81,7 +81,7 @@ export const PepperMenuInput = (menuInputProps: IMenuInput): JSX.Element => {
           style={{
             ...styles.textInput,
             ...{ width: '70%' },
-            ...(_.isEmpty(nameError) ? {} : { shadowColor: pepper_2 }),
+            ...(_.isEmpty(nameError) ? {} : { shadowColor: indigo }),
           }}
           editable
         />
@@ -92,7 +92,7 @@ export const PepperMenuInput = (menuInputProps: IMenuInput): JSX.Element => {
           style={{
             ...styles.textInput,
             ...{ width: '20%' },
-            ...(_.isEmpty(priceError) ? {} : { shadowColor: pepper_2 }),
+            ...(_.isEmpty(priceError) ? {} : { shadowColor: indigo }),
           }}
           editable
         />
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   error: {
     marginTop: space_unit,
     marginLeft: space_unit,
-    color: pepper_2,
+    color: indigo,
   },
   textInput: {
     padding: 2 * space_unit,

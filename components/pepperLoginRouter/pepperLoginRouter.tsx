@@ -22,7 +22,7 @@ const PepperLoginRouter = (): JSX.Element => {
   const schema: FormSchema = {
     phoneNumber: {
       type: FormType.Text,
-      label: 'Phone number',
+      label: 'Enter your phone number',
       max: 13,
       validator: phoneNumberValidator,
     },
@@ -60,7 +60,9 @@ const PepperLoginRouter = (): JSX.Element => {
 
   return isPhoneFormShowing ?
     <ActivityIndicator size="large" color={pepper} /> :
-    <PepperForm schema={schema} onSubmit={onPhoneSubmit}/>;
+    (<>
+      <PepperForm schema={schema} onSubmit={onPhoneSubmit}/>
+    </>);
 };
 
 export default PepperLoginRouter;
