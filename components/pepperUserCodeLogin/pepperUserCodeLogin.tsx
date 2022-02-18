@@ -40,6 +40,7 @@ const PepperUserCodeLogin = (loginProps: { route: { params: { phoneNumber: strin
               duration: Toast.durations.LONG,
               hideOnPress: true,
               opacity: .9,
+              textStyle: { fontFamily: 'Arial' },
             });
             return;
           }

@@ -112,6 +112,7 @@ const PepperUserSubscription = (): JSX.Element => {
               duration: Toast.durations.LONG,
               hideOnPress: true,
               opacity: .9,
+              textStyle: { fontFamily: 'Arial' },
             });
             return;
           }

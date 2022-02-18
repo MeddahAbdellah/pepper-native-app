@@ -100,6 +100,7 @@ const PepperPartyDescription = (descriptionProps: { route: { params: { party: IP
                 duration: Toast.durations.LONG,
                 hideOnPress: true,
                 opacity: .9,
+                textStyle: { fontFamily: 'Arial' },
               });
             }}>
             <PepperTag
