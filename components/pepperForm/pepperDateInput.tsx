@@ -67,11 +67,12 @@ export const PepperDateInput = (dateInputProps: IDateInput): JSX.Element => {
       <TouchableOpacity onPress={() => {
         setIsModalVisible(true);
       }}>
-        <TextInput
-          value={date.format('YYYY MMM DD')}
-          style={{ ...styles.dateInput, ...(_.isEmpty(error) ? {} : { shadowColor: indigo }) }}
-          pointerEvents="none"
-        />
+        <View pointerEvents="none">
+          <TextInput
+            value={date.format('YYYY MMM DD')}
+            style={{ ...styles.dateInput, ...(_.isEmpty(error) ? {} : { shadowColor: indigo }) }}
+          />
+        </View>
       </TouchableOpacity>
       <Text style={styles.error}>{error}</Text>
     </View>
