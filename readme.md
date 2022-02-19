@@ -6,6 +6,8 @@ Multiple components are used throughout the app to accelerate work and factorize
 * Expo-cli
 ```bash
 npm install -g expo-cli
+yarn install
+expo start
 ```
 
 ## PepperCarousel
