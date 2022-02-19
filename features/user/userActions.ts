@@ -26,6 +26,13 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async() => {
   return { ...userInfo.user, matches, parties };
 });
 
+export const updateUser = createAsyncThunk('user/updateUser', async(updatePayload: Partial<IUser>) => {
+  const userInfo = await ApiService.put('user', updatePayload).catch(async(error) => UtilService.throwError(error));
+  const { matches } = await ApiService.get('user/matches').catch(async(error) => UtilService.throwError(error));
+  const { parties } = await ApiService.get('user/parties').catch(async(error) => UtilService.throwError(error));
+  return { ...userInfo.user, matches, parties };
+});
+
 export const addMatch = createAsyncThunk('user/addMatch', async(updatePayload: { matchId: number }) => {
   const { matches } = await ApiService.post('user/matches', updatePayload).catch(async(error) => UtilService.throwError(error));
   return matches;

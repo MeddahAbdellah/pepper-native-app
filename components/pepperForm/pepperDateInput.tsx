@@ -44,8 +44,8 @@ export const PepperDateInput = (dateInputProps: IDateInput): JSX.Element => {
       <BlurView tint="dark" style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <CalendarPicker
-            selectedStartDate={date.toDate()}
-            initialDate={date.toDate()}
+            selectedStartDate={(dateInputProps.initialValue ? dateInputProps.initialValue : date).toDate()}
+            initialDate={(dateInputProps.initialValue ? dateInputProps.initialValue : date).toDate()}
             minDate={moment().subtract(MAX_AGE, 'years').startOf('year').toDate()}
             maxDate={moment().subtract(MIN_AGE, 'years').toDate()}
             selectedDayColor={pepper}

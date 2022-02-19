@@ -28,6 +28,7 @@ export const PepperTextInput = (textInputProps: ITextInput): JSX.Element => {
       <TextInput
         multiline={textInputProps.multiline ?? false}
         maxLength={textInputProps.max}
+        defaultValue={textInputProps.initialValue ? textInputProps.initialValue : ''}
         onChangeText={onChange}
         style={{
           ...styles.textInput,

@@ -6,23 +6,52 @@ import {
   white, space_unit, fontSizeRegular, fontSizeHeader, sun, sun_2, fire, fire_2, indigo_2, indigo, grey_3, color, pepper, raven,
 } from '../../styles/common';
 import PepperDescriptionCarousel from '../pepperDescriptionCarousel/pepperDescriptionCarousel';
-import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import PepperTag from '../pepperTags/pepperTags';
-import { limitTextLength } from '../../helpers/uiHelper';
 import LoginService from '../../services/login';
 import { usePepperDispatch } from '../../hooks/store.hooks';
-import { fetchUser, resetUser } from '../../features/user/userActions';
+import { fetchUser, resetUser, updateUser } from '../../features/user/userActions';
 import { usePepperUser } from '../../hooks/user.hooks';
 import { useNavigation } from '@react-navigation/native';
 import { PepperStackRoutes } from '../../models/routes';
+import {
+  FormSchema, PepperForm, FormType, nameValidator, cityValidator, alwaysValidValidator, MenuItem,
+} from '../pepperForm';
 
 const PepperUserDescription = (): JSX.Element => {
   const { width } = Dimensions.get('window');
   const [carouselWidth, setCarouselWidth] = useState(width);
+  const [schema, setSchema] = useState<FormSchema>({});
   const storeDispatch = usePepperDispatch();
   // Fetch user on load
   useEffect(() => { storeDispatch(fetchUser()); }, []);
   const currentUser = usePepperUser();
+  useEffect(() => {
+    if (!currentUser.user) { return; }
+    setSchema({
+      job: {
+        type: FormType.Text,
+        label: 'Job',
+        initialValue: currentUser.user.job,
+        max: 20,
+        validator: nameValidator,
+      },
+      address: {
+        type: FormType.Text,
+        label: 'Ville',
+        initialValue: currentUser.user.address,
+        max: 30,
+        validator: cityValidator,
+      },
+      description: {
+        type: FormType.Text,
+        label: 'Description',
+        initialValue: currentUser.user.description,
+        multiline: true,
+        max: 200,
+        validator: alwaysValidValidator,
+      },
+    });
+  }, [currentUser]);
 
   // TODO: Library does not provide a type
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -43,6 +72,10 @@ const PepperUserDescription = (): JSX.Element => {
       style={styles.tags}/>);
   });
 
+  const updatePersonalInfo = (result: { [key: string]: string | MenuItem[]; }): void => {
+    storeDispatch(updateUser(result));
+  };
+
   return (
     <ScrollView style={{ backgroundColor: white }}>
       <View style={styles.container} onLayout={onLayout}>
@@ -51,26 +84,18 @@ const PepperUserDescription = (): JSX.Element => {
         </View>
         <View style={styles.detailsContainer}>
           <Text style={{ fontSize: fontSizeHeader }}>{currentUser.user.name}</Text>
-          <View style={styles.details}>
-            <PepperImage src={PepperImages.Briefcase} style={styles.detailImages}></PepperImage>
-            <Text style={styles.detailText}>{currentUser.user.job}</Text>
-          </View>
-          <View style={styles.details}>
-            <PepperImage src={PepperImages.OldPhone} style={styles.detailImages}></PepperImage>
-            <Text style={styles.detailText}>{currentUser.user.phoneNumber}</Text>
-          </View>
-          <View style={styles.details}>
-            <PepperImage src={PepperImages.House} style={styles.detailImages}></PepperImage>
-            <Text style={styles.detailText}>{limitTextLength(currentUser.user.address, 35)}</Text>
-          </View>
           <View style={styles.tagsContainer}>{StaticInterestTags()}</View>
-          <Text style={styles.description}>{currentUser.user.description}</Text>
+          <PepperForm
+            schema={schema}
+            onSubmit={updatePersonalInfo}
+            style={{ padding: 0, marginTop: 2 * space_unit }}
+            hasUpdateButton={true}></PepperForm>
         </View>
         <TouchableOpacity style={styles.logoutButton}
           onPress={async() => {
             await LoginService.logout();
             storeDispatch(resetUser());
-            navigation.navigate(PepperStackRoutes.LoginRouter);
+            navigation.navigate(PepperStackRoutes.LadingPage);
           }}>
           <Text style={styles.logoutButtonText}>Logout</Text>
         </TouchableOpacity>

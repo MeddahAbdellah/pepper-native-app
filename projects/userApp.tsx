@@ -25,13 +25,13 @@ const PepperUserApp = (): JSX.Element => (
     <Provider store={store}>
       <NavigationContainer>
         <ReactStack.Navigator
-          screenOptions={({ navigation }) => ({
+          screenOptions={({ route, navigation }) => ({
             headerShadowVisible: false,
             gestureEnabled: false,
             headerBackVisible: false,
             headerStyle: { backgroundColor: white },
             headerTitle: () => (<PepperTitle/>),
-            headerLeft: () => (<PepperUserProfile navigation={navigation}/>),
+            headerLeft: () => (<PepperUserProfile navigation={navigation} route={route}/>),
             headerRight: () => (<PepperQrCode />),
           })}>
           <ReactStack.Screen name={PepperStackRoutes.LadingPage} component={PepperLandingPage} options={{ headerShown: false }}/>

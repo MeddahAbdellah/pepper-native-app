@@ -10,6 +10,7 @@ export enum FormType {
 export interface TextInputSchema {
   type: FormType.Text,
   label: string,
+  initialValue?: string,
   max: number,
   multiline?: boolean,
   validator: (value: string) => string,
@@ -17,6 +18,7 @@ export interface TextInputSchema {
 
 export interface DateInputSchema {
   type: FormType.Date,
+  initialValue?: Moment,
   label: string,
   validator: (value: Moment) => string,
 }

@@ -57,6 +57,7 @@ export enum StoreStatus {
 export interface IUserStore {
   user: IUser;
   fetchStatus: StoreStatus;
+  updateStatus: StoreStatus;
   addMatchStatus: StoreStatus;
   updateMatchStatus: StoreStatus;
   deleteMatchStatus: StoreStatus;

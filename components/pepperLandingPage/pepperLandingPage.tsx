@@ -29,7 +29,6 @@ const PepperLandingPage = (): JSX.Element => {
     setCustomText({ style: { fontFamily: 'Sora_700Bold' } });
     (async() => {
       try {
-        await LoginService.logout();
         const isLoggedin = await LoginService.isLoggedin();
         if (isLoggedin) {
           navigation.navigate(PepperStackRoutes.Main);

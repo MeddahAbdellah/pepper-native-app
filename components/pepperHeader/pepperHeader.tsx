@@ -15,7 +15,7 @@ export const PepperTitle = (): JSX.Element => (
   }></PepperImage>
 );
 
-export const PepperUserProfile = (userProfileProps: { navigation: { push: (route: string) => void } }): JSX.Element => {
+export const PepperUserProfile = (userProfileProps: { route: { name: string }, navigation: { push: (route: string) => void } }): JSX.Element => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const currentUser = usePepperUser();
 
@@ -33,11 +33,17 @@ export const PepperUserProfile = (userProfileProps: { navigation: { push: (route
     return () => { abortController.abort(); };
   }, [currentUser]);
 
+  const onOpenProfile = (): void => {
+    if (userProfileProps.route.name !== PepperStackRoutes.UserDescription) {
+      userProfileProps.navigation.push(PepperStackRoutes.UserDescription);
+    }
+  };
+
   return (
     <>
       { isLoggedIn ?
         (
-          <TouchableOpacity onPress={ () => userProfileProps.navigation.push(PepperStackRoutes.UserDescription) }>
+          <TouchableOpacity onPress={onOpenProfile}>
             <PepperIcon name="pepper-menu" color={black} size={4.5 * space_unit} />
           </TouchableOpacity>
         ) : null

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  StyleSheet, Text, View, TouchableOpacity,
+} from 'react-native';
 import _ from 'lodash';
 import {
-  space_unit, white, indigo, pepper,
+  space_unit, white, indigo, pepper, indigo_3,
 } from '../../styles/common';
 import {
   FormSchema, FormType, TextInputSchema, DateInputSchema, MenuItem, MenuInputSchema,
@@ -13,20 +15,49 @@ import { PepperDateInput } from './pepperDateInput';
 import { PepperGenderInput } from './pepperGenderInput';
 import { PepperMenuInput } from './pepperMenuInput';
 
-export const PepperForm = (formProps: { schema: FormSchema, onSubmit: (result: { [key: string]: string | MenuItem[] }) => void }): JSX.Element => {
+export const PepperForm = (formProps: {
+  schema: FormSchema,
+  onSubmit: (result: { [key: string]: string | MenuItem[] }) => void,
+  // style could be anything
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  style?: any,
+  hasUpdateButton?: boolean,
+}): JSX.Element => {
   const [formOutput, setFormOutput] = useState({});
   const schemaToErrorsArray = _.reduce(formProps.schema, (res, _value, key) => ({ ...res, [key]: true }), {});
   const [formErrors, setFormErrors] = useState(schemaToErrorsArray);
+  const [changedAtLeastOnce, setChangedAtLeastOnce] = useState(false);
 
   const onFieldSubmit = (key: string, result: { value: string | MenuItem[], valid: boolean }): void => {
+    setChangedAtLeastOnce(true);
     const newFormOutput = { ...formOutput, [key]: result.value };
     const newFormErrors = { ...formErrors, [key]: !result.valid };
     setFormOutput(newFormOutput);
     setFormErrors(newFormErrors);
   };
 
+  const onSubmit = (): void => {
+    setChangedAtLeastOnce(false);
+    formProps.onSubmit(formOutput);
+  };
+
+  const StaticValidateButton = (): JSX.Element => (!formProps.hasUpdateButton ?
+    <PepperRoundButton
+      size={7 * space_unit}
+      style={styles.nextButton}
+      colors={[indigo, pepper]}
+      iconName="pepper-arrowRight"
+      onPress={onSubmit}
+    /> :
+    <TouchableOpacity>
+      <TouchableOpacity style={styles.validateButton}
+        onPress={onSubmit}>
+        <Text style={styles.validateButtonText}>Update</Text>
+      </TouchableOpacity>
+    </TouchableOpacity>);
+
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...formProps.style }}>
       {
         _.map(formProps.schema, (schemaValue, key) => {
           switch (schemaValue.type) {
@@ -54,14 +85,8 @@ export const PepperForm = (formProps: { schema: FormSchema, onSubmit: (result: {
           }
         })
       }
-      { _.isEmpty(_.filter(formErrors)) ?
-        <PepperRoundButton
-          size={7 * space_unit}
-          style={styles.nextButton}
-          colors={[indigo, pepper]}
-          iconName="pepper-arrowRight"
-          onPress={() => formProps.onSubmit(formOutput) }
-        /> :
+      { _.isEmpty(_.filter(formErrors)) && changedAtLeastOnce ?
+        <StaticValidateButton/> :
         null
       }
     </View>
@@ -86,5 +111,14 @@ const styles = StyleSheet.create({
     shadowOpacity: .3,
     shadowRadius: 3,
     elevation: 2,
-  }
+  },
+  validateButton: {
+    flexDirection: 'row',
+    borderRadius: 1 * space_unit,
+    justifyContent: 'center',
+  },
+  validateButtonText: {
+    color: indigo_3,
+    paddingVertical: 2 * space_unit,
+  },
 });
