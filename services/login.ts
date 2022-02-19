@@ -38,7 +38,7 @@ export default class LoginService {
   }
 
   public static async logout(): Promise<void> {
-    await ApiService.setToken(null).catch(this._errorHandler);
+    await UtilService.cleanHistory();
   }
 
   public static async isLoggedin(): Promise<boolean> {

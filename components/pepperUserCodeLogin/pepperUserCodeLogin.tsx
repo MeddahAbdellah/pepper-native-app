@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import { white } from '../../styles/common';
 import { FormSchema, FormType, PepperForm } from '../pepperForm';
 import { codeValidator } from '../pepperForm/validators';
@@ -40,7 +40,14 @@ const PepperUserCodeLogin = (loginProps: { route: { params: { phoneNumber: strin
               duration: Toast.durations.LONG,
               hideOnPress: true,
               opacity: .9,
-              textStyle: { fontFamily: 'Arial' },
+              textStyle: Platform.select({
+                ios: {
+                  fontFamily: 'Arial'
+                },
+                android: {
+                  fontFamily: 'normal'
+                },
+              })
             });
             return;
           }

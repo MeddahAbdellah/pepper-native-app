@@ -12,7 +12,7 @@ export class UtilService {
   }
 
   public static async throwError(error: object): Promise<void> {
-    Promise.all(Object.keys(SecureStoreKeys).map((key) => SecureStore.deleteItemAsync(key)));
+    await UtilService.cleanHistory();
     // we need to log error to debug it
     // eslint-disable-next-line no-console
     console.error('Pepper Error: ', error);
@@ -23,5 +23,9 @@ export class UtilService {
   public static async clearErrors(): Promise<void> {
     await SecureStore.deleteItemAsync(SecureStoreKeys.Error);
     UtilService.reloadApp();
+  }
+
+  public static async cleanHistory(): Promise<void> {
+    Promise.all(Object.keys(SecureStoreKeys).map((key) => SecureStore.deleteItemAsync(key)));
   }
 }

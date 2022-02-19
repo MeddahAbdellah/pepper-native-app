@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet, View, Text, ScrollView, Dimensions, TouchableOpacity, Modal,
+  StyleSheet, View, Text, ScrollView, Dimensions, TouchableOpacity, Modal, Platform,
 } from 'react-native';
 import { IParty } from '../../models/types';
 import {
@@ -100,7 +100,14 @@ const PepperPartyDescription = (descriptionProps: { route: { params: { party: IP
                 duration: Toast.durations.LONG,
                 hideOnPress: true,
                 opacity: .9,
-                textStyle: { fontFamily: 'Arial' },
+                textStyle: Platform.select({
+                  ios: {
+                    fontFamily: 'Arial'
+                  },
+                  android: {
+                    fontFamily: 'normal'
+                  },
+                })
               });
             }}>
             <PepperTag

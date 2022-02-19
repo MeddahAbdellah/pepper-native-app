@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, StyleSheet, Text, TouchableOpacity,
+  View, StyleSheet, Text, TouchableOpacity, Platform,
 } from 'react-native';
 import {
   white, space_unit, indigo_3, fontSizeRegular,
@@ -112,7 +112,14 @@ const PepperUserSubscription = (): JSX.Element => {
               duration: Toast.durations.LONG,
               hideOnPress: true,
               opacity: .9,
-              textStyle: { fontFamily: 'Arial' },
+              textStyle: Platform.select({
+                ios: {
+                  fontFamily: 'Arial'
+                },
+                android: {
+                  fontFamily: 'normal'
+                },
+              })
             });
             return;
           }
