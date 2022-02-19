@@ -15,8 +15,8 @@ export const numberValidator = (text: string): string => {
 };
 
 export const phoneNumberValidator = (text: string): string => {
-  if (!(/^0033[6-7][0-9]{8}$/.test(text))) {
-    return 'Phone number must be in this format 0033760208022';
+  if (!(/^0[6-7][0-9]{8}$/.test(text))) {
+    return 'Phone number must be in this format 0760208022';
   }
   return '';
 };

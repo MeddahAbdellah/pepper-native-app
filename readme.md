@@ -66,7 +66,7 @@ const formSchema: FormSchema = {
   phoneNumber: {
     type: FormType.Text,
     label: 'Enter your phone number',
-    max: 13,
+    max: 10,
     validator: phoneNumberValidator,
   },
 }
@@ -84,7 +84,7 @@ const formSchema: FormSchema = {
       phoneNumber: {
         type: FormType.Text,
         label: 'Confirm your phone number',
-        max: 13,
+        max: 10,
         validator: phoneNumberValidator,
       },
     },

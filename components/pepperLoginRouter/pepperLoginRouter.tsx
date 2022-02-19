@@ -14,7 +14,7 @@ const PepperLoginRouter = (): JSX.Element => {
     phoneNumber: {
       type: FormType.Text,
       label: 'Enter your phone number',
-      max: 13,
+      max: 10,
       validator: phoneNumberValidator,
     },
   };

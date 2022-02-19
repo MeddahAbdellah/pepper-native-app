@@ -23,7 +23,7 @@ const PepperUserSubscription = (): JSX.Element => {
       phoneNumber: {
         type: FormType.Text,
         label: 'Confirm your phone number',
-        max: 13,
+        max: 10,
         validator: phoneNumberValidator,
       },
     },
