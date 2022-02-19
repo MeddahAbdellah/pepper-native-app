@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PepperError from './components/pepperError/pepperError';
 import * as SecureStore from 'expo-secure-store';
 import PepperUserApp from './projects/userApp';
+import { SecureStoreKeys } from './services/util';
 
 const PepperApp = (): JSX.Element => {
   const [isErrorFree, setIsErrorFree] = useState(true);
@@ -10,7 +11,7 @@ const PepperApp = (): JSX.Element => {
     const abortController = new AbortController();
     (async() => {
       try {
-        const error = await SecureStore.getItemAsync('error');
+        const error = await SecureStore.getItemAsync(SecureStoreKeys.Error);
         if (!!error) {
           setIsErrorFree(false);
         }

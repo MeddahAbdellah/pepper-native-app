@@ -5,9 +5,7 @@
 // TODO: any is a valid type as we want to be able to send any object
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as SecureStore from 'expo-secure-store';
-import { UtilService } from './util';
-
-export const secureStoryTokenKey = 'token';
+import { UtilService, SecureStoreKeys } from './util';
 
 enum HttpMethod {
   GET = 'get',
@@ -53,7 +51,7 @@ export default class ApiService {
   }
 
   private static async getHeaders(): Promise<any> {
-    const authorization = await SecureStore.getItemAsync(secureStoryTokenKey).catch(async(error) => UtilService.throwError(error));
+    const authorization = await SecureStore.getItemAsync(SecureStoreKeys.Token).catch(async(error) => UtilService.throwError(error));
     const headers = {
       'Content-Type': 'application/json; charset=utf-8',
       ...( authorization ? { 'Authorization': authorization } : {}),
@@ -63,14 +61,14 @@ export default class ApiService {
 
   public static async setToken(token: string | null): Promise<void> {
     if (!token) {
-      await SecureStore.deleteItemAsync(secureStoryTokenKey);
+      await SecureStore.deleteItemAsync(SecureStoreKeys.Token);
       return;
     }
-    await SecureStore.setItemAsync(secureStoryTokenKey, token).catch(async(error) => UtilService.throwError(error));
+    await SecureStore.setItemAsync(SecureStoreKeys.Token, token).catch(async(error) => UtilService.throwError(error));
   }
 
   public static async getToken(): Promise<string | null> {
-    const token = await SecureStore.getItemAsync(secureStoryTokenKey).catch(async(error) => UtilService.throwError(error));
+    const token = await SecureStore.getItemAsync(SecureStoreKeys.Token).catch(async(error) => UtilService.throwError(error));
     return token || null;
   }
 
