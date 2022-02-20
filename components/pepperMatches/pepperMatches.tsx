@@ -39,7 +39,9 @@ const PepperMatches = (): JSX.Element => {
       case MatchStatus.UNCHECKED:
         return <Text style={{ fontSize: fontSizeRegular, color: sea }}>How was {statusProps.matchName}?</Text>;
       default:
-        return <Text style={{ fontSize: fontSizeRegular, color: pepper_2 }}>Too Early to text her!</Text>;
+        return <Text style={{ fontSize: fontSizeRegular, color: pepper_2 }}>
+          Too Early to text { currentUser.user.gender === Gender.MAN ? 'him' : 'her'}!
+        </Text>;
     }
   };
 

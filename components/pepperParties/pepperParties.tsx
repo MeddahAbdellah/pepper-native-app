@@ -48,9 +48,9 @@ const PepperParties = (): JSX.Element => {
         </TouchableOpacity>
         <LinearGradient colors={['transparent', color(black, .7), black]} style={styles.imageMask}>
           <View style={styles.descriptionContainer}>
-            <Text style={{ ...styles.description, fontSize: fontSizeHeader }}>{party.title}</Text>
+            <Text style={{ ...styles.description, fontSize: fontSizeHeader, fontFamily: 'Sora_700Bold' }}>{party.title}</Text>
             <Text style={{ ...styles.description, fontSize: fontSizeSubHeader }}>{party.theme}</Text>
-            <Text style={{ ...styles.description, marginBottom: 2 * space_unit }}>{moment(party.date).format('YYYY MM DD')}</Text>
+            <Text style={{ ...styles.description, marginBottom: 2 * space_unit }}>{moment(party.date).format('YYYY MMM DD')}</Text>
             <View style={styles.tagsContainer}>
               <PepperTag
                 iconName="pepper-dancing"

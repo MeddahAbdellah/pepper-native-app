@@ -3,7 +3,7 @@ import LoginService from '../../services/login';
 import { useNavigation } from '@react-navigation/native';
 import { PepperStackRoutes } from '../../models/routes';
 import {
-  PepperForm, FormType, FormSchema, MenuItem, phoneNumberValidator,
+  PepperForm, FormType, FormSchema, MenuItem, phoneNumberValidator, KeyBoardType,
 } from '../pepperForm';
 
 const PepperLoginRouter = (): JSX.Element => {
@@ -13,6 +13,7 @@ const PepperLoginRouter = (): JSX.Element => {
   const schema: FormSchema = {
     phoneNumber: {
       type: FormType.Text,
+      keyboardType: KeyBoardType.Numeric,
       label: 'Enter your phone number',
       max: 10,
       validator: phoneNumberValidator,

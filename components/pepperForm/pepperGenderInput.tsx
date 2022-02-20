@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { GenderInputSchema } from './formTypes';
 import {
-  sky, color, sea, space_unit,
+  color, space_unit, indigo,
 } from '../../styles/common';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import { Gender } from '../../models/types';
@@ -23,13 +23,17 @@ export const PepperGenderInput = (genderInputProps: IGenderInput): JSX.Element =
     <View style={styles.container}>
       <TouchableOpacity style={{
         ...styles.genderContainer,
-        ...( gender === Gender.WOMAN ? { backgroundColor: color(sea, .4) } : {})
+        borderWidth: 2,
+        borderColor: 'transparent',
+        ...( gender === Gender.WOMAN ? { borderColor: color(indigo, .5) } : {})
       }} onPressIn={() => onChange(Gender.WOMAN)}>
         <PepperImage src={PepperImages.Woman} style={{ width: '90%' }}/>
       </TouchableOpacity>
       <TouchableOpacity style={{
         ...styles.genderContainer,
-        ...( gender === Gender.MAN ? { backgroundColor: color(sky, .4) } : {})
+        borderWidth: 2,
+        borderColor: 'transparent',
+        ...( gender === Gender.MAN ? { borderColor: color(indigo, .5) } : {})
       }} onPressIn={() => onChange(Gender.MAN)}>
         <PepperImage src={PepperImages.Man} style={{ width: '90%' }}/>
       </TouchableOpacity>

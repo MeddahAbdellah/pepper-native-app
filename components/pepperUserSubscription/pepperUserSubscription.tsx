@@ -5,7 +5,7 @@ import {
 import {
   white, space_unit, indigo_3, fontSizeRegular,
 } from '../../styles/common';
-import { FormSchema, FormType } from '../pepperForm';
+import { FormSchema, FormType, KeyBoardType } from '../pepperForm';
 import {
   legalAgeValidator, nameValidator, cityValidator, alwaysValidValidator, phoneNumberValidator, codeValidator,
 } from '../pepperForm';
@@ -23,6 +23,7 @@ const PepperUserSubscription = (): JSX.Element => {
     {
       phoneNumber: {
         type: FormType.Text,
+        keyboardType: KeyBoardType.Numeric,
         label: 'Confirm your phone number',
         max: 10,
         validator: phoneNumberValidator,
@@ -68,6 +69,7 @@ const PepperUserSubscription = (): JSX.Element => {
     {
       code: {
         type: FormType.Text,
+        keyboardType: KeyBoardType.Numeric,
         label: 'Enter the code received by sms',
         max: 6,
         validator: codeValidator,

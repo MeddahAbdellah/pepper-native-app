@@ -7,9 +7,16 @@ export enum FormType {
   Menu = 'menu',
 }
 
+export enum KeyBoardType {
+  Default = 'default',
+  Numeric = 'decimal-pad',
+  Phone = 'phone-pad',
+}
+
 export interface TextInputSchema {
   type: FormType.Text,
   label: string,
+  keyboardType?: KeyBoardType,
   initialValue?: string,
   max: number,
   multiline?: boolean,

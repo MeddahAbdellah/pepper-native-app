@@ -73,7 +73,8 @@ const styles = StyleSheet.create({
   partyItemContainer: {
     flex: 1,
     flexDirection: 'row',
-    marginVertical: 1 * space_unit,
+    alignItems: 'center',
+    marginVertical: .5 * space_unit,
   },
   partyImage: {
     width: 10 * space_unit,

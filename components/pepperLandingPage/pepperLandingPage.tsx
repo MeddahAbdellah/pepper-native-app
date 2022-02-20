@@ -26,7 +26,7 @@ const PepperLandingPage = (): JSX.Element => {
 
   useEffect(() => {
     if (!fontsLoaded) { return; }
-    setCustomText({ style: { fontFamily: 'Sora_700Bold' } });
+    setCustomText({ style: { fontFamily: 'Sora_400Regular' } });
     (async() => {
       try {
         const isLoggedin = await LoginService.isLoggedin();
@@ -102,12 +102,14 @@ const styles = StyleSheet.create({
     color: white,
     fontSize: fontSizeSubSubHeader,
     textAlign: 'center',
+    fontFamily: 'Sora_700Bold',
   },
   punchline: {
     color: color(white, .9),
     fontSize: fontSizeRegular,
     textAlign: 'center',
     marginTop: 8 * space_unit,
+    fontFamily: 'Sora_700Bold',
   },
   title: {
     color: white,
@@ -118,6 +120,7 @@ const styles = StyleSheet.create({
     shadowOpacity: .5,
     shadowRadius: 1,
     elevation: 2,
+    fontFamily: 'Sora_700Bold',
   },
   titleIcon: {
     shadowColor: white,
@@ -125,6 +128,7 @@ const styles = StyleSheet.create({
     shadowOpacity: .5,
     shadowRadius: 2,
     elevation: 2,
+    fontFamily: 'Sora_700Bold',
   },
   titleWithIcon: {
     flexDirection: 'row',

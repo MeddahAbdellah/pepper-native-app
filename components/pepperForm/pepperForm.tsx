@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity,
+  StyleSheet, Text, View, TouchableOpacity, ScrollView,
 } from 'react-native';
 import _ from 'lodash';
 import {
@@ -58,33 +58,37 @@ export const PepperForm = (formProps: {
 
   return (
     <View style={{ ...styles.container, ...formProps.style }}>
-      {
-        _.map(formProps.schema, (schemaValue, key) => {
-          switch (schemaValue.type) {
-            case FormType.Text:
-              return <PepperTextInput
-                key={key}
-                onSubmit={(fieldOutput: { value: string, valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
-                {..._.omit(schemaValue as TextInputSchema, 'type')}/>;
-            case FormType.Date:
-              return <PepperDateInput
-                key={key}
-                onSubmit={(fieldOutput: { value: string, valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
-                {..._.omit(schemaValue as DateInputSchema, 'type')}/>;
-            case FormType.Gender:
-              return <PepperGenderInput
-                key={key}
-                onSubmit={(fieldOutput: { value: string, valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}/>;
-            case FormType.Menu:
-              return <PepperMenuInput
-                key={key}
-                onSubmit={(fieldOutput: { value: MenuItem[], valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
-                {..._.omit(schemaValue as MenuInputSchema, 'type')}/>;
-            default:
-              return <Text>Missing field</Text>;
-          }
-        })
-      }
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        overScrollMode='never'>
+        {
+          _.map(formProps.schema, (schemaValue, key) => {
+            switch (schemaValue.type) {
+              case FormType.Text:
+                return <PepperTextInput
+                  key={key}
+                  onSubmit={(fieldOutput: { value: string, valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
+                  {..._.omit(schemaValue as TextInputSchema, 'type')}/>;
+              case FormType.Date:
+                return <PepperDateInput
+                  key={key}
+                  onSubmit={(fieldOutput: { value: string, valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
+                  {..._.omit(schemaValue as DateInputSchema, 'type')}/>;
+              case FormType.Gender:
+                return <PepperGenderInput
+                  key={key}
+                  onSubmit={(fieldOutput: { value: string, valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}/>;
+              case FormType.Menu:
+                return <PepperMenuInput
+                  key={key}
+                  onSubmit={(fieldOutput: { value: MenuItem[], valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
+                  {..._.omit(schemaValue as MenuInputSchema, 'type')}/>;
+              default:
+                return <Text>Missing field</Text>;
+            }
+          })
+        }
+      </ScrollView>
       { _.isEmpty(_.filter(formErrors)) && changedAtLeastOnce ?
         <StaticValidateButton/> :
         null

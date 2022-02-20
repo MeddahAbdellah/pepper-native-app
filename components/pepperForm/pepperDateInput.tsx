@@ -18,7 +18,7 @@ interface IDateInput extends Omit<DateInputSchema, 'type'> {
 };
 
 const MIN_AGE = 18;
-const MAX_AGE = 31;
+const MAX_AGE = 37;
 
 export const PepperDateInput = (dateInputProps: IDateInput): JSX.Element => {
   // date picker width must be calculated dynamically as the library does not adapt to parent width

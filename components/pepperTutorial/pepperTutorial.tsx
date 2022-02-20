@@ -13,14 +13,14 @@ const PepperTutorial = (): JSX.Element => {
     ({
       image: PepperImages.FamousMan, text: (<>
         Swiping and being ghosted is no way to find a lover, in
-        {(<Text style={{ color: pepper }}> Pepper parties </Text>)}
+        {(<Text style={{ color: pepper, fontFamily: 'Sora_700Bold' }}> Pepper parties </Text>)}
         everyone will see the star you are </>)
     }) :
     ({
       image: PepperImages.FamousWoman,
       text: (<>
         No one should be able to get you by a single swipe, in
-        {(<Text style={{ color: pepper }}> Pepper parties </Text>)}
+        {(<Text style={{ color: pepper, fontFamily: 'Sora_700Bold' }}> Pepper parties </Text>)}
         you will be treated like the star you are! </>)
     });
 
@@ -34,7 +34,7 @@ const PepperTutorial = (): JSX.Element => {
           image: PepperImages.Safe,
           text: (<>
             For safety reasons profiles will be available to view only
-            {(<Text style={{ color: indigo }}> 24 hours after </Text>)}
+            {(<Text style={{ color: indigo, fontFamily: 'Sora_700Bold' }}> 24 hours after </Text>)}
             QR codes are exchanged and consent of both parties </>)
         },
         genderDependentSlide,

@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import { white } from '../../styles/common';
-import { FormSchema, FormType, PepperForm } from '../pepperForm';
+import {
+  FormSchema, FormType, PepperForm, KeyBoardType,
+} from '../pepperForm';
 import { codeValidator } from '../pepperForm/validators';
 import { useNavigation } from '@react-navigation/native';
 import { PepperStackRoutes } from '../../models/routes';
@@ -13,6 +15,7 @@ const PepperUserCodeLogin = (loginProps: { route: { params: { phoneNumber: strin
   const schemas: FormSchema = {
     code: {
       type: FormType.Text,
+      keyboardType: KeyBoardType.Numeric,
       label: 'Enter the code received by sms',
       max: 6,
       validator: codeValidator,

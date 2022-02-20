@@ -3,11 +3,11 @@ import {
   StyleSheet, Text, View, TextInput,
 } from 'react-native';
 import {
-  space_unit, grey_3, fontSizeRegular, indigo,
+  space_unit, grey_3, indigo, fontSizeBody, fontSizeSubSubHeader,
 } from '../../styles/common';
 import _ from 'lodash';
-import { TextInputSchema } from './formTypes';
-import { sanitizeText } from '../../helpers/uiHelper';
+import { TextInputSchema, KeyBoardType } from './formTypes';
+import { sanitizeText, capitalize } from '../../helpers/uiHelper';
 import { inputStyle, inputErrorStyle } from './style';
 
 interface ITextInput extends Omit<TextInputSchema, 'type'> {
@@ -17,7 +17,7 @@ interface ITextInput extends Omit<TextInputSchema, 'type'> {
 export const PepperTextInput = (textInputProps: ITextInput): JSX.Element => {
   const [error, setError] = useState('');
   const onChange = (value: string): void => {
-    const sanitizedValue = sanitizeText(value);
+    const sanitizedValue = capitalize(sanitizeText(value));
     const validation = textInputProps.validator(sanitizedValue);
     setError(validation);
     textInputProps.onSubmit({ value: sanitizedValue, valid: _.isEmpty(validation) });
@@ -29,12 +29,13 @@ export const PepperTextInput = (textInputProps: ITextInput): JSX.Element => {
       <TextInput
         multiline={textInputProps.multiline ?? false}
         maxLength={textInputProps.max}
+        keyboardType={textInputProps.keyboardType ? textInputProps.keyboardType : KeyBoardType.Default}
         defaultValue={textInputProps.initialValue ? textInputProps.initialValue : ''}
         onChangeText={onChange}
         style={{
           ...styles.textInput,
           ...(_.isEmpty(error) ? {} : { shadowColor: indigo }),
-          ...(textInputProps.multiline ? { paddingTop: 2 * space_unit, maxHeight: 30 * space_unit } : {}),
+          ...(textInputProps.multiline ? styles.multiline : {}),
         }}
         editable
       />
@@ -49,10 +50,17 @@ const styles = StyleSheet.create({
     marginBottom: 2 * space_unit,
   },
   label: {
-    fontSize: fontSizeRegular,
+    fontSize: fontSizeBody,
     marginBottom: space_unit,
     marginLeft: space_unit,
     color: grey_3,
+  },
+  multiline: {
+    paddingTop: 2 * space_unit,
+    minHeight: 20 * space_unit,
+    textAlignVertical: 'top',
+    maxHeight: 30 * space_unit,
+    fontSize: fontSizeSubSubHeader,
   },
   error: inputErrorStyle,
   textInput: inputStyle
