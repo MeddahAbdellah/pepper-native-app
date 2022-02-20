@@ -11,7 +11,7 @@ import { usePepperUser } from '../../hooks/user.hooks';
 import { usePepperDispatch } from '../../hooks/store.hooks';
 import { fetchUser } from '../../features/user/userActions';
 import { PepperStackRoutes } from '../../models/routes';
-import { keyExtractor } from '../../helpers/uiHelper';
+import { keyExtractor, limitTextLength } from '../../helpers/uiHelper';
 import moment from 'moment';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 
@@ -30,8 +30,8 @@ const PepperUserParties = (): JSX.Element => {
       onPress={() => navigation.push(PepperStackRoutes.PartyDescription, { party, canCancel: true })}>
       <Image source={party.imgs[0]} style={styles.partyImage}/>
       <View style={{ flex: 1 }}>
-        <Text style={{ fontSize: fontSizeSubHeader }}>{party.title}</Text>
-        <Text style={{ fontSize: fontSizeRegular }}>{party.theme}</Text>
+        <Text style={{ fontSize: fontSizeSubHeader }}>{limitTextLength(party.title, 15) }</Text>
+        <Text style={{ fontSize: fontSizeRegular }}>{limitTextLength(party.theme, 20)}</Text>
         <Text style={{ fontSize: fontSizeRegular }}>{moment(party.date).format('YYYY MM DD')}</Text>
       </View>
     </TouchableOpacity>

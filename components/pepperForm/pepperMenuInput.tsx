@@ -3,12 +3,13 @@ import {
   StyleSheet, Text, View, TextInput, TouchableOpacity,
 } from 'react-native';
 import {
-  space_unit, grey_1, grey_2, grey_3, fontSizeRegular, color, indigo_3, fontSizeBody, indigo,
+  space_unit, grey_3, fontSizeRegular, indigo_3, fontSizeBody, indigo,
 } from '../../styles/common';
 import _ from 'lodash';
 import { MenuInputSchema, MenuItem } from './formTypes';
 import { sanitizeText } from '../../helpers/uiHelper';
 import PepperIcon from '../pepperIcon/pepperIcon';
+import { inputStyle, inputErrorStyle } from './style';
 
 const MENU_ITEM_MAX_LENGTH = 15;
 const MENU_PRICE_MAX_LENGTH = 3;
@@ -115,31 +116,13 @@ export const PepperMenuInput = (menuInputProps: IMenuInput): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
+    marginBottom: 2 * space_unit,
   },
   addButton: {
     fontSize: fontSizeRegular,
     marginVertical: 2 * space_unit,
     color: indigo_3,
   },
-  error: {
-    marginTop: space_unit,
-    marginLeft: space_unit,
-    color: indigo,
-  },
-  textInput: {
-    padding: 2 * space_unit,
-    fontSize: fontSizeRegular,
-    color: grey_3,
-    backgroundColor: color(grey_1, .4),
-    borderColor: grey_2,
-    elevation: 1,
-    shadowColor: grey_1,
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 1,
-    borderRadius: space_unit,
-  }
+  error: inputErrorStyle,
+  textInput: inputStyle
 });

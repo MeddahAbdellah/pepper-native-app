@@ -34,7 +34,7 @@ const PepperTutorial = (): JSX.Element => {
           image: PepperImages.Safe,
           text: (<>
             For safety reasons profiles will be available to view only
-            {(<Text style={{ color: indigo }}>24 hours after</Text>)}
+            {(<Text style={{ color: indigo }}> 24 hours after </Text>)}
             QR codes are exchanged and consent of both parties </>)
         },
         genderDependentSlide,

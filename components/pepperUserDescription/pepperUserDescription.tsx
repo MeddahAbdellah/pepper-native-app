@@ -16,6 +16,7 @@ import { PepperStackRoutes } from '../../models/routes';
 import {
   FormSchema, PepperForm, FormType, nameValidator, cityValidator, alwaysValidValidator, MenuItem,
 } from '../pepperForm';
+import { keyExtractor } from '../../helpers/uiHelper';
 
 const PepperUserDescription = (): JSX.Element => {
   const { width } = Dimensions.get('window');
@@ -65,7 +66,7 @@ const PepperUserDescription = (): JSX.Element => {
   const StaticInterestTags = (): JSX.Element[] => currentUser.user.interests.map((interest, index) => {
     const tagColors = [[sun, sun_2], [fire, fire_2], [indigo, indigo_2]];
     return (<PepperTag
-      key={interest}
+      key={keyExtractor(interest)}
       text={interest}
       firstGradientColor={tagColors[index][0]}
       secondGradientColor={tagColors[index][1]}

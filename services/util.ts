@@ -26,6 +26,6 @@ export class UtilService {
   }
 
   public static async cleanHistory(): Promise<void> {
-    Promise.all(Object.keys(SecureStoreKeys).map((key) => SecureStore.deleteItemAsync(key)));
+    Promise.all(Object.values(SecureStoreKeys).map(async(value) => SecureStore.deleteItemAsync(value)));
   }
 }

@@ -5,12 +5,13 @@ import {
 import CalendarPicker from 'react-native-calendar-picker';
 import moment, { Moment } from 'moment';
 import {
-  fontSizeRegular, space_unit, grey_3, color, grey_1, grey_2, white, black, pepper,
+  fontSizeRegular, space_unit, grey_3, white, black, pepper,
   fontSizeTypo, raven, indigo_3, indigo_2, fontSizeBody, indigo,
 } from '../../styles/common';
 import { DateInputSchema } from './formTypes';
 import _ from 'lodash';
 import { BlurView } from 'expo-blur';
+import { inputStyle, inputErrorStyle } from './style';
 
 interface IDateInput extends Omit<DateInputSchema, 'type'> {
   onSubmit: (result: {value: string, valid: boolean}) => void,
@@ -82,6 +83,7 @@ export const PepperDateInput = (dateInputProps: IDateInput): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
+    marginBottom: 2 * space_unit,
   },
   label: {
     fontSize: fontSizeRegular,
@@ -89,27 +91,8 @@ const styles = StyleSheet.create({
     marginLeft: space_unit,
     color: grey_3,
   },
-  error: {
-    marginTop: space_unit,
-    marginLeft: space_unit,
-    color: indigo,
-  },
-  dateInput: {
-    padding: 2 * space_unit,
-    fontSize: fontSizeRegular,
-    color: grey_3,
-    backgroundColor: color(grey_1, .4),
-    borderColor: grey_2,
-    elevation: 1,
-    shadowColor: grey_1,
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 1,
-    borderRadius: space_unit,
-  },
+  error: inputErrorStyle,
+  dateInput: inputStyle,
   modalContainer: {
     flex: 1,
     flexDirection: 'column',

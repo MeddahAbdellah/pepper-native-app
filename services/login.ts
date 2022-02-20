@@ -39,6 +39,7 @@ export default class LoginService {
 
   public static async logout(): Promise<void> {
     await UtilService.cleanHistory();
+    UtilService.reloadApp();
   }
 
   public static async isLoggedin(): Promise<boolean> {

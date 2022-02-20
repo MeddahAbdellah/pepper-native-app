@@ -16,7 +16,7 @@ import { usePepperDispatch } from '../../hooks/store.hooks';
 import { deleteParty } from '../../features/user/userActions';
 import { useNavigation } from '@react-navigation/native';
 import { createOpenLink } from 'react-native-open-maps';
-import { limitTextLength } from '../../helpers/uiHelper';
+import { limitTextLength, keyExtractor } from '../../helpers/uiHelper';
 import * as Clipboard from 'expo-clipboard';
 import Toast from 'react-native-root-toast';
 
@@ -45,7 +45,7 @@ const PepperPartyDescription = (descriptionProps: { route: { params: { party: IP
   const miniDrinkPrice = (): string => `${Math.min(...party.drinks.map((food) => food.price))}$`;
   const partyPrice = (): string => (party.price !== 0 ? `${party.price}$` : 'Free');
   const StaticMenuList = (items: Array<{ name: string, price: number }>): JSX.Element[] => items.map((item) => (
-    <View key={item.name} style={styles.menuDescription}>
+    <View key={keyExtractor(item.name)} style={styles.menuDescription}>
       <Text>{item.name}</Text>
       <Text>{`${item.price}$`}</Text>
     </View>

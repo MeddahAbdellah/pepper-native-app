@@ -3,11 +3,12 @@ import {
   StyleSheet, Text, View, TextInput,
 } from 'react-native';
 import {
-  space_unit, grey_1, grey_2, grey_3, fontSizeRegular, color, indigo,
+  space_unit, grey_3, fontSizeRegular, indigo,
 } from '../../styles/common';
 import _ from 'lodash';
 import { TextInputSchema } from './formTypes';
 import { sanitizeText } from '../../helpers/uiHelper';
+import { inputStyle, inputErrorStyle } from './style';
 
 interface ITextInput extends Omit<TextInputSchema, 'type'> {
   onSubmit: (result: {value: string, valid: boolean}) => void,
@@ -45,6 +46,7 @@ export const PepperTextInput = (textInputProps: ITextInput): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
+    marginBottom: 2 * space_unit,
   },
   label: {
     fontSize: fontSizeRegular,
@@ -52,25 +54,6 @@ const styles = StyleSheet.create({
     marginLeft: space_unit,
     color: grey_3,
   },
-  error: {
-    marginTop: space_unit,
-    marginLeft: space_unit,
-    color: indigo,
-  },
-  textInput: {
-    padding: 2 * space_unit,
-    fontSize: fontSizeRegular,
-    color: grey_3,
-    backgroundColor: color(grey_1, .4),
-    borderColor: grey_2,
-    elevation: 1,
-    shadowColor: grey_1,
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 1,
-    borderRadius: space_unit,
-  }
+  error: inputErrorStyle,
+  textInput: inputStyle
 });

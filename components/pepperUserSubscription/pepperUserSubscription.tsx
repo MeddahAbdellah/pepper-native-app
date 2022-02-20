@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  View, StyleSheet, Text, TouchableOpacity, Platform,
+  View, StyleSheet, Text, TouchableOpacity, Platform, Keyboard,
 } from 'react-native';
 import {
   white, space_unit, indigo_3, fontSizeRegular,
@@ -18,6 +18,7 @@ import { UtilService } from '../../services/util';
 import Toast from 'react-native-root-toast';
 
 const PepperUserSubscription = (): JSX.Element => {
+  const [hasGoToLoginButton, setHasGoToLoginButton] = useState(true);
   const schemas: FormSchema[] = [
     {
       phoneNumber: {
@@ -78,6 +79,11 @@ const PepperUserSubscription = (): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const navigation = useNavigation<any>();
 
+  useEffect(() => {
+    Keyboard.addListener('keyboardDidShow', () => setHasGoToLoginButton(false));
+    Keyboard.addListener('keyboardDidHide', () => setHasGoToLoginButton(true));
+  }, []);
+
   return (
     <View style={styles.container}>
       <PepperFormStepper schemas={schemas} onDone={async(subscriptionFormOutput) => {
@@ -126,9 +132,13 @@ const PepperUserSubscription = (): JSX.Element => {
           UtilService.throwError(error);
         }
       }}/>
-      <TouchableOpacity style={styles.loginButton} onPress={() => { navigation.navigate(PepperStackRoutes.LoginRouter); }}>
-        <Text style={styles.loginText}>Already have an account?</Text>
-      </TouchableOpacity>
+      {
+        hasGoToLoginButton ?
+          <TouchableOpacity style={styles.loginButton} onPress={() => { navigation.navigate(PepperStackRoutes.LoginRouter); }}>
+            <Text style={styles.loginText}>Already have an account?</Text>
+          </TouchableOpacity> :
+          null
+      }
     </View>
   );
 };
