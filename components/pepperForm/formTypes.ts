@@ -5,6 +5,7 @@ export enum FormType {
   Date = 'date',
   Gender = 'gender',
   Menu = 'menu',
+  Image = 'image',
 }
 
 export enum KeyBoardType {
@@ -34,9 +35,17 @@ export interface GenderInputSchema {
   type: FormType.Gender
 }
 
+export interface ImageInputSchema {
+  type: FormType.Image
+}
+
 export interface MenuItem {
   name: string,
   price: string,
+}
+
+export interface ImageItem {
+  uri: string,
 }
 
 export interface MenuInputSchema {
@@ -47,5 +56,5 @@ export interface MenuInputSchema {
 }
 
 export interface FormSchema {
-  [key: string]: TextInputSchema | DateInputSchema | GenderInputSchema | MenuInputSchema,
+  [key: string]: TextInputSchema | DateInputSchema | GenderInputSchema | MenuInputSchema | ImageInputSchema,
 }
