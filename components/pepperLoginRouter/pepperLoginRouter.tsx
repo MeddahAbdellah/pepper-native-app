@@ -21,7 +21,7 @@ const PepperLoginRouter = (): JSX.Element => {
   };
 
   // FIX: fix typing
-  const onPhoneSubmit = async(output: { [key: string]: string | MenuItem[] }): Promise<void> => {
+  const onPhoneSubmit = async(output: { [key: string]: string | MenuItem[] | string[] }): Promise<void> => {
     const { phoneNumber } = output;
     const isSubscribed = await LoginService.isSubscribedAndInitLogin(phoneNumber as string);
     if (isSubscribed) {

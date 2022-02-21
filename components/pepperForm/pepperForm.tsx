@@ -7,7 +7,7 @@ import {
   space_unit, white, indigo, pepper, indigo_3,
 } from '../../styles/common';
 import {
-  FormSchema, FormType, TextInputSchema, DateInputSchema, MenuItem, MenuInputSchema, ImageItem,
+  FormSchema, FormType, TextInputSchema, DateInputSchema, MenuItem, MenuInputSchema, ImageItem, TagSchema,
 } from './formTypes';
 import { PepperTextInput } from './pepperTextInput';
 import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
@@ -15,10 +15,12 @@ import { PepperDateInput } from './pepperDateInput';
 import { PepperGenderInput } from './pepperGenderInput';
 import { PepperMenuInput } from './pepperMenuInput';
 import PepperImageInput from './pepperIamgeInput';
+import { PepperTagsInput } from './pepperTagsInput';
+
 
 export const PepperForm = (formProps: {
   schema: FormSchema,
-  onSubmit: (result: { [key: string]: string | MenuItem[] }) => void,
+  onSubmit: (result: { [key: string]: string | MenuItem[] | string[] }) => void,
   // style could be anything
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   style?: any,
@@ -29,7 +31,7 @@ export const PepperForm = (formProps: {
   const [formErrors, setFormErrors] = useState(schemaToErrorsArray);
   const [changedAtLeastOnce, setChangedAtLeastOnce] = useState(false);
 
-  const onFieldSubmit = (key: string, result: { value: string | MenuItem[] | ImageItem[], valid: boolean }): void => {
+  const onFieldSubmit = (key: string, result: { value: string | MenuItem[] | ImageItem[] | string[], valid: boolean }): void => {
     setChangedAtLeastOnce(true);
     const newFormOutput = { ...formOutput, [key]: result.value };
     const newFormErrors = { ...formErrors, [key]: !result.valid };
@@ -88,6 +90,11 @@ export const PepperForm = (formProps: {
                   key={key}
                   onSubmit={(fieldOutput: { value: MenuItem[], valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
                   {..._.omit(schemaValue as MenuInputSchema, 'type')}/>;
+              case FormType.Tags:
+                return <PepperTagsInput
+                  key={key}
+                  onSubmit={(fieldOutput: { value: string[], valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
+                  {..._.omit(schemaValue as TagSchema, 'type')}/>;
               default:
                 return <Text>Missing field</Text>;
             }

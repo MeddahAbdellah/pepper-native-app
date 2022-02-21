@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, View, ScrollView, Dimensions, TouchableOpacity,
 } from 'react-native';
 import {
-  white, space_unit, fontSizeRegular, fontSizeHeader, sun, sun_2, fire, fire_2, indigo_2, indigo, grey_3, color, pepper, raven,
+  white, space_unit, fontSizeRegular, fontSizeHeader, sun, sun_2, fire, fire_2, indigo_2, indigo, grey_3, color, pepper, raven, pepper_2,
 } from '../../styles/common';
 import PepperDescriptionCarousel from '../pepperDescriptionCarousel/pepperDescriptionCarousel';
 import PepperTag from '../pepperTags/pepperTags';
@@ -14,7 +14,7 @@ import { usePepperUser } from '../../hooks/user.hooks';
 import { useNavigation } from '@react-navigation/native';
 import { PepperStackRoutes } from '../../models/routes';
 import {
-  FormSchema, PepperForm, FormType, nameValidator, cityValidator, alwaysValidValidator, MenuItem,
+  FormSchema, PepperForm, FormType, nameValidator, cityValidator, alwaysValidValidator, MenuItem, tagValidator,
 } from '../pepperForm';
 import { keyExtractor } from '../../helpers/uiHelper';
 
@@ -51,6 +51,12 @@ const PepperUserDescription = (): JSX.Element => {
         max: 200,
         validator: alwaysValidValidator,
       },
+      hobbies: {
+        type: FormType.Tags,
+        label: 'You & your hobbies',
+        initialValue: Array<string>(),
+        validator: tagValidator,
+      },
     });
   }, [currentUser]);
 
@@ -64,7 +70,7 @@ const PepperUserDescription = (): JSX.Element => {
   };
 
   const StaticInterestTags = (): JSX.Element[] => currentUser.user.interests.map((interest, index) => {
-    const tagColors = [[sun, sun_2], [fire, fire_2], [indigo, indigo_2]];
+    const tagColors = [[sun, sun_2], [fire, fire_2], [indigo, indigo_2], [pepper, pepper_2]];
     return (<PepperTag
       key={keyExtractor(interest)}
       text={interest}
@@ -73,7 +79,7 @@ const PepperUserDescription = (): JSX.Element => {
       style={styles.tags}/>);
   });
 
-  const updatePersonalInfo = (result: { [key: string]: string | MenuItem[]; }): void => {
+  const updatePersonalInfo = (result: { [key: string]: string | MenuItem[] | string[]; }): void => {
     storeDispatch(updateUser(result));
   };
 

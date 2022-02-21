@@ -41,4 +41,13 @@ export const cityValidator = (text: string): string => {
   return '';
 };
 
+export const tagValidator = (text: string): string => {
+  if (text === '') {return '';};
+  if (text.length < 4) {return 'At least 3 characters are required';};
+  if (!(/^[a-zA-Z'\s-]+$/.test(text))) {
+    return 'Only characters and \'-\' are allowed )';
+  }
+  return '';
+};
+
 export const alwaysValidValidator = (): string => '';

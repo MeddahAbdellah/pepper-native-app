@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { space_unit, white, fontSizeBody } from '../../styles/common';
+import { space_unit, white, fontSizeRegular } from '../../styles/common';
 import PepperIcon from '../pepperIcon/pepperIcon';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -54,9 +54,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2 * space_unit,
     paddingVertical: 1 * space_unit,
     borderRadius: 2.8 * space_unit,
+    textAlignVertical: 'center',
   },
   tagDescription: {
-    fontSize: fontSizeBody,
+    fontSize: fontSizeRegular,
     color: white,
+    textAlignVertical: 'center',
+    // backgroundColor: 'red',
+    padding: 0
   }
 });
