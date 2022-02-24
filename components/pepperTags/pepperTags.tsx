@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { space_unit, white, fontSizeRegular } from '../../styles/common';
+import { space_unit, white, fontSizeBody } from '../../styles/common';
 import PepperIcon from '../pepperIcon/pepperIcon';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
   },
   tagDescription: {
-    fontSize: fontSizeRegular,
+    fontSize: fontSizeBody,
     color: white,
     textAlignVertical: 'center',
     padding: 0
