@@ -51,7 +51,7 @@ const PepperUserDescription = (): JSX.Element => {
         max: 200,
         validator: alwaysValidValidator,
       },
-      hobbies: {
+      interests: {
         type: FormType.Tags,
         label: 'You & your hobbies',
         initialValue: Array<string>(),

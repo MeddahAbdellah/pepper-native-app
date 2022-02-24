@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     fontSize: fontSizeRegular,
     color: white,
     textAlignVertical: 'center',
-    // backgroundColor: 'red',
     padding: 0
   }
 });

@@ -17,7 +17,7 @@ enum HttpMethod {
 const HTTP_OK = 200;
 
 export default class ApiService {
-  private static _baseUrl: string = `http://192.168.1.39:7550/api`;
+  private static _baseUrl: string = `http://localhost:7550/api`;
 
   public static async get(resource: string, params?: any): Promise<any> {
     const queryString = params ? Object.keys(params).map(key => `${key}=${params[key]}`).join('&') : '';

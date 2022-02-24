@@ -52,8 +52,8 @@ export const PepperTagsInput = (tagInputProps: ITagInput): JSX.Element => {
     return (<PepperTag
       text={interest}
       // Randomly selected colors
-      firstGradientColor={tagColors[index % 4][0]}
-      secondGradientColor={tagColors[index % 4][1]}
+      firstGradientColor={tagColors[index % tagColors.length][0]}
+      secondGradientColor={tagColors[index % tagColors.length][1]}
       style={styles.tags}/>);
   }
   ;
@@ -61,9 +61,7 @@ export const PepperTagsInput = (tagInputProps: ITagInput): JSX.Element => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{tagInputProps.label}</Text>
-      <View style={{
-        flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: space_unit
-      }}>
+      <View style={styles.tagHolder}>
         <TextInput
           value={currentTag}
           maxLength={TAG_MAX_LENGTH}
@@ -77,7 +75,6 @@ export const PepperTagsInput = (tagInputProps: ITagInput): JSX.Element => {
         />
         <TouchableOpacity style={{ width: '15%' }}
           onPress={onAdd}>
-          {/* <PepperTag text={'Add'} firstGradientColor={pepper} secondGradientColor={indigo} /> */}
           <PepperIcon name='pepper-add' size={6 * space_unit} color={color(indigo, .8)} />
         </TouchableOpacity>
       </View>
@@ -138,6 +135,12 @@ const styles = StyleSheet.create({
     marginRight: .5 * space_unit,
     shadowColor: color(grey_3, .3),
   },
+  tagHolder: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: space_unit
+  }
 });
 
 
