@@ -14,6 +14,7 @@ import { inputErrorStyle } from './style';
 import PepperTag from '../pepperTags/pepperTags';
 
 const TAG_MAX_LENGTH = 15;
+const MAX_TAGS_NUMBER = 9;
 
 interface ITagInput extends Omit<TagSchema, 'type'> {
   onSubmit: (result: {value: string[], valid: boolean}) => void,
@@ -73,16 +74,16 @@ export const PepperTagsInput = (tagInputProps: ITagInput): JSX.Element => {
           }}
           editable
         />
-        <TouchableOpacity style={{ width: '15%' }}
-          onPress={onAdd}>
-          <PepperIcon name='pepper-add' size={6 * space_unit} color={color(indigo, .8)} />
-        </TouchableOpacity>
+        { (tagItems.length < MAX_TAGS_NUMBER) ?
+          <TouchableOpacity style={{ width: '15%' }}
+            onPress={onAdd}>
+            <PepperIcon name='pepper-add' size={6 * space_unit} color={color(indigo, .8)} />
+          </TouchableOpacity> :
+          null}
       </View>
       <Text style={styles.error}>{tagError}</Text>
 
-      <View style={{
-        flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', marginTop: space_unit, flexWrap: 'wrap'
-      }}>
+      <View style={styles.displayedTagsHolder}>
         {
           _.map(tagItems, (item, index) => (
             <View key={item} style={{
@@ -140,6 +141,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: space_unit
+  },
+  displayedTagsHolder: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginTop: space_unit,
+    flexWrap: 'wrap'
   }
 });
 
