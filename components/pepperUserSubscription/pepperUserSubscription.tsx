@@ -5,7 +5,9 @@ import {
 import {
   white, space_unit, indigo_3, fontSizeRegular,
 } from '../../styles/common';
-import { FormSchema, FormType, KeyBoardType } from '../pepperForm';
+import {
+  FormSchema, FormType, KeyBoardType, tagValidator,
+} from '../pepperForm';
 import {
   legalAgeValidator, nameValidator, cityValidator, alwaysValidValidator, phoneNumberValidator, codeValidator,
 } from '../pepperForm';
@@ -67,6 +69,13 @@ const PepperUserSubscription = (): JSX.Element => {
       },
     },
     {
+      interests: {
+        type: FormType.Tags,
+        label: 'You & your hobbies',
+        validator: tagValidator,
+      },
+    },
+    {
       code: {
         type: FormType.Text,
         keyboardType: KeyBoardType.Numeric,
@@ -97,6 +106,7 @@ const PepperUserSubscription = (): JSX.Element => {
           gender,
           address,
           description,
+          interests,
           job,
         } = subscriptionFormOutput;
 
@@ -109,12 +119,15 @@ const PepperUserSubscription = (): JSX.Element => {
             gender as Gender,
             address as string,
             description as string,
+            interests as string[],
             job as string,
           );
           if (subcribeSuccess) {
             navigation.navigate(PepperStackRoutes.Tutorial);
           }
-        } catch (error) {
+        // we are catching an error that could be anything
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
           if (error.status === 401 ) {
             Toast.show('The code is not valid', {
               duration: Toast.durations.LONG,

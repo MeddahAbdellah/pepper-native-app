@@ -12,6 +12,7 @@ interface ITagProps {
   style?: any,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   tagStyle?: any,
+  iconComponent?: JSX.Element
 }
 
 const PepperTag = (tagProps: ITagProps): JSX.Element => (
@@ -31,6 +32,9 @@ const PepperTag = (tagProps: ITagProps): JSX.Element => (
       { tagProps.iconName ?
         <PepperIcon name={tagProps.iconName} color={white} size={3.5 * space_unit} style={{ marginLeft: 1 * space_unit }} /> :
         null
+      }
+      {
+        tagProps.iconComponent
       }
     </LinearGradient>
   </View>
@@ -54,9 +58,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2 * space_unit,
     paddingVertical: 1 * space_unit,
     borderRadius: 2.8 * space_unit,
+    textAlignVertical: 'center',
   },
   tagDescription: {
     fontSize: fontSizeBody,
     color: white,
+    textAlignVertical: 'center',
+    padding: 0
   }
 });

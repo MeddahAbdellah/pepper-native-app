@@ -26,8 +26,8 @@ const PepperMatchDescription = (descriptionProps: { route: { params: IUser } }):
     return (<PepperTag
       key={interest}
       text={interest}
-      firstGradientColor={tagColors[index][0]}
-      secondGradientColor={tagColors[index][1]}
+      firstGradientColor={tagColors[index % tagColors.length][0]}
+      secondGradientColor={tagColors[index % tagColors.length][1]}
       style={styles.tags}/>);
   });
 

@@ -6,6 +6,7 @@ export enum FormType {
   Gender = 'gender',
   Menu = 'menu',
   Image = 'image',
+  Tags = 'tags'
 }
 
 export enum KeyBoardType {
@@ -55,6 +56,14 @@ export interface MenuInputSchema {
   priceValidator: (price: string) => string,
 }
 
+
+export interface TagSchema {
+  type: FormType.Tags,
+  label: string,
+  initialValue?: string[],
+  validator: (tag: string) => string,
+}
+
 export interface FormSchema {
-  [key: string]: TextInputSchema | DateInputSchema | GenderInputSchema | MenuInputSchema | ImageInputSchema,
+  [key: string]: TextInputSchema | DateInputSchema | GenderInputSchema | MenuInputSchema | ImageInputSchema | TagSchema,
 }

@@ -6,12 +6,12 @@ import { PepperForm } from './pepperForm';
 
 export const PepperFormStepper = (formProps: {
   schemas: FormSchema[],
-  onDone: (result: { [key: string]: string | MenuItem[] }) => void,
+  onDone: (result: { [key: string]: string | MenuItem[] | string[] }) => void,
 }): JSX.Element => {
   const [stepperFormOutput, setStepperFormOutput] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const onFormSubmit = (output: { [key: string]: string | MenuItem[] }): void => {
+  const onFormSubmit = (output: { [key: string]: string | MenuItem[] | string[] }): void => {
     const newStepperOutput = { ...stepperFormOutput, ...output };
     setStepperFormOutput(newStepperOutput);
     if (currentIndex < (formProps.schemas.length - 1)) {
