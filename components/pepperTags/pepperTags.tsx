@@ -12,6 +12,7 @@ interface ITagProps {
   style?: any,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   tagStyle?: any,
+  iconComponent?: JSX.Element
 }
 
 const PepperTag = (tagProps: ITagProps): JSX.Element => (
@@ -31,6 +32,9 @@ const PepperTag = (tagProps: ITagProps): JSX.Element => (
       { tagProps.iconName ?
         <PepperIcon name={tagProps.iconName} color={white} size={3.5 * space_unit} style={{ marginLeft: 1 * space_unit }} /> :
         null
+      }
+      {
+        tagProps.iconComponent
       }
     </LinearGradient>
   </View>

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet, Text, View, TextInput, TouchableOpacity,
 } from 'react-native';
 import {
   space_unit, grey_3, fontSizeRegular, indigo_3, fontSizeBody, indigo, color, fontSizeSubHeader,
-  grey_1, indigo_2, fire, fire_2, sun, sun_2, pepper_2, pepper,
+  grey_1, indigo_2, fire, fire_2, sun, sun_2, pepper_2, pepper, white,
 } from '../../styles/common';
 import _ from 'lodash';
 import { TagSchema } from './formTypes';
@@ -25,6 +25,10 @@ export const PepperTagsInput = (tagInputProps: ITagInput): JSX.Element => {
   const [tagError, setTagError] = useState('');
   const [tagItems, setTagsItems] = useState<string[]>([]);
 
+  useEffect(() => {
+    setTagsItems(tagInputProps.initialValue || []);
+  }, [tagInputProps.initialValue]);
+
   const onTagChange = (value: string): void => {
     const sanitizedValue = sanitizeText(value);
     const validation = tagInputProps.validator(sanitizedValue);
@@ -33,7 +37,7 @@ export const PepperTagsInput = (tagInputProps: ITagInput): JSX.Element => {
   };
 
   const onAdd = (): void => {
-    if (tagError === '') {
+    if (tagError === '' && currentTag !== '') {
       const filteredMenuItems = _.filter(tagItems, (item) => item !== currentTag );
       const newTagsItems = [...filteredMenuItems, currentTag];
       setTagsItems(newTagsItems);
@@ -50,49 +54,53 @@ export const PepperTagsInput = (tagInputProps: ITagInput): JSX.Element => {
 
   const StaticTagsDisplay = (interest: string, index: number): JSX.Element => {
     const tagColors = [[sun, sun_2], [fire, fire_2], [indigo, indigo_2], [pepper, pepper_2]];
-    return (<PepperTag
-      text={interest}
-      // Randomly selected colors
-      firstGradientColor={tagColors[index % tagColors.length][0]}
-      secondGradientColor={tagColors[index % tagColors.length][1]}
-      style={styles.tags}/>);
+    return (<>
+      <PepperTag
+        text={interest}
+        firstGradientColor={tagColors[index % tagColors.length][0]}
+        secondGradientColor={tagColors[index % tagColors.length][1]}
+        style={styles.tags}
+        iconComponent={<TouchableOpacity style={styles.tagDelete} onPress={() => onRemove(interest)}>
+          <PepperIcon name="pepper-close" size={2 * space_unit} color={white}></PepperIcon>
+        </TouchableOpacity>}
+      />
+
+    </>);
   }
   ;
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{tagInputProps.label}</Text>
-      <View style={styles.tagHolder}>
-        <TextInput
-          value={currentTag}
-          maxLength={TAG_MAX_LENGTH}
-          onChangeText={onTagChange}
-          style={{
-            ...styles.textInput,
-            ...{ width: '80%' },
-            ...(_.isEmpty(tagError) ? {} : { shadowColor: indigo }),
-          }}
-          editable
-        />
-        { (tagItems.length < MAX_TAGS_NUMBER) ?
-          <TouchableOpacity style={{ width: '15%' }}
-            onPress={onAdd}>
-            <PepperIcon name='pepper-add' size={6 * space_unit} color={color(indigo, .8)} />
-          </TouchableOpacity> :
-          null}
-      </View>
+
+      { (tagItems.length < MAX_TAGS_NUMBER) ?
+        <View style={styles.tagHolder}>
+          <TextInput
+            value={currentTag}
+            maxLength={TAG_MAX_LENGTH}
+            onChangeText={onTagChange}
+            style={{
+              ...styles.textInput,
+              ...{ flex: 1 },
+              ...(_.isEmpty(tagError) ? {} : { shadowColor: indigo }),
+            }}
+            editable
+          />
+
+          <TouchableOpacity onPress={onAdd} style={{ marginLeft: 2.5 * space_unit, marginRight: 1 * space_unit }}>
+            <PepperIcon name='pepper-add' size={5 * space_unit} color={color(indigo, .8)} />
+          </TouchableOpacity>
+        </View> :
+        <Text style={styles.error}>{'You have reached the maximum number of interests'}</Text>}
       <Text style={styles.error}>{tagError}</Text>
 
       <View style={styles.displayedTagsHolder}>
         {
           _.map(tagItems, (item, index) => (
             <View key={item} style={{
-              flexDirection: 'row', alignItems: 'center', marginVertical: space_unit,
+              flexDirection: 'row', alignItems: 'center',
             }}>
               {StaticTagsDisplay(item, index)}
-              <TouchableOpacity style={styles.tagDelete} onPress={() => onRemove(item)}>
-                <PepperIcon name="pepper-close" size={2 * space_unit} color={grey_3}></PepperIcon>
-              </TouchableOpacity>
             </View>
           ))
         }
@@ -126,14 +134,13 @@ const styles = StyleSheet.create({
     borderRadius: space_unit,
   },
   tagDelete: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginEnd: 2 * space_unit,
-    paddingBottom: .8 * space_unit
+    marginLeft: 1 * space_unit,
+    marginRight: .2 * space_unit,
+    padding: .5 * space_unit
   },
   tags: {
     marginBottom: 1 * space_unit,
-    marginRight: .5 * space_unit,
+    marginRight: 1.5 * space_unit,
     shadowColor: color(grey_3, .3),
   },
   tagHolder: {

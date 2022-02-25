@@ -46,7 +46,7 @@ export const tagValidator = (text: string): string => {
     return '';
   };
   if (text.length < 4) {
-    return 'At least 3 characters are required';
+    return 'At least 4 characters are required';
   };
   if (!(/^[a-zA-Z'\s-]+$/.test(text))) {
     return 'Only characters and \'-\' are allowed )';

@@ -19,6 +19,7 @@ export default class LoginService {
     gender: Gender,
     address: string,
     description: string,
+    interests: string[],
     job: string,
   ): Promise<boolean> {
     const { token } = await ApiService.put('user/login', {
@@ -28,6 +29,7 @@ export default class LoginService {
       gender,
       address,
       description,
+      interests,
       job,
     });
     if (token) {

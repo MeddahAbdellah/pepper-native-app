@@ -3,10 +3,9 @@ import {
   StyleSheet, Text, View, ScrollView, Dimensions, TouchableOpacity,
 } from 'react-native';
 import {
-  white, space_unit, fontSizeRegular, fontSizeHeader, sun, sun_2, fire, fire_2, indigo_2, indigo, grey_3, color, pepper, raven, pepper_2,
+  white, space_unit, fontSizeRegular, fontSizeHeader, grey_3, color, pepper, raven,
 } from '../../styles/common';
 import PepperDescriptionCarousel from '../pepperDescriptionCarousel/pepperDescriptionCarousel';
-import PepperTag from '../pepperTags/pepperTags';
 import LoginService from '../../services/login';
 import { usePepperDispatch } from '../../hooks/store.hooks';
 import { fetchUser, resetUser, updateUser } from '../../features/user/userActions';
@@ -16,7 +15,6 @@ import { PepperStackRoutes } from '../../models/routes';
 import {
   FormSchema, PepperForm, FormType, nameValidator, cityValidator, alwaysValidValidator, MenuItem, tagValidator,
 } from '../pepperForm';
-import { keyExtractor } from '../../helpers/uiHelper';
 
 const PepperUserDescription = (): JSX.Element => {
   const { width } = Dimensions.get('window');
@@ -29,6 +27,12 @@ const PepperUserDescription = (): JSX.Element => {
   useEffect(() => {
     if (!currentUser.user) { return; }
     setSchema({
+      interests: {
+        type: FormType.Tags,
+        label: 'You & your hobbies',
+        initialValue: currentUser.user.interests,
+        validator: tagValidator,
+      },
       job: {
         type: FormType.Text,
         label: 'Job',
@@ -50,13 +54,7 @@ const PepperUserDescription = (): JSX.Element => {
         multiline: true,
         max: 200,
         validator: alwaysValidValidator,
-      },
-      interests: {
-        type: FormType.Tags,
-        label: 'You & your hobbies',
-        initialValue: Array<string>(),
-        validator: tagValidator,
-      },
+      }
     });
   }, [currentUser]);
 
@@ -68,16 +66,6 @@ const PepperUserDescription = (): JSX.Element => {
     const { width } = event.nativeEvent.layout;
     setCarouselWidth(.97 * width);
   };
-
-  const StaticInterestTags = (): JSX.Element[] => currentUser.user.interests.map((interest, index) => {
-    const tagColors = [[sun, sun_2], [fire, fire_2], [indigo, indigo_2], [pepper, pepper_2]];
-    return (<PepperTag
-      key={keyExtractor(interest)}
-      text={interest}
-      firstGradientColor={tagColors[index % tagColors.length][0]}
-      secondGradientColor={tagColors[index % tagColors.length][1]}
-      style={styles.tags}/>);
-  });
 
   const updatePersonalInfo = (result: { [key: string]: string | MenuItem[] | string[]; }): void => {
     storeDispatch(updateUser(result));
@@ -91,7 +79,6 @@ const PepperUserDescription = (): JSX.Element => {
         </View>
         <View style={styles.detailsContainer}>
           <Text style={{ fontSize: fontSizeHeader }}>{currentUser.user.name}</Text>
-          <View style={styles.tagsContainer}>{StaticInterestTags()}</View>
           <PepperForm
             schema={schema}
             onSubmit={updatePersonalInfo}
