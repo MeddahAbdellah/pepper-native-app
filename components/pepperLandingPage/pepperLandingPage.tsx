@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   },
   titleWithIcon: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
   founders: {
     bottom: 3 * space_unit,

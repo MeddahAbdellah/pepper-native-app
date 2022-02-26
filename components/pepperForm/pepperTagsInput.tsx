@@ -88,7 +88,7 @@ export const PepperTagsInput = (tagInputProps: ITagInput): JSX.Element => {
           />
 
           <TouchableOpacity onPress={onAdd} style={{ marginLeft: 2.5 * space_unit, marginRight: 1 * space_unit }}>
-            <PepperIcon name='pepper-add' size={5 * space_unit} color={color(indigo, .8)} />
+            <PepperIcon name='pepper-add' size={4 * space_unit} color={color(indigo, .8)} />
           </TouchableOpacity>
         </View> :
         <Text style={styles.error}>{'You have reached the maximum number of interests'}</Text>}

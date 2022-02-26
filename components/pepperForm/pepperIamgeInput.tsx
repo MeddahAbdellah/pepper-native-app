@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet, View, TouchableOpacity, Image,
 } from 'react-native';
@@ -10,6 +10,7 @@ import {
 import PepperIcon from '../pepperIcon/pepperIcon';
 import * as ImagePicker from 'expo-image-picker';
 import _ from 'lodash';
+import FileUploadService from '../../services/fileUpload';
 
 const IMAGE_ROWS = 2;
 const IMAGE_COLUMNS = 3;
@@ -20,6 +21,12 @@ interface IImageInput extends Omit<ImageInputSchema, 'type'> {
 const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
   const [imgsOutput, setImagesOutput] = useState<{[key: number]: { uri: string }}>({});
 
+  useEffect(() => {
+    if (!imageInputProms.initialValue) { return; }
+    const initialImages = _.mapValues(imageInputProms.initialValue);
+    setImagesOutput(initialImages);
+  }, [imageInputProms.initialValue]);
+
   const addImage = (id: number): void => {
     (async() => {
       const image = await ImagePicker.launchImageLibraryAsync({
@@ -29,9 +36,9 @@ const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
         base64: true,
         quality: 1,
       });
-      if (image && !image.cancelled) {
-        // use base64 and aws to generate uri
-        const newImgOutput = { ...imgsOutput, [id]: { uri: image.uri } };
+      if (image && !image.cancelled && image.base64) {
+        const img = await FileUploadService.uploadImage(image.base64);
+        const newImgOutput = { ...imgsOutput, [id]: img };
         setImagesOutput(newImgOutput);
         imageInputProms.onSubmit({ value: _.values(newImgOutput), valid: true });
       };
@@ -39,9 +46,9 @@ const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
   };
 
   const StaticImageInput = (imageProps: { id: number }): JSX.Element => (
-    <TouchableOpacity style={styles.imageContainer} onPress={() => addImage(imageProps.id)}>
-      { !!imgsOutput[imageProps.id] ?
-        <Image style={{ width: '100%', height: '100%' }} source={{ uri: imgsOutput[imageProps.id].uri }}/> :
+    <TouchableOpacity style={styles.imageContainer} onPress={() => addImage((imageProps.id - 1))}>
+      { !!imgsOutput[imageProps.id - 1] ?
+        <Image style={{ width: '100%', height: '100%' }} source={{ uri: imgsOutput[imageProps.id - 1].uri }}/> :
         <PepperIcon name='pepper-add' size={4 * space_unit} color={color(indigo, .6)}/>
       }
     </TouchableOpacity>
@@ -60,7 +67,7 @@ const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
     <View>{
       Array.from(
         Array(IMAGE_ROWS).keys()
-      ).map((value) => <StaticImageInputColumns id={value + 1} key={keyExtractor(value)}/>)
+      ).map((value) => <StaticImageInputColumns id={value} key={keyExtractor(value)}/>)
     }</View>);
 
   return (
@@ -79,6 +86,7 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom: 2 * space_unit,
   },
   imageContainer: {
     width: '30%',

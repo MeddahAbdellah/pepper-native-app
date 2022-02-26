@@ -26,8 +26,8 @@ export default class ApiService {
       .then(this._responseFormatter);
   }
 
-  public static async post(resource: string, body: any): Promise<any> {
-    return this.postLikeRequest(HttpMethod.POST, resource, body);
+  public static async post(resource: string, body: any, isJson: boolean = true): Promise<any> {
+    return this.postLikeRequest(HttpMethod.POST, resource, body, isJson);
   }
 
   public static async put(resource: string, body: any): Promise<any> {
@@ -39,21 +39,21 @@ export default class ApiService {
     return this.postLikeRequest(HttpMethod.DELETE, resource, body);
   }
 
-  private static async postLikeRequest(method: HttpMethod, resource: string, body: any): Promise<any> {
-    const headers = await this.getHeaders();
+  private static async postLikeRequest(method: HttpMethod, resource: string, body: any, isJson: boolean = true): Promise<any> {
+    const headers = await this.getHeaders(isJson);
     const response = await fetch(`${this._baseUrl}/${resource}`, {
       method,
       headers,
-      body: JSON.stringify(body),
+      body: isJson ? JSON.stringify(body) : body,
     }
     ).then(this._responseFormatter);
     return response;
   }
 
-  private static async getHeaders(): Promise<any> {
+  private static async getHeaders(isJson: boolean = true): Promise<any> {
     const authorization = await SecureStore.getItemAsync(SecureStoreKeys.Token).catch(async(error) => UtilService.throwError(error));
     const headers = {
-      'Content-Type': 'application/json; charset=utf-8',
+      ...(isJson ? { 'Content-Type': 'application/json; charset=utf-8' } : {}),
       ...( authorization ? { 'Authorization': authorization } : {}),
     };
     return headers;

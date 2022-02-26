@@ -37,7 +37,8 @@ export interface GenderInputSchema {
 }
 
 export interface ImageInputSchema {
-  type: FormType.Image
+  type: FormType.Image,
+  initialValue?: Array<{uri: string}>,
 }
 
 export interface MenuItem {

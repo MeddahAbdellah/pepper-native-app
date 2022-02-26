@@ -7,7 +7,7 @@ import {
   space_unit, white, indigo, pepper, indigo_3,
 } from '../../styles/common';
 import {
-  FormSchema, FormType, TextInputSchema, DateInputSchema, MenuItem, MenuInputSchema, ImageItem, TagSchema,
+  FormSchema, FormType, TextInputSchema, DateInputSchema, MenuItem, MenuInputSchema, ImageItem, TagSchema, ImageInputSchema,
 } from './formTypes';
 import { PepperTextInput } from './pepperTextInput';
 import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
@@ -84,7 +84,8 @@ export const PepperForm = (formProps: {
               case FormType.Image:
                 return <PepperImageInput
                   key={key}
-                  onSubmit={(fieldOutput: { value: ImageItem[], valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}/>;
+                  onSubmit={(fieldOutput: { value: ImageItem[], valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
+                  {..._.omit(schemaValue as ImageInputSchema, 'type')}/>;
               case FormType.Menu:
                 return <PepperMenuInput
                   key={key}
