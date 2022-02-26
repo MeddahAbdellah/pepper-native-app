@@ -24,9 +24,11 @@ const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
   const [isImgLoading, setIsImgLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    const abortController = new AbortController();
     if (!imageInputProms.initialValue) { return; }
     const initialImages = _.mapValues(imageInputProms.initialValue);
     setImagesOutput(initialImages);
+    return () => { abortController.abort(); };
   }, [imageInputProms.initialValue]);
 
   const addImage = (id: number): void => {

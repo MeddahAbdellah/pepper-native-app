@@ -26,7 +26,9 @@ export const PepperTagsInput = (tagInputProps: ITagInput): JSX.Element => {
   const [tagItems, setTagsItems] = useState<string[]>([]);
 
   useEffect(() => {
+    const abortController = new AbortController();
     setTagsItems(tagInputProps.initialValue || []);
+    return () => { abortController.abort(); };
   }, [tagInputProps.initialValue]);
 
   const onTagChange = (value: string): void => {
