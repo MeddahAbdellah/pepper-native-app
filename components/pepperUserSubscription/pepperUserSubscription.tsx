@@ -76,6 +76,11 @@ const PepperUserSubscription = (): JSX.Element => {
       },
     },
     {
+      imgs: {
+        type: FormType.Image,
+      },
+    },
+    {
       code: {
         type: FormType.Text,
         keyboardType: KeyBoardType.Numeric,
@@ -108,6 +113,7 @@ const PepperUserSubscription = (): JSX.Element => {
           description,
           interests,
           job,
+          imgs,
         } = subscriptionFormOutput;
 
         try {
@@ -121,6 +127,7 @@ const PepperUserSubscription = (): JSX.Element => {
             description as string,
             interests as string[],
             job as string,
+            imgs as Array<{ uri: string}>,
           );
           if (subcribeSuccess) {
             navigation.navigate(PepperStackRoutes.Tutorial);

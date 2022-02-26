@@ -12,7 +12,7 @@ const PepperIntro = (): JSX.Element => (
       {
         image: PepperImages.Bar, text: (<>
           {(<Text style={{ color: pepper, fontFamily: 'Sora_700Bold' }}> Pepper parties </Text>)}
-        are the best place to meet awesome guys/girls</>)
+        are the best place to meet awesome people</>)
       },
       { image: PepperImages.Bracelets, text: 'You will all have the same bracelets so talking to strangers will be much easier' },
       { image: PepperImages.Parity, text: 'The parity will be respected! Half girlz half boyz' },

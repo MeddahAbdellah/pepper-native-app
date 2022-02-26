@@ -71,8 +71,7 @@ export const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
     <Modal
       animationType="fade"
       visible={isHugeImage}
-      transparent={true}
-      onRequestClose={() => setIsHugeImage(false)}>
+      transparent={true}>
       <BlurView tint="dark" style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <PepperImage src={PepperImages.Dino} style={styles.modalImage}></PepperImage>

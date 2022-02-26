@@ -6,7 +6,7 @@ import { PepperForm } from './pepperForm';
 
 export const PepperFormStepper = (formProps: {
   schemas: FormSchema[],
-  onDone: (result: { [key: string]: string | MenuItem[] | string[] }) => void,
+  onDone: (result: { [key: string]: string | MenuItem[] | string[] | Array<{ uri: string}> }) => void,
 }): JSX.Element => {
   const [stepperFormOutput, setStepperFormOutput] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);

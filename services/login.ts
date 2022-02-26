@@ -21,6 +21,7 @@ export default class LoginService {
     description: string,
     interests: string[],
     job: string,
+    imgs: Array<{ uri: string}>,
   ): Promise<boolean> {
     const { token } = await ApiService.put('user/login', {
       phoneNumber,
@@ -31,6 +32,7 @@ export default class LoginService {
       description,
       interests,
       job,
+      imgs,
     });
     if (token) {
       await ApiService.setToken(token).catch(this._errorHandler);
