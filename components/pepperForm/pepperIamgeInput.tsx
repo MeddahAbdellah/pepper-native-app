@@ -30,7 +30,6 @@ const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
   }, [imageInputProms.initialValue]);
 
   const addImage = (id: number): void => {
-    setIsImgLoading(true);
     (async() => {
       const image = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -39,6 +38,7 @@ const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
         base64: true,
         quality: 1,
       });
+      setIsImgLoading(true);
       if (image && !image.cancelled && image.base64) {
         const img = await FileUploadService.uploadImage(image.base64);
         const newImgOutput = { ...imgsOutput, [id]: img };
