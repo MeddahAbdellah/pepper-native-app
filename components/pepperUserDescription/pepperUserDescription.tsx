@@ -76,7 +76,8 @@ const PepperUserDescription = (): JSX.Element => {
             schema={schema}
             onSubmit={updatePersonalInfo}
             style={{ padding: 0, marginTop: 2 * space_unit }}
-            hasUpdateButton={true}></PepperForm>
+            hasUpdateButton={true}
+            submitOnImageChange={true}></PepperForm>
         </View>
         <TouchableOpacity style={styles.logoutButton}
           onPress={async() => {

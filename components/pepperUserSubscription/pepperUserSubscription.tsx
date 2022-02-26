@@ -127,7 +127,7 @@ const PepperUserSubscription = (): JSX.Element => {
           }
         // we are catching an error that could be anything
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (error: any) {
+        } catch (error) {
           if (error.status === 401 ) {
             Toast.show('The code is not valid', {
               duration: Toast.durations.LONG,

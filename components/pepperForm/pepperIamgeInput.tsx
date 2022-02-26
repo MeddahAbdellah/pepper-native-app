@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet, View, TouchableOpacity, Image,
+  StyleSheet, View, TouchableOpacity, Image, Modal, ActivityIndicator,
 } from 'react-native';
 import { keyExtractor } from '../../helpers/uiHelper';
 import { ImageInputSchema, ImageItem } from './formTypes';
 import {
-  space_unit, grey_3, color, indigo, indigo_3, fontSizeSubSubHeader,
+  space_unit, grey_3, color, indigo, indigo_3, fontSizeSubSubHeader, pepper,
 } from '../../styles/common';
 import PepperIcon from '../pepperIcon/pepperIcon';
 import * as ImagePicker from 'expo-image-picker';
 import _ from 'lodash';
 import FileUploadService from '../../services/fileUpload';
+import { BlurView } from 'expo-blur';
 
 const IMAGE_ROWS = 2;
 const IMAGE_COLUMNS = 3;
@@ -20,6 +21,7 @@ interface IImageInput extends Omit<ImageInputSchema, 'type'> {
 
 const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
   const [imgsOutput, setImagesOutput] = useState<{[key: number]: { uri: string }}>({});
+  const [isImgLoading, setIsImgLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!imageInputProms.initialValue) { return; }
@@ -28,6 +30,7 @@ const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
   }, [imageInputProms.initialValue]);
 
   const addImage = (id: number): void => {
+    setIsImgLoading(true);
     (async() => {
       const image = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -41,6 +44,7 @@ const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
         const newImgOutput = { ...imgsOutput, [id]: img };
         setImagesOutput(newImgOutput);
         imageInputProms.onSubmit({ value: _.values(newImgOutput), valid: true });
+        setIsImgLoading(false);
       };
     })();
   };
@@ -70,13 +74,28 @@ const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
       ).map((value) => <StaticImageInputColumns id={value} key={keyExtractor(value)}/>)
     }</View>);
 
+  const StaticLoadignImage = (): JSX.Element => (
+    <Modal
+      animationType="fade"
+      visible={isImgLoading}
+      transparent={true}
+      onRequestClose={() => setIsImgLoading(false)}>
+      <BlurView tint="dark" style={styles.modalContainer}>
+        <ActivityIndicator size="large" color={pepper} />
+      </BlurView>
+    </Modal>
+  );
+
   return (
-    <View style={styles.container}>
-      <StaticImageInputRows/>
-    </View>
+    <>
+      <StaticLoadignImage/>
+      <View style={styles.container}>
+        <StaticImageInputRows/>
+      </View>
+    </>
   );
 };
-
+//
 export default PepperImageInput;
 
 const styles = StyleSheet.create({
@@ -87,6 +106,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 2 * space_unit,
+  },
+  modalContainer: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   imageContainer: {
     width: '30%',

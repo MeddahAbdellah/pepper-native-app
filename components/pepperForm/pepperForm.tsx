@@ -25,18 +25,20 @@ export const PepperForm = (formProps: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   style?: any,
   hasUpdateButton?: boolean,
+  submitOnImageChange?: boolean,
 }): JSX.Element => {
   const [formOutput, setFormOutput] = useState({});
   const schemaToErrorsArray = _.reduce(formProps.schema, (res, _value, key) => ({ ...res, [key]: true }), {});
   const [formErrors, setFormErrors] = useState(schemaToErrorsArray);
   const [changedAtLeastOnce, setChangedAtLeastOnce] = useState(false);
 
-  const onFieldSubmit = (key: string, result: { value: string | MenuItem[] | ImageItem[] | string[], valid: boolean }): void => {
+  const onFieldSubmit = (key: string, result: { value: string | MenuItem[] | ImageItem[] | string[], valid: boolean }, submit?: boolean): void => {
     setChangedAtLeastOnce(true);
     const newFormOutput = { ...formOutput, [key]: result.value };
     const newFormErrors = { ...formErrors, [key]: !result.valid };
     setFormOutput(newFormOutput);
     setFormErrors(newFormErrors);
+    if (submit) {formProps.onSubmit(newFormOutput); }
   };
 
   const onSubmit = (): void => {
@@ -84,7 +86,9 @@ export const PepperForm = (formProps: {
               case FormType.Image:
                 return <PepperImageInput
                   key={key}
-                  onSubmit={(fieldOutput: { value: ImageItem[], valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
+                  onSubmit={(fieldOutput: { value: ImageItem[], valid: boolean }) => {
+                    onFieldSubmit(key, fieldOutput, formProps.submitOnImageChange);
+                  }}
                   {..._.omit(schemaValue as ImageInputSchema, 'type')}/>;
               case FormType.Menu:
                 return <PepperMenuInput
