@@ -14,7 +14,7 @@ import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { PepperDateInput } from './pepperDateInput';
 import { PepperGenderInput } from './pepperGenderInput';
 import { PepperMenuInput } from './pepperMenuInput';
-import PepperImageInput from './pepperIamgeInput';
+import { PepperImageInput } from './pepperImageInput';
 import { PepperTagsInput } from './pepperTagsInput';
 
 

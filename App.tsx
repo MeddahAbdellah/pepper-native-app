@@ -19,7 +19,7 @@ const PepperApp = (): JSX.Element => {
         setIsErrorFree(false);
       }
     })();
-    return () => { abortController.abort();};
+    return () => { abortController.abort(); };
   }, []);
 
 

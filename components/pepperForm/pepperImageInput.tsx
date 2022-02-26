@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet, View, TouchableOpacity, Image, Modal, ActivityIndicator,
+  StyleSheet, View, TouchableOpacity, Image, Modal, ActivityIndicator, Text,
 } from 'react-native';
 import { keyExtractor } from '../../helpers/uiHelper';
 import { ImageInputSchema, ImageItem } from './formTypes';
 import {
-  space_unit, grey_3, color, indigo, indigo_3, fontSizeSubSubHeader, pepper,
+  space_unit, grey_3, color, indigo, indigo_3, fontSizeSubSubHeader, pepper, fontSizeBody, white, black, fontSizeRegular,
 } from '../../styles/common';
 import PepperIcon from '../pepperIcon/pepperIcon';
 import * as ImagePicker from 'expo-image-picker';
 import _ from 'lodash';
 import FileUploadService from '../../services/fileUpload';
 import { BlurView } from 'expo-blur';
+import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 
 const IMAGE_ROWS = 2;
 const IMAGE_COLUMNS = 3;
@@ -19,9 +20,10 @@ interface IImageInput extends Omit<ImageInputSchema, 'type'> {
   onSubmit: (result: {value: ImageItem[], valid: boolean}) => void,
 };
 
-const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
+export const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
   const [imgsOutput, setImagesOutput] = useState<{[key: number]: { uri: string }}>({});
   const [isImgLoading, setIsImgLoading] = useState<boolean>(false);
+  const [isHugeImage, setIsHugeImage] = useState<boolean>(false);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -42,11 +44,16 @@ const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
       });
       setIsImgLoading(true);
       if (image && !image.cancelled && image.base64) {
-        const img = await FileUploadService.uploadImage(image.base64);
-        const newImgOutput = { ...imgsOutput, [id]: img };
-        setImagesOutput(newImgOutput);
-        imageInputProms.onSubmit({ value: _.values(newImgOutput), valid: true });
-        setIsImgLoading(false);
+        try {
+          const img = await FileUploadService.uploadImage(image.base64);
+          const newImgOutput = { ...imgsOutput, [id]: img };
+          setImagesOutput(newImgOutput);
+          imageInputProms.onSubmit({ value: _.values(newImgOutput), valid: true });
+          setIsImgLoading(false);
+        } catch (error) {
+          setIsImgLoading(false);
+          setIsHugeImage(true);
+        }
       };
     })();
   };
@@ -58,6 +65,29 @@ const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
         <PepperIcon name='pepper-add' size={4 * space_unit} color={color(indigo, .6)}/>
       }
     </TouchableOpacity>
+  );
+
+  const StaticHugeFileModal = (): JSX.Element => (
+    <Modal
+      animationType="fade"
+      visible={isHugeImage}
+      transparent={true}
+      onRequestClose={() => setIsHugeImage(false)}>
+      <BlurView tint="dark" style={styles.modalContainer}>
+        <View style={styles.modalContent}>
+          <PepperImage src={PepperImages.Dino} style={styles.modalImage}></PepperImage>
+          <Text style={{ ...styles.modalDescription }}>
+            The image you selected is over 25Mb!
+          </Text>
+          <Text style={{ ...styles.modalDescription }}>
+            Please choose a smaller image
+          </Text>
+          <TouchableOpacity onPress={() => setIsHugeImage(false) }>
+            <Text style={{ fontSize: fontSizeBody }}>Okey</Text>
+          </TouchableOpacity>
+        </View>
+      </BlurView>
+    </Modal>
   );
 
   const StaticImageInputColumns = (imageInputColumnsProps: { id: number }): JSX.Element => (
@@ -90,6 +120,7 @@ const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
 
   return (
     <>
+      <StaticHugeFileModal/>
       <StaticLoadignImage/>
       <View style={styles.container}>
         <StaticImageInputRows/>
@@ -97,8 +128,6 @@ const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
     </>
   );
 };
-//
-export default PepperImageInput;
 
 const styles = StyleSheet.create({
   container: {
@@ -115,6 +144,30 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  modalContent: {
+    width: '95%',
+    backgroundColor: white,
+    borderRadius: 2 * space_unit,
+    padding: 3 * space_unit,
+    alignItems: 'center',
+    textAlign: 'center',
+    shadowColor: black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalImage: {
+    height: 22 * space_unit,
+  },
+  modalDescription: {
+    textAlign: 'center',
+    marginVertical: 2 * space_unit,
+    fontSize: fontSizeRegular,
   },
   imageContainer: {
     width: '30%',
