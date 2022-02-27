@@ -4,11 +4,39 @@ import * as SecureStore from 'expo-secure-store';
 export enum SecureStoreKeys {
   Error = 'error',
   Token = 'token',
+  Organizer = 'organizer',
 }
 
 export class UtilService {
   public static reloadApp(): void {
     Updates.reloadAsync();
+  }
+
+  public static async isOrganizer(): Promise<boolean> {
+    const isOrganizer = await SecureStore.getItemAsync(SecureStoreKeys.Organizer);
+    return isOrganizer === 'true';
+  }
+
+  public static async switchToOrganizer(): Promise<void> {
+    await UtilService.cleanHistory();
+    await SecureStore.setItemAsync(SecureStoreKeys.Organizer, 'true');
+    UtilService.reloadApp();
+
+  }
+
+  public static async switchToUser(): Promise<void> {
+    await UtilService.cleanHistory();
+    await SecureStore.setItemAsync(SecureStoreKeys.Organizer, 'false');
+    UtilService.reloadApp();
+  }
+
+  public static async toggleBetweenUserAndOrganizer(): Promise<void> {
+    const isOrganizer = await UtilService.isOrganizer();
+    if (isOrganizer) {
+      await UtilService.switchToUser();
+      return;
+    }
+    await UtilService.switchToOrganizer();
   }
 
   public static async throwError(error: object): Promise<void> {

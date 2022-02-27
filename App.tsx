@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import PepperError from './components/pepperError/pepperError';
 import * as SecureStore from 'expo-secure-store';
 import PepperUserApp from './projects/userApp';
-import { SecureStoreKeys } from './services/util';
+import { SecureStoreKeys, UtilService } from './services/util';
+import PepperOrganizerApp from './projects/organizerApp';
 
 const PepperApp = (): JSX.Element => {
   const [isErrorFree, setIsErrorFree] = useState(true);
+  const [isOrganizer, setIsOrganizer] = useState(false);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -15,6 +17,8 @@ const PepperApp = (): JSX.Element => {
         if (!!error) {
           setIsErrorFree(false);
         }
+        const isOrganizer = await UtilService.isOrganizer();
+        setIsOrganizer(isOrganizer);
       } catch (error) {
         setIsErrorFree(false);
       }
@@ -28,7 +32,13 @@ const PepperApp = (): JSX.Element => {
       {
         !isErrorFree ?
           (<PepperError/>) :
-          (<PepperUserApp/>)
+          <>
+            {
+              isOrganizer ?
+                (<PepperOrganizerApp/>) :
+                (<PepperUserApp/>)
+            }
+          </>
       }
     </>
   );

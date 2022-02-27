@@ -4,7 +4,8 @@ import { Gender } from '../models/types';
 
 export default class LoginService {
   public static async login(phoneNumber: string, code: string): Promise<boolean> {
-    const { token } = await ApiService.post('user/login', { phoneNumber, code });
+    const loginPath = await this.getLoginPath();
+    const { token } = await ApiService.post(loginPath, { phoneNumber, code });
     if (token) {
       await ApiService.setToken(token).catch(this._errorHandler);
       return true;
@@ -23,7 +24,8 @@ export default class LoginService {
     job: string,
     imgs: Array<{ uri: string}>,
   ): Promise<boolean> {
-    const { token } = await ApiService.put('user/login', {
+    const loginPath = await this.getLoginPath();
+    const { token } = await ApiService.put(loginPath, {
       phoneNumber,
       code,
       name,
@@ -52,8 +54,14 @@ export default class LoginService {
   }
 
   public static async isSubscribedAndInitLogin(phoneNumber: string): Promise<boolean> {
-    const { userExists } = await ApiService.get('user/login', { phoneNumber }).catch(this._errorHandler);
+    const loginPath = await this.getLoginPath();
+    const { userExists } = await ApiService.get(loginPath, { phoneNumber }).catch(this._errorHandler);
     return userExists;
+  }
+
+  private static async getLoginPath(): Promise<string> {
+    const isOrganizer = await UtilService.isOrganizer();
+    return isOrganizer ? 'organizer/login' : 'user/login';
   }
 
   // any is a valid type as we want to be able to send any object

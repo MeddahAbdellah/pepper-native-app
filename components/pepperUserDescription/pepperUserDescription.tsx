@@ -83,7 +83,7 @@ const PepperUserDescription = (): JSX.Element => {
           onPress={async() => {
             await LoginService.logout();
             storeDispatch(resetUser());
-            navigation.navigate(PepperStackRoutes.LadingPage);
+            navigation.navigate(PepperStackRoutes.LandingPage);
           }}>
           <Text style={styles.logoutButtonText}>Logout</Text>
         </TouchableOpacity>

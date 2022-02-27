@@ -20,6 +20,7 @@ const PepperLandingPage = (): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const navigation = useNavigation<any>();
   const [isLangingPageShowing, setIsLangingPageShowing] = useState(false);
+  const [isOrganizer, setIsOrganizer] = useState(false);
   // Font name must be named like this
   // eslint-disable-next-line @typescript-eslint/naming-convention
   let [fontsLoaded] = useFonts({ Sora_400Regular, Sora_700Bold, ArchitectsDaughter_400Regular });
@@ -34,6 +35,8 @@ const PepperLandingPage = (): JSX.Element => {
           navigation.navigate(PepperStackRoutes.Main);
           return;
         }
+        const isOrganizer = await UtilService.isOrganizer();
+        setIsOrganizer(isOrganizer);
         setIsLangingPageShowing(true);
       } catch (error) {
         UtilService.throwError(error);
@@ -43,6 +46,10 @@ const PepperLandingPage = (): JSX.Element => {
 
   const onGo = (): void => {
     navigation.navigate(PepperStackRoutes.LoginRouter);
+  };
+
+  const onToggleApp = async(): Promise<void> => {
+    await UtilService.toggleBetweenUserAndOrganizer();
   };
 
   return isLangingPageShowing ?
@@ -59,9 +66,14 @@ const PepperLandingPage = (): JSX.Element => {
           </View>
           <Text style={styles.punchline}>Better to go out to find a lover than to find a lover to go out</Text>
         </View>
-        <TouchableOpacity onPress={onGo} style={styles.goButton}>
-          <Text style={styles.goButtonText}> Let's go! </Text>
-        </TouchableOpacity>
+        <View style={{ width: '100%' }}>
+          <TouchableOpacity onPress={onGo} style={styles.goButton}>
+            <Text style={styles.goButtonText}> Let's go! </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onToggleApp}>
+            <Text style={styles.switchToOrganizerButton}>{ !isOrganizer ? 'Become an organizer!' : 'Looking for love ? find Pepper Parties!'}</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.founders}>
           <Text style={styles.foundersText}> Pepper dating </Text>
           <Text style={styles.foundersText}> Founded by </Text>
@@ -109,6 +121,13 @@ const styles = StyleSheet.create({
     fontSize: fontSizeRegular,
     textAlign: 'center',
     marginTop: 8 * space_unit,
+    fontFamily: 'Sora_700Bold',
+  },
+  switchToOrganizerButton: {
+    color: color(white, .9),
+    fontSize: fontSizeRegular,
+    textAlign: 'center',
+    marginTop: 4 * space_unit,
     fontFamily: 'Sora_700Bold',
   },
   title: {

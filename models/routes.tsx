@@ -8,5 +8,5 @@ export enum PepperStackRoutes {
   UserDescription = 'userDescription',
   CodeLogin = 'codelogin',
   LoginRouter = 'loginRouter',
-  LadingPage = 'ladingPage',
+  LandingPage = 'landingPage',
 }
