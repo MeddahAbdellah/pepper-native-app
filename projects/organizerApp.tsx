@@ -6,9 +6,10 @@ import { Provider } from 'react-redux';
 import store from '../services/store';
 import { PepperTitle, PepperUserProfile, PepperQrCode } from '../components/pepperHeader/pepperHeader';
 import { PepperStackRoutes } from '../models/routes';
-import PepperLoginRouter from '../components/pepperLoginRouter/pepperLoginRouter';
 import { white } from '../styles/common';
 import PepperLandingPage from '../components/pepperLandingPage/pepperLandingPage';
+import PepperOrganizerLanding from '../components/pepperOrganizer/pepperOrganizerLanding';
+import PepperOrganizerLogin from '../components/pepperOrganizer/pepperOgranizerLogin';
 
 const ReactStack = createNativeStackNavigator();
 
@@ -27,7 +28,8 @@ const PepperOrganizerApp = (): JSX.Element => (
             headerRight: () => (<PepperQrCode />),
           })}>
           <ReactStack.Screen name={PepperStackRoutes.LandingPage} component={PepperLandingPage} options={{ headerShown: false }}/>
-          <ReactStack.Screen name={PepperStackRoutes.LoginRouter} component={PepperLoginRouter} />
+          <ReactStack.Screen name={PepperStackRoutes.Tutorial} component={PepperOrganizerLanding} />
+          <ReactStack.Screen name={PepperStackRoutes.LoginRouter} component={PepperOrganizerLogin} />
         </ReactStack.Navigator>
       </NavigationContainer>
     </Provider>

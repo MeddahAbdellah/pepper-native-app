@@ -47,12 +47,48 @@ export enum Gender {
   WOMAN = 'woman'
 }
 
+
+
+
+export enum OrganizerStatus {
+  Pending = 'pending',
+  Accepted = 'accepted',
+  Rejected = 'rejected',
+}
+
+
+export interface IOrganizerBase {
+  id: number,
+  userName: string
+  title: string
+  location: string
+  phoneNumber: string,
+  address: string,
+  description: string,
+  imgs: Array<{ uri: string }>,
+  foods: Array<{ name: string, price: number }>,
+  drinks: Array<{ name: string, price: number }>,
+  status: OrganizerStatus
+}
+
+export interface IOrganizer extends IOrganizerBase {
+  parties: IParty[]
+}
+
 export enum StoreStatus {
   Idle = 'idle',
   Pending = 'pending',
   Fulfilled = 'fulfilled',
   Rejected = 'rejected',
 };
+
+export interface IOrganizerStore {
+  organizer: IOrganizer;
+  fetchStatus: StoreStatus;
+  updateStatus: StoreStatus;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  error: any;
+}
 
 export interface IUserStore {
   user: IUser;
@@ -67,3 +103,12 @@ export interface IUserStore {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error: any;
 }
+
+export interface IPartyEvent {
+  theme: string,
+  date: string,
+  people: number,
+  minAge: number,
+  maxAge: number,
+  price: number
+};

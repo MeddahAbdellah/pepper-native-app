@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from '../features/user/userSlice';
 import partiesReducer from '../features/parties/partiesSlice';
+import organizerReducer from '../features/organizer/organizerSlice';
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     parties: partiesReducer,
+    organizer: organizerReducer
   },
 });
 

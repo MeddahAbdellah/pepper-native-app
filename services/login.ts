@@ -3,6 +3,7 @@ import { UtilService } from './util';
 import { Gender } from '../models/types';
 
 export default class LoginService {
+  // User login and subscribe
   public static async login(phoneNumber: string, code: string): Promise<boolean> {
     const loginPath = await this.getLoginPath();
     const { token } = await ApiService.post(loginPath, { phoneNumber, code });
@@ -35,6 +36,48 @@ export default class LoginService {
       interests,
       job,
       imgs,
+    });
+    if (token) {
+      await ApiService.setToken(token).catch(this._errorHandler);
+      return true;
+    }
+    return false;
+  }
+
+  // organizer login and subscribe
+  public static async loginOrganizer(username: string, password: string): Promise<boolean> {
+    const loginPath = await this.getLoginPath();
+    const { token } = await ApiService.post(loginPath, { username, password });
+    if (token) {
+      await ApiService.setToken(token).catch(this._errorHandler);
+      return true;
+    }
+    return false;
+  }
+
+  public static async subscribeOrganizer(
+    userName: string,
+    phoneNumber: string,
+    password: string,
+    title: Gender,
+    location: string,
+    description: string,
+    imgs: Array<{ uri: string}>,
+    foods: Array<{ name: string, price: number}>,
+    drinks: Array<{ name: string, price: number}>
+
+  ): Promise<boolean> {
+    const loginPath = await this.getLoginPath();
+    const { token } = await ApiService.put(loginPath, {
+      userName,
+      phoneNumber,
+      password,
+      title,
+      location,
+      description,
+      imgs,
+      foods,
+      drinks,
     });
     if (token) {
       await ApiService.setToken(token).catch(this._errorHandler);

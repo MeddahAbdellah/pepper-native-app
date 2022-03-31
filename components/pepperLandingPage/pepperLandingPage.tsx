@@ -38,14 +38,19 @@ const PepperLandingPage = (): JSX.Element => {
         const isOrganizer = await UtilService.isOrganizer();
         setIsOrganizer(isOrganizer);
         setIsLangingPageShowing(true);
-      } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         UtilService.throwError(error);
       }
     })();
   }, [fontsLoaded]);
 
   const onGo = (): void => {
-    navigation.navigate(PepperStackRoutes.LoginRouter);
+    if (isOrganizer) {
+      navigation.navigate(PepperStackRoutes.Tutorial);
+    } else {
+      navigation.navigate(PepperStackRoutes.LoginRouter);
+    }
   };
 
   const onToggleApp = async(): Promise<void> => {
