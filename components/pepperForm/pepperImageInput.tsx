@@ -97,7 +97,7 @@ export const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
   );
 
   const StaticImageInputColumns = (imageInputColumnsProps: { id: number }): JSX.Element => (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
       {
         Array.from(
           Array(IMAGE_COLUMNS).keys()
@@ -163,9 +163,8 @@ const styles = StyleSheet.create({
     fontSize: fontSizeRegular,
   },
   imageContainer: {
-    width: '30%',
+    width: '32%',
     aspectRatio: 2 / 3,
-    margin: space_unit,
     backgroundColor: color(grey_3, .1),
     borderRadius: space_unit,
     justifyContent: 'center',
