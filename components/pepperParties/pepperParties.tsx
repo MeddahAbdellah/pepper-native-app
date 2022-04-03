@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import {
   space_unit, white, color, fontSizeHeader, fontSizeSubHeader, sun_2, sun,
-  indigo_2, fire, fire_2, indigo_3, fontSizeRegular, pepper, pepper_2, grey_1, raven, black,
+  indigo_2, fire, fire_2, indigo_3, fontSizeRegular, pepper, pepper_2, grey_1, raven, black, heaven,
 } from '../../styles/common';
 import Swiper from 'react-native-deck-swiper';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -93,6 +93,18 @@ const PepperParties = (): JSX.Element => {
     <Button title="Refresh" onPress={ async() => { storeDispatch(fetchParties()).then(() => setHasSwipedAll(false)); }}/>
   </>);
 
+  const StaticGoing = (): JSX.Element => (
+    <View style={{ ...styles.swipeLabel, borderColor: heaven }}>
+      <Text style={{ color: heaven, fontSize: fontSizeSubHeader }}>Going</Text>
+    </View>
+  );
+
+  const StaticSleeping = (): JSX.Element => (
+    <View style={{ ...styles.swipeLabel, borderColor: pepper }}>
+      <Text style={{ color: pepper, fontSize: fontSizeSubHeader }}>Sleeping</Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       { hasSwipedAll || !currentParties.parties.length ?
@@ -104,6 +116,63 @@ const PepperParties = (): JSX.Element => {
               <Swiper
                 cards={currentParties.parties}
                 renderCard={StaticCard}
+                animateOverlayLabelsOpacity={true}
+                verticalSwipe={false}
+                overlayLabels={{
+                  bottom: {
+                    element: <StaticSleeping/>,
+                    style: {
+                      wrapper: {
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                        justifyContent: 'flex-start',
+                        marginTop: 70,
+                        marginLeft: -50,
+                      }
+                    }
+                  },
+                  left: {
+                    element: <StaticSleeping/>,
+                    style: {
+                      wrapper: {
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                        justifyContent: 'flex-start',
+                        marginTop: 70,
+                        marginLeft: -50,
+                      }
+                    }
+                  },
+                  right: {
+                    element: <StaticGoing/>,
+                    style: {
+                      wrapper: {
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        justifyContent: 'flex-start',
+                        marginTop: 70,
+                        marginLeft: 50,
+                      }
+                    }
+                  },
+                  top: {
+                    element: <StaticGoing/>,
+                    style: {
+                      wrapper: {
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        justifyContent: 'flex-start',
+                        marginTop: 70,
+                        marginLeft: 50,
+                      }
+                    }
+                  },
+                }}
+                overlayLabelStyle={{
+                  zIndex: 20,
+                  backgroundColor: 'red',
+                  padding: 10,
+                }}
                 // disabling linter for console for now until these are implemented
                 // eslint-disable-next-line no-console
                 onSwipedRight={(cardIndex) => storeDispatch(updateParty({ partyId: currentParties.parties[cardIndex].id })) }
@@ -147,6 +216,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 4,
     elevation: 2,
+  },
+  swipeLabel: {
+    padding: 1.5 * space_unit,
+    borderWidth: 3,
+    borderRadius: space_unit,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 4,
+    shadowRadius: 2,
+    elevation: 1,
   },
   refreshPageImage: {
     height: '30%',
