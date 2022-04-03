@@ -37,7 +37,8 @@ const PepperUserCodeLogin = (loginProps: { route: { params: { phoneNumber: strin
           if (loginSuccess) {
             navigation.navigate(PepperStackRoutes.Main);
           }
-        } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
           if (error.status === 401 ) {
             Toast.show('The code is not valid', {
               duration: Toast.durations.LONG,

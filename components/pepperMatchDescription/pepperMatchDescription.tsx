@@ -9,7 +9,7 @@ import PepperDescriptionCarousel from '../pepperDescriptionCarousel/pepperDescri
 import { IUser } from '../../models/types';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import PepperTag from '../pepperTags/pepperTags';
-import { limitTextLength } from '../../helpers/uiHelper';
+import { keyExtractor, limitTextLength } from '../../helpers/uiHelper';
 
 const PepperMatchDescription = (descriptionProps: { route: { params: IUser } }): JSX.Element => {
   const { width } = Dimensions.get('window');
@@ -24,7 +24,7 @@ const PepperMatchDescription = (descriptionProps: { route: { params: IUser } }):
   const StaticInterestTags = (): JSX.Element[] => user.interests.map((interest, index) => {
     const tagColors = [[sun, sun_2], [fire, fire_2], [indigo, indigo_2]];
     return (<PepperTag
-      key={interest}
+      key={keyExtractor(interest)}
       text={interest}
       firstGradientColor={tagColors[index % tagColors.length][0]}
       secondGradientColor={tagColors[index % tagColors.length][1]}

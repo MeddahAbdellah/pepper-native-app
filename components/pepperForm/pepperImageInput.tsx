@@ -42,8 +42,8 @@ export const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
         base64: true,
         quality: 1,
       });
-      setIsImgLoading(true);
       if (image && !image.cancelled && image.base64) {
+        setIsImgLoading(true);
         try {
           const img = await FileUploadService.uploadImage(image.base64);
           const newImgOutput = { ...imgsOutput, [id]: img };
@@ -51,7 +51,6 @@ export const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
           imageInputProms.onSubmit({ value: _.values(newImgOutput), valid: true });
           setIsImgLoading(false);
         } catch (error) {
-          setIsImgLoading(false);
           setIsHugeImage(true);
         }
       };
@@ -67,25 +66,33 @@ export const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
     </TouchableOpacity>
   );
 
-  const StaticHugeFileModal = (): JSX.Element => (
+  const StaticLoadignImageModal = (): JSX.Element => (
     <Modal
       animationType="fade"
-      visible={isHugeImage}
+      visible={isImgLoading}
       transparent={true}>
-      <BlurView tint="dark" style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          <PepperImage src={PepperImages.Dino} style={styles.modalImage}></PepperImage>
-          <Text style={{ ...styles.modalDescription }}>
+      { isHugeImage ?
+        <BlurView tint="dark" style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <PepperImage src={PepperImages.Dino} style={styles.modalImage}></PepperImage>
+            <Text style={{ ...styles.modalDescription }}>
             The image you selected is over 25Mb!
-          </Text>
-          <Text style={{ ...styles.modalDescription }}>
+            </Text>
+            <Text style={{ ...styles.modalDescription }}>
             Please choose a smaller image
-          </Text>
-          <TouchableOpacity onPress={() => setIsHugeImage(false) }>
-            <Text style={{ fontSize: fontSizeBody }}>Okey</Text>
-          </TouchableOpacity>
-        </View>
-      </BlurView>
+            </Text>
+            <TouchableOpacity onPress={() => {
+              setIsHugeImage(false);
+              setIsImgLoading(false);
+            }}>
+              <Text style={{ fontSize: fontSizeBody }}>Okey</Text>
+            </TouchableOpacity>
+          </View>
+        </BlurView> :
+        <BlurView tint="dark" style={styles.modalContainer}>
+          <ActivityIndicator size="large" color={pepper} />
+        </BlurView>
+      }
     </Modal>
   );
 
@@ -105,22 +112,9 @@ export const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
       ).map((value) => <StaticImageInputColumns id={value} key={keyExtractor(value)}/>)
     }</View>);
 
-  const StaticLoadignImage = (): JSX.Element => (
-    <Modal
-      animationType="fade"
-      visible={isImgLoading}
-      transparent={true}
-      onRequestClose={() => setIsImgLoading(false)}>
-      <BlurView tint="dark" style={styles.modalContainer}>
-        <ActivityIndicator size="large" color={pepper} />
-      </BlurView>
-    </Modal>
-  );
-
   return (
     <>
-      <StaticHugeFileModal/>
-      <StaticLoadignImage/>
+      <StaticLoadignImageModal/>
       <View style={styles.container}>
         <StaticImageInputRows/>
       </View>

@@ -29,7 +29,7 @@ const PepperLoginRouter = (): JSX.Element => {
       return;
     }
     // Intro has subscription after it thats why we are routing to it
-    navigation.navigate(PepperStackRoutes.Intro);
+    navigation.navigate(PepperStackRoutes.Intro, { phoneNumber });
   };
 
   return <PepperForm schema={schema} onSubmit={onPhoneSubmit}/>;

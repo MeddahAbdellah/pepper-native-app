@@ -9,7 +9,7 @@ import {
   FormSchema, FormType, KeyBoardType, tagValidator,
 } from '../pepperForm';
 import {
-  legalAgeValidator, nameValidator, cityValidator, alwaysValidValidator, phoneNumberValidator, codeValidator,
+  legalAgeValidator, nameValidator, cityValidator, alwaysValidValidator, codeValidator,
 } from '../pepperForm';
 import { PepperFormStepper } from '../pepperForm/pepperFormStepper';
 import { useNavigation } from '@react-navigation/native';
@@ -19,18 +19,9 @@ import { Gender } from '../../models/types';
 import { UtilService } from '../../services/util';
 import Toast from 'react-native-root-toast';
 
-const PepperUserSubscription = (): JSX.Element => {
+const PepperUserSubscription = (subscriptionProps: { route: { params: { phoneNumber: string} } }): JSX.Element => {
   const [hasGoToLoginButton, setHasGoToLoginButton] = useState(true);
   const schemas: FormSchema[] = [
-    {
-      phoneNumber: {
-        type: FormType.Text,
-        keyboardType: KeyBoardType.Numeric,
-        label: 'Confirm your phone number',
-        max: 10,
-        validator: phoneNumberValidator,
-      },
-    },
     {
       name: {
         type: FormType.Text,
@@ -105,7 +96,6 @@ const PepperUserSubscription = (): JSX.Element => {
       <PepperFormStepper schemas={schemas} onDone={async(subscriptionFormOutput) => {
         // FIX: fix type inferance
         const {
-          phoneNumber,
           code,
           name,
           gender,
@@ -119,7 +109,7 @@ const PepperUserSubscription = (): JSX.Element => {
         try {
           // TODO: remove phoneNumberInput
           const subcribeSuccess = await LoginService.subscribe(
-            phoneNumber as string,
+            subscriptionProps.route.params.phoneNumber,
             code as string,
             name as string,
             gender as Gender,
@@ -134,7 +124,7 @@ const PepperUserSubscription = (): JSX.Element => {
           }
         // we are catching an error that could be anything
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (error) {
+        } catch (error: any) {
           if (error.status === 401 ) {
             Toast.show('The code is not valid', {
               duration: Toast.durations.LONG,

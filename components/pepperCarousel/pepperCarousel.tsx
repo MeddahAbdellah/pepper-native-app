@@ -10,7 +10,11 @@ import {
 import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { useNavigation } from '@react-navigation/native';
 
-const PepperCarousel = (onBoardingProps: { pages: Array<{ image: PepperImages, text: string | JSX.Element }>, nextStep: string }): JSX.Element => {
+const PepperCarousel = (
+  onBoardingProps: { pages: Array<{ image: PepperImages, text: string | JSX.Element }>,
+  nextStep: string,
+  paramsToPass: object,
+}): JSX.Element => {
   const carouselWidth = Dimensions.get('window').width;
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -52,7 +56,7 @@ const PepperCarousel = (onBoardingProps: { pages: Array<{ image: PepperImages, t
           style={styles.nextButton}
           colors={[indigo, pepper]}
           iconName="pepper-arrowRight"
-          onPress={() => {navigation.navigate(onBoardingProps.nextStep);}}
+          onPress={() => {navigation.navigate(onBoardingProps.nextStep, onBoardingProps.paramsToPass);}}
         /> :
         null
       }

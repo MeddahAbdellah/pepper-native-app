@@ -5,7 +5,7 @@ import { PepperImages } from '../pepperImage/pepperImage';
 import { PepperStackRoutes } from '../../models/routes';
 import { white, pepper } from '../../styles/common';
 
-const PepperIntro = (): JSX.Element => (
+const PepperIntro = (introProps: { route: { params: { phoneNumber: string} } }): JSX.Element => (
   <View style={styles.container}>
     <PepperCarousel pages={[
       { image: PepperImages.Weirdo, text: 'Afraid of going on a date and getting stuck with a weirdo for the entire time' },
@@ -18,6 +18,7 @@ const PepperIntro = (): JSX.Element => (
       { image: PepperImages.Parity, text: 'The parity will be respected! Half girlz half boyz' },
     ]}
     nextStep={PepperStackRoutes.Subscription}
+    paramsToPass={introProps.route.params}
     ></PepperCarousel>
   </View>
 );
