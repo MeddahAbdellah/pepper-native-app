@@ -22,6 +22,7 @@ export interface TextInputSchema {
   initialValue?: string,
   max: number,
   multiline?: boolean,
+  password?: boolean,
   validator: (value: string) => string,
 }
 

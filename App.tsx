@@ -8,6 +8,7 @@ import PepperOrganizerApp from './projects/organizerApp';
 const PepperApp = (): JSX.Element => {
   const [isErrorFree, setIsErrorFree] = useState(true);
   const [isOrganizer, setIsOrganizer] = useState(false);
+  const [isUser, setIsUser] = useState(false);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -19,6 +20,7 @@ const PepperApp = (): JSX.Element => {
         }
         const isOrganizer = await UtilService.isOrganizer();
         setIsOrganizer(isOrganizer);
+        setIsUser(!isOrganizer);
       } catch (error) {
         setIsErrorFree(false);
       }
@@ -32,13 +34,15 @@ const PepperApp = (): JSX.Element => {
       {
         !isErrorFree ?
           (<PepperError/>) :
-          <>
-            {
-              isOrganizer ?
-                (<PepperOrganizerApp/>) :
-                (<PepperUserApp/>)
-            }
-          </>
+          <><>
+            {isOrganizer ?
+              (<PepperOrganizerApp />) :
+              null}
+          </><>
+            {isUser ?
+              (<PepperUserApp />) :
+              null}
+          </></>
       }
     </>
   );

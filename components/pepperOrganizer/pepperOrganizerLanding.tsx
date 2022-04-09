@@ -5,7 +5,7 @@ import { PepperImages } from '../pepperImage/pepperImage';
 import { PepperStackRoutes } from '../../models/routes';
 import { indigo, white } from '../../styles/common';
 
-const PepperOrganizerLanding = (): JSX.Element => (
+const PepperOrganizerIntro = (): JSX.Element => (
   <View style={styles.container}>
     <PepperCarousel pages={[
       {
@@ -23,12 +23,12 @@ const PepperOrganizerLanding = (): JSX.Element => (
         </>)
       },
     ]}
-    nextStep={PepperStackRoutes.LoginRouter}
+    nextStep={PepperStackRoutes.Subscription}
     ></PepperCarousel>
   </View>
 );
 
-export default PepperOrganizerLanding;
+export default PepperOrganizerIntro;
 
 const styles = StyleSheet.create({
   container: {

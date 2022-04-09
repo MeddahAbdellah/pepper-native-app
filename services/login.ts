@@ -45,9 +45,9 @@ export default class LoginService {
   }
 
   // organizer login and subscribe
-  public static async loginOrganizer(username: string, password: string): Promise<boolean> {
+  public static async loginOrganizer(userName: string, password: string): Promise<boolean> {
     const loginPath = await this.getLoginPath();
-    const { token } = await ApiService.post(loginPath, { username, password });
+    const { token } = await ApiService.post(loginPath, { userName, password });
     if (token) {
       await ApiService.setToken(token).catch(this._errorHandler);
       return true;
@@ -59,7 +59,7 @@ export default class LoginService {
     userName: string,
     phoneNumber: string,
     password: string,
-    title: Gender,
+    title: string,
     location: string,
     description: string,
     imgs: Array<{ uri: string}>,

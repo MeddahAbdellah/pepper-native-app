@@ -29,7 +29,8 @@ export const PepperUserProfile = (userProfileProps: {
       try {
         const loggedIn = await LoginService.isLoggedin();
         setIsLoggedIn(loggedIn);
-      } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         UtilService.throwError(error);
       }
     })();
@@ -69,7 +70,8 @@ export const PepperQrCode = (): JSX.Element => {
       try {
         const loggedIn = await LoginService.isLoggedin();
         setIsLoggedIn(loggedIn);
-      } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         UtilService.throwError(error);
       }
     })();

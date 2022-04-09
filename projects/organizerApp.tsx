@@ -8,8 +8,10 @@ import { PepperTitle, PepperUserProfile, PepperQrCode } from '../components/pepp
 import { PepperStackRoutes } from '../models/routes';
 import { white } from '../styles/common';
 import PepperLandingPage from '../components/pepperLandingPage/pepperLandingPage';
-import PepperOrganizerLanding from '../components/pepperOrganizer/pepperOrganizerLanding';
-import PepperOrganizerLogin from '../components/pepperOrganizer/pepperOgranizerLogin';
+import PepperOrganizerIntro from '../components/pepperOrganizer/pepperOrganizerLanding';
+import PepperOrganizerSubscribe from '../components/pepperOrganizer/pepperOgranizerSubscription';
+import PepperOrganizerMain from '../components/pepperOrganizer/pepperOrganizerMain';
+import PepperOrganizerLogin from '../components/pepperOrganizer/pepperOrganizerLogin';
 
 const ReactStack = createNativeStackNavigator();
 
@@ -28,8 +30,10 @@ const PepperOrganizerApp = (): JSX.Element => (
             headerRight: () => (<PepperQrCode />),
           })}>
           <ReactStack.Screen name={PepperStackRoutes.LandingPage} component={PepperLandingPage} options={{ headerShown: false }}/>
-          <ReactStack.Screen name={PepperStackRoutes.Tutorial} component={PepperOrganizerLanding} />
+          <ReactStack.Screen name={PepperStackRoutes.Intro} component={PepperOrganizerIntro} />
+          <ReactStack.Screen name={PepperStackRoutes.Subscription} component={PepperOrganizerSubscribe} />
           <ReactStack.Screen name={PepperStackRoutes.LoginRouter} component={PepperOrganizerLogin} />
+          <ReactStack.Screen name={PepperStackRoutes.Main} component={PepperOrganizerMain} />
         </ReactStack.Navigator>
       </NavigationContainer>
     </Provider>

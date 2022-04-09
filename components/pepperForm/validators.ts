@@ -54,4 +54,37 @@ export const tagValidator = (text: string): string => {
   return '';
 };
 
+export const passwordValidator = (text: string): string => {
+  if (text === '') {
+    return '';
+  };
+  if (text.length < 7) {
+    return 'At least 8 characters are required';
+  };
+  if ((/^[0-9a-zA-Z]+$/.test(text))) {
+    return 'Must contain a special caracter #@ ...';
+  }
+  return '';
+};
+
+export const userNameValidator = (text: string): string => {
+  if (text === '') {
+    return '';
+  };
+  if (text.length < 7) {
+    return 'Choose a userName to remember ! At least 8 characters are required';
+  };
+  return '';
+};
+
+export const priceValidator = (text: string): string => {
+  if (text === '') {
+    return '';
+  };
+  if (((/^[0-9].'\s-]+$/.test(text)))) {
+    return 'Must be a number';
+  };
+  return '';
+};
+
 export const alwaysValidValidator = (): string => '';

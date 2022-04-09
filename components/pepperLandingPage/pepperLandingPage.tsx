@@ -47,7 +47,7 @@ const PepperLandingPage = (): JSX.Element => {
 
   const onGo = (): void => {
     if (isOrganizer) {
-      navigation.navigate(PepperStackRoutes.Tutorial);
+      navigation.navigate(PepperStackRoutes.Intro);
     } else {
       navigation.navigate(PepperStackRoutes.LoginRouter);
     }

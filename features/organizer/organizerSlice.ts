@@ -29,7 +29,8 @@ export const organizerSlice = createSlice({
       }).
       addCase(fetchOrganizer.fulfilled, (state, action) => {
         state.fetchStatus = StoreStatus.Fulfilled;
-        state.organizer = action.payload;
+        const { parties } = state.organizer;
+        state.organizer = { ...action.payload, parties };
       }).
       addCase(fetchOrganizer.rejected, (state, action) => {
         state.fetchStatus = StoreStatus.Rejected;
@@ -51,7 +52,7 @@ export const organizerSlice = createSlice({
       }).
       addCase(createParty.fulfilled, (state, action) => {
         state.updateStatus = StoreStatus.Fulfilled;
-        state.organizer.parties = action.payload;
+        state.organizer = { ...state.organizer, parties: action.payload };
       }).
       addCase(createParty.rejected, (state, action) => {
         state.updateStatus = StoreStatus.Rejected;

@@ -6,7 +6,7 @@ import {
   space_unit, grey_3, fontSizeRegular, indigo_3, fontSizeBody, indigo,
 } from '../../styles/common';
 import _ from 'lodash';
-import { MenuInputSchema, MenuItem } from './formTypes';
+import { KeyBoardType, MenuInputSchema, MenuItem } from './formTypes';
 import { sanitizeText } from '../../helpers/uiHelper';
 import PepperIcon from '../pepperIcon/pepperIcon';
 import { inputStyle, inputErrorStyle } from './style';
@@ -90,6 +90,7 @@ export const PepperMenuInput = (menuInputProps: IMenuInput): JSX.Element => {
           value={currentPrice}
           maxLength={MENU_PRICE_MAX_LENGTH}
           onChangeText={onPriceChange}
+          keyboardType={KeyBoardType.Numeric}
           style={{
             ...styles.textInput,
             ...{ width: '20%' },
