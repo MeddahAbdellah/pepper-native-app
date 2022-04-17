@@ -3,6 +3,7 @@ export enum PepperStackRoutes {
   Subscription = 'Subscription',
   Tutorial = 'tutorial',
   Main = 'main',
+  PartyDetails = 'partyDetails',
   PartyDescription = 'partyDescription',
   MatchDescription = 'matchDescription',
   UserDescription = 'userDescription',

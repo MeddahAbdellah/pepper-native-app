@@ -27,7 +27,7 @@ const PepperUserParties = (): JSX.Element => {
   const partyItem = (party: IParty): JSX.Element => (
     <TouchableOpacity
       style={styles.partyItemContainer}
-      onPress={() => navigation.push(PepperStackRoutes.PartyDescription, { party, canCancel: true })}>
+      onPress={() => navigation.push(PepperStackRoutes.PartyDetails, { party })}>
       <Image source={party.imgs[0]} style={styles.partyImage}/>
       <View style={{ flex: 1 }}>
         <Text style={{ fontSize: fontSizeSubHeader }}>{limitTextLength(party.title, 15) }</Text>

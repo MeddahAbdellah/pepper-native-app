@@ -35,7 +35,9 @@ export const updateUser = createAsyncThunk('user/updateUser', async(updatePayloa
 
 export const addMatch = createAsyncThunk('user/addMatch', async(updatePayload: { matchId: number }) => {
   const { matches } = await ApiService.post('user/matches', updatePayload).catch(async(error) => UtilService.throwError(error));
-  return matches;
+  // We need to update parties too since adding a match affects the attendees list shown to user
+  const { parties } = await ApiService.get('user/parties').catch(async(error) => UtilService.throwError(error));
+  return { matches, parties };
 });
 
 export const updateMatch = createAsyncThunk('user/updateMatch', async(updatePayload: { matchId: number, status: MatchStatus }) => {

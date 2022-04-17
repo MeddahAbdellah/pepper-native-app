@@ -12,9 +12,18 @@ export interface IParty {
   drinks: Array<{ name: string, price: number }>,
   price: number,
   imgs: Array<{ uri: string }>,
+  attendees?: IUserBase[],
+  status?: UserPartyStatus,
 };
 
-interface IUserBase {
+export enum UserPartyStatus {
+  WAITING = 'waiting',
+  ACCEPTED = 'accepted',
+  ATTENDED = 'attended',
+  REJECTED = 'rejected',
+  ABSENT = 'absent',
+}
+export interface IUserBase {
   id: number,
   name: string,
   gender: Gender

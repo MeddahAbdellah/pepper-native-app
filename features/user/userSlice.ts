@@ -55,7 +55,8 @@ export const userSlice = createSlice({
       })
       .addCase(addMatch.fulfilled, (state, action) => {
         state.addMatchStatus = StoreStatus.Fulfilled;
-        state.user.matches = action.payload;
+        const { parties, matches } = action.payload;
+        state.user = { ...state.user, matches, parties };
       })
       .addCase(addMatch.rejected, (state, action) => {
         state.addMatchStatus = StoreStatus.Rejected;
@@ -66,7 +67,7 @@ export const userSlice = createSlice({
       })
       .addCase(updateMatch.fulfilled, (state, action) => {
         state.updateMatchStatus = StoreStatus.Fulfilled;
-        state.user.matches = action.payload;
+        state.user = { ...state.user, matches: action.payload };
       })
       .addCase(updateMatch.rejected, (state, action) => {
         state.updateMatchStatus = StoreStatus.Rejected;
@@ -77,7 +78,7 @@ export const userSlice = createSlice({
       })
       .addCase(deleteMatch.fulfilled, (state, action) => {
         state.deleteMatchStatus = StoreStatus.Fulfilled;
-        state.user.matches = action.payload;
+        state.user = { ...state.user, matches: action.payload };
       })
       .addCase(deleteMatch.rejected, (state, action) => {
         state.deleteMatchStatus = StoreStatus.Rejected;
@@ -88,7 +89,7 @@ export const userSlice = createSlice({
       })
       .addCase(updateParty.fulfilled, (state, action) => {
         state.updatePartyStatus = StoreStatus.Fulfilled;
-        state.user.parties = action.payload;
+        state.user = { ...state.user, parties: action.payload };
       })
       .addCase(updateParty.rejected, (state, action) => {
         state.updatePartyStatus = StoreStatus.Rejected;
@@ -99,7 +100,7 @@ export const userSlice = createSlice({
       })
       .addCase(deleteParty.fulfilled, (state, action) => {
         state.deletePartyStatus = StoreStatus.Fulfilled;
-        state.user.parties = action.payload;
+        state.user = { ...state.user, parties: action.payload };
       })
       .addCase(deleteParty.rejected, (state, action) => {
         state.deletePartyStatus = StoreStatus.Rejected;
