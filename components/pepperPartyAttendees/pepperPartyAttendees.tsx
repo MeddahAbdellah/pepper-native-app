@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { IParty, IUserBase } from '../../models/types';
 import {
-  space_unit, white, fontSizeRegular, raven, black, color, fontSizeHeader, fontSizeSubHeader, grey_1, indigo, pepper,
+  space_unit, white, fontSizeRegular, raven, black, color, fontSizeHeader, fontSizeSubHeader, grey_1, indigo, pepper, heaven,
 } from '../../styles/common';
 
 import Swiper from 'react-native-deck-swiper';
@@ -40,6 +40,18 @@ const PepperPartyAttendees = (descriptionProps: { route: { params: { party: IPar
     <Text style={styles.refreshPageDescription}> Come to the next party, you'll meet more people!</Text>
   </>);
 
+  const StaticYes = (): JSX.Element => (
+    <View style={{ ...styles.swipeLabel, borderColor: heaven }}>
+      <Text style={{ color: heaven, fontSize: fontSizeSubHeader }}>Like</Text>
+    </View>
+  );
+
+  const StaticNope = (): JSX.Element => (
+    <View style={{ ...styles.swipeLabel, borderColor: pepper }}>
+      <Text style={{ color: pepper, fontSize: fontSizeSubHeader }}>Nope</Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.cardContainer}>
@@ -52,18 +64,8 @@ const PepperPartyAttendees = (descriptionProps: { route: { params: { party: IPar
               animateOverlayLabelsOpacity={true}
               verticalSwipe={false}
               overlayLabels={{
-                bottom: {
-                  style: {
-                    wrapper: {
-                      flexDirection: 'column',
-                      alignItems: 'flex-end',
-                      justifyContent: 'flex-start',
-                      marginTop: 70,
-                      marginLeft: -50,
-                    }
-                  }
-                },
                 left: {
+                  element: <StaticNope/>,
                   style: {
                     wrapper: {
                       flexDirection: 'column',
@@ -75,17 +77,7 @@ const PepperPartyAttendees = (descriptionProps: { route: { params: { party: IPar
                   }
                 },
                 right: {
-                  style: {
-                    wrapper: {
-                      flexDirection: 'column',
-                      alignItems: 'flex-start',
-                      justifyContent: 'flex-start',
-                      marginTop: 70,
-                      marginLeft: 50,
-                    }
-                  }
-                },
-                top: {
+                  element: <StaticYes/>,
                   style: {
                     wrapper: {
                       flexDirection: 'column',

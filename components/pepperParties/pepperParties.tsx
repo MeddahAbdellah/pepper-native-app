@@ -119,18 +119,6 @@ const PepperParties = (): JSX.Element => {
                 animateOverlayLabelsOpacity={true}
                 verticalSwipe={false}
                 overlayLabels={{
-                  bottom: {
-                    element: <StaticSleeping/>,
-                    style: {
-                      wrapper: {
-                        flexDirection: 'column',
-                        alignItems: 'flex-end',
-                        justifyContent: 'flex-start',
-                        marginTop: 70,
-                        marginLeft: -50,
-                      }
-                    }
-                  },
                   left: {
                     element: <StaticSleeping/>,
                     style: {
@@ -144,18 +132,6 @@ const PepperParties = (): JSX.Element => {
                     }
                   },
                   right: {
-                    element: <StaticGoing/>,
-                    style: {
-                      wrapper: {
-                        flexDirection: 'column',
-                        alignItems: 'flex-start',
-                        justifyContent: 'flex-start',
-                        marginTop: 70,
-                        marginLeft: 50,
-                      }
-                    }
-                  },
-                  top: {
                     element: <StaticGoing/>,
                     style: {
                       wrapper: {
