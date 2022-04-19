@@ -4,7 +4,7 @@ export const limitTextLength = (text: string, maxLength: number = 10): string =>
   `${text}` :
   `${text.substring(0, maxLength)}...`).replace(/\r?\n|\r/g, ' ');
 
-export const capitalize = (text: string): string => `${text.charAt(0).toUpperCase()}${text.slice(1)}`;
+export const capitalize = (text: string | undefined): string => (text ? `${text.charAt(0).toUpperCase()}${text.slice(1)}` : '');
 
 export const sanitizeText = (text: string): string => text.
   replace(/\r?\n|\r/g, ' ').

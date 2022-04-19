@@ -1,19 +1,20 @@
 import React, { useEffect } from 'react';
 import {
-  StyleSheet, Text, View, Image, FlatList, TouchableOpacity,
+  StyleSheet, Text, View, FlatList, TouchableOpacity, ImageBackground,
 } from 'react-native';
 import {
-  space_unit, fontSizeSubHeader, white, fontSizeRegular, raven,
+  space_unit, fontSizeSubHeader, white, fontSizeRegular, raven, black, color, grey_1, fontSizeBody, heaven, grey_2,
 } from '../../styles/common';
-import { IParty, StoreStatus } from '../../models/types';
+import { IParty, StoreStatus, UserPartyStatus } from '../../models/types';
 import { useNavigation } from '@react-navigation/native';
 import { usePepperUser } from '../../hooks/user.hooks';
 import { usePepperDispatch } from '../../hooks/store.hooks';
 import { fetchUser } from '../../features/user/userActions';
 import { PepperStackRoutes } from '../../models/routes';
-import { keyExtractor, limitTextLength } from '../../helpers/uiHelper';
+import { capitalize, keyExtractor } from '../../helpers/uiHelper';
 import moment from 'moment';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const PepperUserParties = (): JSX.Element => {
   // TODO: Library does not provide a type
@@ -25,16 +26,37 @@ const PepperUserParties = (): JSX.Element => {
   const currentUser = usePepperUser();
 
   const partyItem = (party: IParty): JSX.Element => (
-    <TouchableOpacity
-      style={styles.partyItemContainer}
-      onPress={() => navigation.push(PepperStackRoutes.PartyDetails, { party })}>
-      <Image source={party.imgs[0]} style={styles.partyImage}/>
-      <View style={{ flex: 1 }}>
-        <Text style={{ fontSize: fontSizeSubHeader }}>{limitTextLength(party.title, 15) }</Text>
-        <Text style={{ fontSize: fontSizeRegular }}>{limitTextLength(party.theme, 20)}</Text>
-        <Text style={{ fontSize: fontSizeRegular }}>{moment(party.date).format('YYYY MM DD')}</Text>
-      </View>
-    </TouchableOpacity>
+    <ImageBackground source={party.imgs[0]} style={styles.image} resizeMode="cover">
+      <TouchableOpacity
+        style={{ ...styles.imageMask, zIndex: styles.imageMask.zIndex + 1 }}
+        onPress={() => navigation.push(
+          party.status === UserPartyStatus.ATTENDED ? PepperStackRoutes.PartyDetails : PepperStackRoutes.PartyDescription,
+          { party, canCancel: false })}
+      >
+      </TouchableOpacity>
+      <LinearGradient colors={['transparent', color(black, .7), black]} style={styles.imageMask}>
+        <View style={styles.descriptionContainer}>
+          <View style={{
+            ...styles.statusHeader,
+            backgroundColor: party.status && [UserPartyStatus.ACCEPTED, UserPartyStatus.ATTENDED].includes(party.status) ? heaven : grey_2,
+          }}>
+            <Text style={{ ...styles.description, fontSize: fontSizeBody }}>{capitalize(party.status)}</Text>
+          </View>
+          <View style={{ padding: 2 * space_unit }}>
+            <Text style={{
+              ...styles.description,
+              fontSize: fontSizeSubHeader,
+              fontFamily: 'Sora_700Bold',
+              marginBottom: space_unit,
+            }}>{party.title}</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text style={{ ...styles.description, fontSize: fontSizeBody }}>{party.theme}</Text>
+              <Text style={{ ...styles.description, marginBottom: 2 * space_unit }}>{moment(party.date).format('YYYY MMM DD')}</Text>
+            </View>
+          </View>
+        </View>
+      </LinearGradient>
+    </ImageBackground>
   );
 
   const StaticGoSwipe = (): JSX.Element => (
@@ -99,4 +121,35 @@ const styles = StyleSheet.create({
     color: raven,
     marginBottom: space_unit,
   },
+  image: {
+    backgroundColor: grey_1,
+    width: '100%',
+    height: 40 * space_unit,
+    zIndex: 1,
+    borderRadius: .75 * space_unit,
+    overflow: 'hidden',
+    marginBottom: 2 * space_unit,
+  },
+  imageMask: {
+    position: 'absolute',
+    height: 40 * space_unit,
+    width: '100%',
+    zIndex: 2,
+  },
+  descriptionContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  description: {
+    fontSize: fontSizeRegular,
+    color: white,
+    zIndex: 3,
+    marginVertical: .25 * space_unit,
+  },
+  statusHeader: {
+    width: '100%',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    padding: 1.5 * space_unit,
+  }
 });
