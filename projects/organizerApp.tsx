@@ -12,7 +12,7 @@ import PepperOrganizerIntro from '../components/pepperOrganizer/pepperOrganizerL
 import PepperOrganizerSubscribe from '../components/pepperOrganizer/pepperOgranizerSubscription';
 import PepperOrganizerMain from '../components/pepperOrganizer/pepperOrganizerMain';
 import PepperOrganizerLogin from '../components/pepperOrganizer/pepperOrganizerLogin';
-import PepperOrganizerUpdateImages from '../components/pepperOrganizer/pepperOrganizerUpdates/pepperOrganizerUpdateImages';
+import PepperOrganizerEditImages from '../components/pepperOrganizer/pepperOrganizerUpdates/pepperOrganizerEditImages';
 
 const ReactStack = createNativeStackNavigator();
 
@@ -35,7 +35,7 @@ const PepperOrganizerApp = (): JSX.Element => (
           <ReactStack.Screen name={PepperStackRoutes.Subscription} component={PepperOrganizerSubscribe} />
           <ReactStack.Screen name={PepperStackRoutes.LoginRouter} component={PepperOrganizerLogin} />
           <ReactStack.Screen name={PepperStackRoutes.Main} component={PepperOrganizerMain} />
-          <ReactStack.Screen name={PepperOrganizerUpdatesStackRoutes.ImageUpdateRoute} component={PepperOrganizerUpdateImages} />
+          <ReactStack.Screen name={PepperOrganizerUpdatesStackRoutes.ImageUpdateRoute} component={PepperOrganizerEditImages} />
 
         </ReactStack.Navigator>
       </NavigationContainer>

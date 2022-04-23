@@ -14,7 +14,7 @@ import { updateOrganizer } from '../../../features/organizer/organizerActions';
 import { usePepperDispatch } from '../../../hooks/store.hooks';
 import { StoreStatus } from '../../../models/types';
 
-const PepperOrganizerUpdateImages = (): JSX.Element => {
+const PepperOrganizerEditImages = (): JSX.Element => {
   const organizer = usePepperOrganizer();
   const storeDispatch = usePepperDispatch();
   // TODO: Library does not provide a type
@@ -53,7 +53,7 @@ const PepperOrganizerUpdateImages = (): JSX.Element => {
   );
 };
 
-export default PepperOrganizerUpdateImages;
+export default PepperOrganizerEditImages;
 
 const styles = StyleSheet.create({
   container: {
