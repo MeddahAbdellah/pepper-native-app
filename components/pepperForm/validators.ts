@@ -34,6 +34,12 @@ export const legalAgeValidator = (date: Moment): string => {
   if (!validDateOfBirth) { return 'The app is for people over 18'; } return '';
 };
 
+export const upcomingDateValidator = (date: Moment): string => {
+  const today = moment();
+  const validDateOfBirth = moment(date).isAfter(today);
+  if (!validDateOfBirth) { return 'It must be an upcoming Date'; } return '';
+};
+
 export const cityValidator = (text: string): string => {
   if (!(/^[a-zA-Z',.\s-]{1,25}$/.test(text))) {
     return 'A city is required';

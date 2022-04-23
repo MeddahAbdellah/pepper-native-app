@@ -29,6 +29,7 @@ export interface TextInputSchema {
 export interface DateInputSchema {
   type: FormType.Date,
   initialValue?: Moment,
+  isEventDate?: boolean,
   label: string,
   validator: (value: Moment) => string,
 }
@@ -56,6 +57,7 @@ export interface MenuInputSchema {
   label: string,
   nameValidator: (name: string) => string,
   priceValidator: (price: string) => string,
+  initialValue?: MenuItem[]
 }
 
 

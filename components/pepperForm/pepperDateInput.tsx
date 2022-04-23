@@ -25,7 +25,7 @@ export const PepperDateInput = (dateInputProps: IDateInput): JSX.Element => {
   const datePickerWidth = (Dimensions.get('window').width * .95) - (2 * space_unit);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [date, setDate] = useState(moment().subtract(MIN_AGE, 'years').startOf('year'));
+  const [date, setDate] = useState(dateInputProps.isEventDate ? moment() : moment().subtract(MIN_AGE, 'years').startOf('year'));
   const [error, setError] = useState('');
 
   const onDateChange = (newDate: Moment): void => {
@@ -47,8 +47,8 @@ export const PepperDateInput = (dateInputProps: IDateInput): JSX.Element => {
           <CalendarPicker
             selectedStartDate={(dateInputProps.initialValue ? dateInputProps.initialValue : date).toDate()}
             initialDate={(dateInputProps.initialValue ? dateInputProps.initialValue : date).toDate()}
-            minDate={moment().subtract(MAX_AGE, 'years').startOf('year').toDate()}
-            maxDate={moment().subtract(MIN_AGE, 'years').toDate()}
+            minDate={(dateInputProps.isEventDate ? moment() : moment().subtract(MAX_AGE, 'years').startOf('year')).toDate()}
+            maxDate={(dateInputProps.isEventDate ? moment().add(1, 'years') : moment().subtract(MIN_AGE, 'years')).toDate()}
             selectedDayColor={pepper}
             selectedDayTextStyle={{ color: white }}
             textStyle={{ fontSize: fontSizeTypo, color: raven }}

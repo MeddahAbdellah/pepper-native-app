@@ -9,4 +9,9 @@ export enum PepperStackRoutes {
   CodeLogin = 'codelogin',
   LoginRouter = 'loginRouter',
   LandingPage = 'landingPage',
+
+}
+
+export enum PepperOrganizerUpdatesStackRoutes {
+  ImageUpdateRoute = 'ImageUpdateRoute',
 }

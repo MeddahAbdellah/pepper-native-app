@@ -24,7 +24,7 @@ export const PepperMenuInput = (menuInputProps: IMenuInput): JSX.Element => {
   const [currentPrice, setCurrentPrice] = useState('');
   const [nameError, setNameError] = useState('');
   const [priceError, setPriceError] = useState('');
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [menuItems, setMenuItems] = useState<MenuItem[]>(menuInputProps.initialValue ? menuInputProps.initialValue : [] );
 
   const onNameChange = (value: string): void => {
     const sanitizedValue = sanitizeText(value);

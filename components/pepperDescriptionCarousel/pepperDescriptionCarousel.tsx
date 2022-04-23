@@ -8,7 +8,10 @@ import {
 import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
 import { useNavigation } from '@react-navigation/native';
 
-const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carouselImgs: Array<{ uri: string }> }): JSX.Element => {
+
+const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carouselImgs: Array<{ uri: string }>,
+   hideGoBackBtn?: boolean, editBtnEffect?: () => void }):
+ JSX.Element => {
   const [activeIndex, setActiveIndex] = useState(0);
   const navigation = useNavigation();
 
@@ -33,13 +36,24 @@ const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carou
         inactiveSlideScale={1}
         renderItem={StaticDescriptionImgs}
         onBeforeSnapToItem={(index) => { setActiveIndex(index); } } />
-      <PepperRoundButton
-        size={6 * space_unit}
-        style={styles.backButton}
-        colors={[indigo, pepper]}
-        iconName="pepper-arrowLeft"
-        onPress={navigation.goBack}
-      />
+      { (carouselProps.hideGoBackBtn !== true) ?
+        <PepperRoundButton
+          size={6 * space_unit}
+          style={styles.backButton}
+          colors={[indigo, pepper]}
+          iconName="pepper-arrowLeft"
+          onPress={navigation.goBack}
+        /> :
+        null}
+      { (carouselProps.editBtnEffect !== undefined) ?
+        <PepperRoundButton
+          size={6 * space_unit}
+          style={styles.editButton}
+          colors={[indigo, pepper]}
+          iconName="pepper-pencil"
+          onPress={carouselProps.editBtnEffect}
+        /> :
+        null}
       <View style={styles.paginationContainer} pointerEvents="none">
         <Pagination
           dotsLength={carouselProps.carouselImgs.length}
@@ -86,6 +100,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 2 * space_unit,
     left: 2 * space_unit,
+    zIndex: 4,
+    shadowColor: white,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: .3,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  editButton: {
+    position: 'absolute',
+    bottom: 2 * space_unit,
+    right: 2 * space_unit,
     zIndex: 4,
     shadowColor: white,
     shadowOffset: { width: 0, height: 0 },
