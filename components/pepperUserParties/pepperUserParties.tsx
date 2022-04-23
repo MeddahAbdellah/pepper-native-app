@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, View, FlatList, TouchableOpacity, ImageBackground,
 } from 'react-native';
 import {
-  space_unit, fontSizeSubHeader, white, fontSizeRegular, raven, black, color, grey_1, fontSizeBody, heaven, grey_2,
+  space_unit, fontSizeSubHeader, white, fontSizeRegular, raven, black, color, grey_1, fontSizeBody, heaven, grey_3,
 } from '../../styles/common';
 import { IParty, StoreStatus, UserPartyStatus } from '../../models/types';
 import { useNavigation } from '@react-navigation/native';
@@ -38,7 +38,7 @@ const PepperUserParties = (): JSX.Element => {
         <View style={styles.descriptionContainer}>
           <View style={{
             ...styles.statusHeader,
-            backgroundColor: party.status && [UserPartyStatus.ACCEPTED, UserPartyStatus.ATTENDED].includes(party.status) ? heaven : grey_2,
+            backgroundColor: color(party.status && [UserPartyStatus.ACCEPTED, UserPartyStatus.ATTENDED].includes(party.status) ? heaven : grey_3, .8),
           }}>
             <Text style={{ ...styles.description, fontSize: fontSizeBody }}>{capitalize(party.status)}</Text>
           </View>
