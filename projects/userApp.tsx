@@ -10,13 +10,14 @@ import PepperIntro from '../components/pepperIntro/pepperIntro';
 import PepperUserSubscription from '../components/pepperUserSubscription/pepperUserSubscription';
 import PepperTutorial from '../components/pepperTutorial/pepperTutorial';
 import PepperMain from '../components/pepperMain/pepperMain';
-import PepperPartyDescription from '../components/pepperPartyDescription/pepperPartyDescription';
 import PepperMatchDescription from '../components/pepperMatchDescription/pepperMatchDescription';
 import PepperUserCodeLogin from '../components/pepperUserCodeLogin/pepperUserCodeLogin';
 import PepperLoginRouter from '../components/pepperLoginRouter/pepperLoginRouter';
 import PepperUserDescription from '../components/pepperUserDescription/pepperUserDescription';
 import { white } from '../styles/common';
 import PepperLandingPage from '../components/pepperLandingPage/pepperLandingPage';
+import PepperPartyDetails from '../components/pepperPartyDetails/pepperPartyDetails';
+import PepperPartyDescription from '../components/pepperPartyDescription/pepperPartyDescription';
 
 const ReactStack = createNativeStackNavigator();
 
@@ -42,6 +43,7 @@ const PepperUserApp = (): JSX.Element => (
           <ReactStack.Screen name={PepperStackRoutes.Tutorial} component={PepperTutorial} />
           <ReactStack.Screen name={PepperStackRoutes.Main} component={PepperMain} />
           <ReactStack.Screen name={PepperStackRoutes.PartyDescription} component={PepperPartyDescription} />
+          <ReactStack.Screen name={PepperStackRoutes.PartyDetails} component={PepperPartyDetails} />
           <ReactStack.Screen name={PepperStackRoutes.MatchDescription} component={PepperMatchDescription} />
           <ReactStack.Screen name={PepperStackRoutes.UserDescription} component={PepperUserDescription} />
         </ReactStack.Navigator>
