@@ -4,11 +4,18 @@ import * as SecureStore from 'expo-secure-store';
 import PepperUserApp from './projects/userApp';
 import { SecureStoreKeys, UtilService } from './services/util';
 import PepperOrganizerApp from './projects/organizerApp';
+import { ActivityIndicator, View } from 'react-native';
+import { pepper } from './styles/common';
+
+enum AppType {
+  Loading,
+  User,
+  Organizer
+}
 
 const PepperApp = (): JSX.Element => {
   const [isErrorFree, setIsErrorFree] = useState(true);
-  const [isOrganizer, setIsOrganizer] = useState(false);
-  const [isUser, setIsUser] = useState(false);
+  const [appType, setAppType] = useState(AppType.Loading);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -19,8 +26,11 @@ const PepperApp = (): JSX.Element => {
           setIsErrorFree(false);
         }
         const isOrganizer = await UtilService.isOrganizer();
-        setIsOrganizer(isOrganizer);
-        setIsUser(!isOrganizer);
+        if (isOrganizer) {
+          setAppType(AppType.Organizer);
+          return;
+        }
+        setAppType(AppType.User);
       } catch (error) {
         setIsErrorFree(false);
       }
@@ -34,15 +44,25 @@ const PepperApp = (): JSX.Element => {
       {
         !isErrorFree ?
           (<PepperError/>) :
-          <><>
-            {isOrganizer ?
-              (<PepperOrganizerApp />) :
-              null}
-          </><>
-            {isUser ?
-              (<PepperUserApp />) :
-              null}
-          </></>
+          <>
+            <>
+              {appType === AppType.Loading ?
+                (<View style={{ flex: 1, justifyContent: 'center' }}>
+                  <ActivityIndicator size="large" color={pepper} />
+                </View>) :
+                null}
+            </>
+            <>
+              {appType === AppType.Organizer ?
+                (<PepperOrganizerApp />) :
+                null}
+            </>
+            <>
+              {appType === AppType.User ?
+                (<PepperUserApp />) :
+                null}
+            </>
+          </>
       }
     </>
   );
