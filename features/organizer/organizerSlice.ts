@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IOrganizerStore, StoreStatus } from '../../models/types';
 import {
-  emptyOrganizer, fetchOrganizer, updateOrganizer, createParty, resetOrganizer,
+  emptyOrganizer, fetchOrganizer, updateOrganizer, createParty, resetOrganizer, deleteParty,
 } from './organizerActions';
 
 
@@ -29,8 +29,7 @@ export const organizerSlice = createSlice({
       }).
       addCase(fetchOrganizer.fulfilled, (state, action) => {
         state.fetchStatus = StoreStatus.Fulfilled;
-        const { parties } = state.organizer;
-        state.organizer = { ...action.payload, parties };
+        state.organizer = { ... action.payload };
       }).
       addCase(fetchOrganizer.rejected, (state, action) => {
         state.fetchStatus = StoreStatus.Rejected;
@@ -55,6 +54,17 @@ export const organizerSlice = createSlice({
         state.organizer = { ...state.organizer, parties: action.payload };
       }).
       addCase(createParty.rejected, (state, action) => {
+        state.updateStatus = StoreStatus.Rejected;
+        state.error = action.error.message;
+      }).
+      addCase(deleteParty.pending, (state) => {
+        state.updateStatus = StoreStatus.Pending;
+      }).
+      addCase(deleteParty.fulfilled, (state, action) => {
+        state.updateStatus = StoreStatus.Fulfilled;
+        state.organizer = { ...state.organizer, parties: action.payload };
+      }).
+      addCase(deleteParty.rejected, (state, action) => {
         state.updateStatus = StoreStatus.Rejected;
         state.error = action.error.message;
       });

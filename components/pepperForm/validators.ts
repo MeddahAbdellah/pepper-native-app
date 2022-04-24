@@ -83,6 +83,14 @@ export const userNameValidator = (text: string): string => {
   return '';
 };
 
+export const themeValidator = (text: string): string => {
+
+  if (text.length < 2) {
+    return 'Provide a theme ! ex : Vanilla ';
+  };
+  return '';
+};
+
 export const priceValidator = (text: string): string => {
   if (text === '') {
     return '';

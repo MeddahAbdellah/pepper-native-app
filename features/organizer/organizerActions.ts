@@ -39,3 +39,9 @@ export const createParty = createAsyncThunk('organizer/createParty', async(paylo
   const { parties } = await ApiService.post('organizer/party', payload).catch(async(error) => UtilService.throwError(error));
   return parties as IParty[];
 });
+
+
+export const deleteParty = createAsyncThunk('organizer/deleteParty', async(payload: {id: number}) => {
+  const { parties } = await ApiService.delete('organizer/party', payload).catch(async(error) => UtilService.throwError(error));
+  return parties as IParty[];
+});

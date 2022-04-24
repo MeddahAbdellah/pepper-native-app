@@ -19,9 +19,10 @@ import {
 import PepperDescriptionCarousel from '../pepperDescriptionCarousel/pepperDescriptionCarousel';
 import PepperTag from '../pepperTags/pepperTags';
 import * as Clipboard from 'expo-clipboard';
-import { PepperOrganizerEditFoods } from './pepperOrganizerUpdates/pepperOrganizerEditFoods';
-import { PepperOrganizerEditDrinks } from './pepperOrganizerUpdates/pepperOrganizerEditDrinks';
-import { PepperOrganizerEditDescription } from './pepperOrganizerUpdates/pepperOrganizerEditDescription';
+import { PepperOrganizerEditFoods } from './pepperOrganizerEdits/pepperOrganizerEditFoods';
+import { PepperOrganizerEditDrinks } from './pepperOrganizerEdits/pepperOrganizerEditDrinks';
+import { PepperOrganizerEditDescription } from './pepperOrganizerEdits/pepperOrganizerEditDescription';
+import { PepperOrganizerPartyDatePicker } from './pepperOrganizerEdits/pepperOrganizerPartyDatePicker';
 
 
 
@@ -48,7 +49,7 @@ const PepperOrganizerMain = (): JSX.Element => {
   return ( <ScrollView style={{ backgroundColor: white }}>
     <View style={styles.container} onLayout={onLayout}>
       <View style={styles.imageCarouselContainer}>
-        <PepperDescriptionCarousel carouselWidth={carouselWidth} hideGoBackBtn={true} editBtnEffect={() => {
+        <PepperDescriptionCarousel carouselWidth={carouselWidth} hideGoBackBtn={true} onEdit={() => {
           // eslint-disable-next-line no-console
           // PepperOrganizerUpdatesStackRoutes.ImageUpdateRoute
           navigation.navigate(PepperOrganizerUpdatesStackRoutes.ImageUpdateRoute);
@@ -81,6 +82,7 @@ const PepperOrganizerMain = (): JSX.Element => {
             style={styles.tags}
             tagStyle={styles.locationTag}/>
         </TouchableOpacity>
+        <PepperOrganizerPartyDatePicker />
         <PepperOrganizerEditDescription />
         <PepperOrganizerEditDrinks/>
         <PepperOrganizerEditFoods/>
