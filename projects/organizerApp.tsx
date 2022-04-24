@@ -12,7 +12,7 @@ import PepperOrganizerIntro from '../components/pepperOrganizer/pepperOrganizerL
 import PepperOrganizerSubscribe from '../components/pepperOrganizer/pepperOgranizerSubscription';
 import PepperOrganizerMain from '../components/pepperOrganizer/pepperOrganizerMain';
 import PepperOrganizerLogin from '../components/pepperOrganizer/pepperOrganizerLogin';
-import PepperOrganizerEditImages from '../components/pepperOrganizer/pepperOrganizerUpdates/pepperOrganizerEditImages';
+import PepperOrganizerEditImages from '../components/pepperOrganizer/pepperOrganizerEdits/pepperOrganizerEditImages';
 
 const ReactStack = createNativeStackNavigator();
 
