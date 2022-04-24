@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carouselImgs: Array<{ uri: string }>,
-   hideGoBackBtn?: boolean, editBtnEffect?: () => void }):
+   hideGoBackBtn?: boolean, onEdit?: () => void }):
  JSX.Element => {
   const [activeIndex, setActiveIndex] = useState(0);
   const navigation = useNavigation();
@@ -45,13 +45,13 @@ const PepperDescriptionCarousel = (carouselProps: { carouselWidth: number, carou
           onPress={navigation.goBack}
         /> :
         null}
-      { (carouselProps.editBtnEffect !== undefined) ?
+      { (carouselProps.onEdit !== undefined) ?
         <PepperRoundButton
           size={6 * space_unit}
           style={styles.editButton}
           colors={[indigo, pepper]}
           iconName="pepper-pencil"
-          onPress={carouselProps.editBtnEffect}
+          onPress={carouselProps.onEdit}
         /> :
         null}
       <View style={styles.paginationContainer} pointerEvents="none">
