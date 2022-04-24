@@ -71,6 +71,7 @@ export interface IUserStore {
   updateMatchStatus: StoreStatus;
   deleteMatchStatus: StoreStatus;
   updatePartyStatus: StoreStatus;
+  attendPartyStatus: StoreStatus;
   deletePartyStatus: StoreStatus;
   // TODO: Library does not provide a type
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

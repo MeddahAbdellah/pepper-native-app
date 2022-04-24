@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
-import { space_unit, black } from '../../styles/common';
+import { space_unit, black, indigo_3 } from '../../styles/common';
 import PepperIcon from '../pepperIcon/pepperIcon';
 import PepperQRCodeModal from './pepperQRCodeModal';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View, Image } from 'react-native';
 import LoginService from '../../services/login';
 import { usePepperUser } from '../../hooks/user.hooks';
 import { UtilService } from '../../services/util';
@@ -29,7 +29,8 @@ export const PepperUserProfile = (userProfileProps: {
       try {
         const loggedIn = await LoginService.isLoggedin();
         setIsLoggedIn(loggedIn);
-      } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         UtilService.throwError(error);
       }
     })();
@@ -46,16 +47,26 @@ export const PepperUserProfile = (userProfileProps: {
 
   return (
     <>
-      { isLoggedIn ?
+      { (isLoggedIn && !!currentUser.user) ?
         (
           <TouchableOpacity onPress={onToggleProfile}>
-            <PepperIcon name="pepper-menu" color={black} size={4.5 * space_unit} />
+            <View style={{
+              width: 6 * space_unit,
+              height: 6 * space_unit,
+              borderRadius: 4 * space_unit,
+              borderWidth: 1,
+              borderColor: indigo_3,
+              overflow: 'hidden',
+            }}>
+              <Image style={{ width: '100%', height: '100%' }} source={{ uri: currentUser?.user?.imgs[0]?.uri }}/>
+            </View>
           </TouchableOpacity>
         ) : null
       }
     </>
   );
 };
+//  :
 
 export const PepperQrCode = (): JSX.Element => {
   const [showQrCodeModal, setShowQrCodeModal] = useState(false);
@@ -69,7 +80,8 @@ export const PepperQrCode = (): JSX.Element => {
       try {
         const loggedIn = await LoginService.isLoggedin();
         setIsLoggedIn(loggedIn);
-      } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         UtilService.throwError(error);
       }
     })();

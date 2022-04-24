@@ -55,6 +55,11 @@ export const updateParty = createAsyncThunk('user/updateParty', async(updatePayl
   return parties;
 });
 
+export const attendParty = createAsyncThunk('user/attendParty', async(updatePayload: { partyId: number }) => {
+  const { parties } = await ApiService.put('user/parties', updatePayload).catch(async(error) => UtilService.throwError(error));
+  return parties;
+});
+
 export const deleteParty = createAsyncThunk('user/deleteParty', async(deletePayload: { partyId: number }) => {
   const { parties } = await ApiService.delete('user/parties', deletePayload).catch(async(error) => UtilService.throwError(error));
   return parties;

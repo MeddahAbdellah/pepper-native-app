@@ -12,16 +12,28 @@ import PepperIcon from '../pepperIcon/pepperIcon';
 import PepperQrCodeScanner from './pepperQRCodeScanner';
 import { BarCodeScanningResult } from 'expo-camera';
 import { usePepperUser } from '../../hooks/user.hooks';
-import { fetchUser, addMatch } from '../../features/user/userActions';
+import { fetchUser, addMatch, attendParty } from '../../features/user/userActions';
 import { usePepperDispatch } from '../../hooks/store.hooks';
 
 enum QRcodeModalMode {
   Scan = 'scan',
   Display = 'display'
 }
+
+enum QRCodeType {
+  User = 'user',
+  Party = 'party',
+}
+
+enum QrCodeScannedType {
+  User = 'user',
+  Party = 'party',
+  None = 'none',
+}
+
 const PepperQRCodeModal = (modalProps: { show: boolean, onRequestClose: () => void }): JSX.Element => {
   const [mode, setMode] = useState(QRcodeModalMode.Display);
-  const [qrCodeScanned, setQrCodeScanned] = useState(false);
+  const [qrCodeScannedType, setQrCodeScannedType] = useState(QrCodeScannedType.None);
   const storeDispatch = usePepperDispatch();
   // Fetch user on load
   useEffect(() => {
@@ -35,25 +47,40 @@ const PepperQRCodeModal = (modalProps: { show: boolean, onRequestClose: () => vo
     // Keeping console log until implmentation
     // eslint-disable-next-line no-console
     console.log(`Bar code with type ${result.type} and data ${result.data} has been scanned!`);
-
-    storeDispatch(addMatch({ matchId: Number(result.data) }));
-    modalProps.onRequestClose();
-    setQrCodeScanned(true);
+    const qrCodeData = JSON.parse(result.data);
+    if (qrCodeData.type === QRCodeType.User) {
+      storeDispatch(addMatch({ matchId: qrCodeData.id })).then(() => {
+        modalProps.onRequestClose();
+        setQrCodeScannedType(QrCodeScannedType.User);
+      });
+      return;
+    }
+    storeDispatch(attendParty({ partyId: qrCodeData.id })).then(() => {
+      modalProps.onRequestClose();
+      setQrCodeScannedType(QrCodeScannedType.Party);
+    });
   };
 
   const StaticQrCodeScannedModal = (): JSX.Element => (
     <Modal
       animationType="fade"
-      visible={qrCodeScanned}
+      visible={qrCodeScannedType !== QrCodeScannedType.None}
       transparent={true}
-      onRequestClose={() => setQrCodeScanned(false)}>
+      onRequestClose={() => setQrCodeScannedType(QrCodeScannedType.None)}>
       <BlurView tint="dark" style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          <PepperImage src={PepperImages.Peace} style={styles.modalImage}></PepperImage>
+          <PepperImage src={
+            qrCodeScannedType === QrCodeScannedType.User ?
+              PepperImages.Peace :
+              PepperImages.Welcome
+          } style={styles.modalImage}></PepperImage>
           <Text style={styles.modalDescription}>
-            Somebody new has entered your life, Treat them right this might go somewhere!
+            { qrCodeScannedType === QrCodeScannedType.User ?
+              'Somebody new has entered your life, Treat them right this might go somewhere!' :
+              'Welcome to the party, go meet some new people!'
+            }
           </Text>
-          <TouchableOpacity onPress={() => setQrCodeScanned(false) }>
+          <TouchableOpacity onPress={() => setQrCodeScannedType(QrCodeScannedType.None) }>
             <Text style={{ fontSize: fontSizeBody }}>Great!</Text>
           </TouchableOpacity>
         </View>
@@ -80,7 +107,7 @@ const PepperQRCodeModal = (modalProps: { show: boolean, onRequestClose: () => vo
                 <View style={styles.qrCodeContainer}>
                   <QRCode
                     // TODO: add totp userID for security
-                    value={`${currentUser.user.id}`}
+                    value={`${JSON.stringify({ type: QRCodeType.User, id: currentUser.user.id })}`}
                     size={styles.qrCodeContainer.height}
                     logoSize={.3 * styles.qrCodeContainer.height}
                     logo={imagesPepperSources.chiliPepperBlack}

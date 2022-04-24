@@ -3,7 +3,7 @@ import {
   StoreStatus, IUserStore,
 } from '../../models/types';
 import {
-  fetchUser, updateMatch, updateParty, deleteMatch, deleteParty, addMatch, emptyUser, resetUser, updateUser,
+  fetchUser, updateMatch, updateParty, deleteMatch, deleteParty, addMatch, emptyUser, resetUser, updateUser, attendParty,
 } from './userActions';
 
 const initialState: IUserStore = {
@@ -14,6 +14,7 @@ const initialState: IUserStore = {
   updateMatchStatus: StoreStatus.Idle,
   deleteMatchStatus: StoreStatus.Idle,
   updatePartyStatus: StoreStatus.Idle,
+  attendPartyStatus: StoreStatus.Idle,
   deletePartyStatus: StoreStatus.Idle,
   error: null,
 };
@@ -93,6 +94,17 @@ export const userSlice = createSlice({
       })
       .addCase(updateParty.rejected, (state, action) => {
         state.updatePartyStatus = StoreStatus.Rejected;
+        state.error = action.error.message;
+      })
+      .addCase(attendParty.pending, (state) => {
+        state.attendPartyStatus = StoreStatus.Pending;
+      })
+      .addCase(attendParty.fulfilled, (state, action) => {
+        state.attendPartyStatus = StoreStatus.Fulfilled;
+        state.user = { ...state.user, parties: action.payload };
+      })
+      .addCase(attendParty.rejected, (state, action) => {
+        state.attendPartyStatus = StoreStatus.Rejected;
         state.error = action.error.message;
       })
       .addCase(deleteParty.pending, (state) => {
