@@ -33,6 +33,9 @@ export interface IUserBase {
   job: string,
   imgs: Array<{ uri: string }>,
   interests: string[],
+  facebook: string,
+  instagram: string,
+  snapchat: string,
 }
 
 export interface IUser extends IUserBase {
@@ -47,8 +50,6 @@ export interface IMatch extends IUserBase{
 export enum MatchStatus {
   ACCEPTED = 'accepted',
   WAITING = 'waiting',
-  UNCHECKED = 'unchecked',
-  UNAVAILABLE = 'unavailable',
 }
 
 export enum Gender {
@@ -68,7 +69,6 @@ export interface IUserStore {
   fetchStatus: StoreStatus;
   updateStatus: StoreStatus;
   addMatchStatus: StoreStatus;
-  updateMatchStatus: StoreStatus;
   deleteMatchStatus: StoreStatus;
   updatePartyStatus: StoreStatus;
   attendPartyStatus: StoreStatus;

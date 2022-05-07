@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, View, Image, FlatList, TouchableOpacity, Modal,
 } from 'react-native';
 import {
-  space_unit, fontSizeSubHeader, white, fontSizeRegular, heaven, pepper_2, sea, grey_3, black, fontSizeBody, pepper, raven,
+  space_unit, fontSizeSubHeader, white, fontSizeRegular, heaven, grey_3, black, fontSizeBody, pepper, raven, sea,
 } from '../../styles/common';
 import {
   IMatch, MatchStatus, Gender, StoreStatus,
@@ -13,7 +13,7 @@ import { BlurView } from 'expo-blur';
 import { useNavigation } from '@react-navigation/native';
 import { usePepperUser } from '../../hooks/user.hooks';
 import { usePepperDispatch } from '../../hooks/store.hooks';
-import { fetchUser, updateMatch, deleteMatch } from '../../features/user/userActions';
+import { fetchUser, deleteMatch } from '../../features/user/userActions';
 import { PepperStackRoutes } from '../../models/routes';
 import { keyExtractor, limitTextLength } from '../../helpers/uiHelper';
 
@@ -23,7 +23,6 @@ const PepperMatches = (): JSX.Element => {
   const navigation = useNavigation<any>();
   const [patienceModalVisible, setPatienceModalVisible] = useState<boolean>(false);
   const [cupidModalVisible, setCupidModalVisible] = useState<boolean>(false);
-  const [evaluationModalVisible, setEvaluationModalVisible] = useState<boolean>(false);
   const [selectedMatch, setSelectedMatch] = useState<IMatch>();
   const storeDispatch = usePepperDispatch();
   // Fetch user on load
@@ -33,30 +32,22 @@ const PepperMatches = (): JSX.Element => {
   const StaticStatusTag = (statusProps: { status: MatchStatus, matchName: string }): JSX.Element => {
     switch (statusProps.status) {
       case MatchStatus.ACCEPTED:
-        return <Text style={{ fontSize: fontSizeRegular, color: heaven }}>Check her profile</Text>;
-      case MatchStatus.WAITING:
-        return <Text style={{ fontSize: fontSizeRegular, color: grey_3 }}>Didn't check you yet</Text>;
-      case MatchStatus.UNCHECKED:
-        return <Text style={{ fontSize: fontSizeRegular, color: sea }}>How was {statusProps.matchName}?</Text>;
-      default:
-        return <Text style={{ fontSize: fontSizeRegular, color: pepper_2 }}>
-          Too Early to text { currentUser.user.gender === Gender.MAN ? 'him' : 'her'}!
+        return <Text style={{ fontSize: fontSizeRegular, color: heaven }}>
+          Check { currentUser.user.gender === Gender.MAN ? 'his' : 'her'} profile
         </Text>;
+      default:
+        return <Text style={{ fontSize: fontSizeRegular, color: grey_3 }}>Didn't check you yet</Text>;
     }
   };
 
   const checkMatch = (match: IMatch): void => {
     switch (match.status) {
       case MatchStatus.ACCEPTED:
-        navigation.push(PepperStackRoutes.MatchDescription, match);
+        navigation.push(PepperStackRoutes.MatchDescription, { user: match, withContact: true });
         break;
       case MatchStatus.WAITING:
         setSelectedMatch(match);
         setPatienceModalVisible(true);
-        break;
-      case MatchStatus.UNCHECKED:
-        setSelectedMatch(match);
-        setEvaluationModalVisible(true);
         break;
       default:
         break;
@@ -65,23 +56,11 @@ const PepperMatches = (): JSX.Element => {
 
   const closeModalAndResetSelection = (): void => {
     setPatienceModalVisible(false);
-    setEvaluationModalVisible(false);
     setSelectedMatch(undefined);
   };
 
-  const validateMatch = (matchId: number): void => {
-    closeModalAndResetSelection();
-    storeDispatch(updateMatch({ matchId, status: MatchStatus.WAITING })).finally(() => {
-      setCupidModalVisible(true);
-    });
-  };
-
-  const discardMatch = (matchId: number): void => {
-    closeModalAndResetSelection();
-    storeDispatch(deleteMatch({ matchId }));
-  };
-
-  const reportMatch = (matchId: number): void => {
+  const discardMatch = (matchId?: number): void => {
+    if (!matchId) { return; }
     closeModalAndResetSelection();
     storeDispatch(deleteMatch({ matchId }));
   };
@@ -111,9 +90,16 @@ const PepperMatches = (): JSX.Element => {
           <Text style={styles.modalDescription}>
             In life there is time for work and time for love. {selectedMatch?.gender === Gender.MAN ? 'He' : 'She' }’s probably busy working!
           </Text>
-          <TouchableOpacity onPress={() => closeModalAndResetSelection() }>
-            <Text style={{ fontSize: fontSizeBody }}>Okey</Text>
-          </TouchableOpacity>
+          <View style={{
+            marginTop: 2 * space_unit, width: '100%', flexDirection: 'row', justifyContent: 'space-around'
+          }}>
+            <TouchableOpacity onPress={() => discardMatch(selectedMatch?.id) }>
+              <Text style={{ fontSize: fontSizeBody, color: pepper }}>Delete</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => closeModalAndResetSelection() }>
+              <Text style={{ fontSize: fontSizeBody, color: sea }}>Okey</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </BlurView>
     </Modal>
@@ -139,34 +125,6 @@ const PepperMatches = (): JSX.Element => {
     </Modal>
   );
 
-  const StaticCheckMatchModal = (): JSX.Element => (
-    <Modal
-      animationType="fade"
-      visible={evaluationModalVisible}
-      transparent={true}
-      onRequestClose={() => closeModalAndResetSelection() }>
-      <BlurView tint="dark" style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          <PepperImage src={selectedMatch?.gender === Gender.MAN ? PepperImages.Man : PepperImages.Woman} style={styles.modalImage}></PepperImage>
-          <Text style={styles.modalDescription}>
-            How was {selectedMatch?.name} ?
-          </Text>
-          <TouchableOpacity onPress={() => (selectedMatch ? validateMatch(selectedMatch.id) : null) }>
-            <Text style={{ marginVertical: 1.5 * space_unit, color: heaven, fontSize: fontSizeBody }}>
-              Awesome I wanna see {selectedMatch?.gender === Gender.MAN ? 'him' : 'her' } again!
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => (selectedMatch ? discardMatch(selectedMatch.id) : null) }>
-            <Text style={{ marginVertical: 1.5 * space_unit, color: sea, fontSize: fontSizeBody }}>Cool but not my type</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => (selectedMatch ? reportMatch(selectedMatch.id) : null) }>
-            <Text style={{ marginVertical: 1.5 * space_unit, color: pepper_2, fontSize: fontSizeBody }}>Don’t wanna meet again</Text>
-          </TouchableOpacity>
-        </View>
-      </BlurView>
-    </Modal>
-  );
-
   const StaticGoGetMatches = (): JSX.Element => (
     currentUser.user.gender === Gender.MAN ?
       (<View style={styles.goGetMatchContainer}>
@@ -186,7 +144,6 @@ const PepperMatches = (): JSX.Element => {
   return (
     <View style={styles.listContainer}>
       <StaticPatienceModal/>
-      <StaticCheckMatchModal/>
       <StaticCupidModal/>
       { !currentUser.user.matches.length ?
         <StaticGoGetMatches/> :

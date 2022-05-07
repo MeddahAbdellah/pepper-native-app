@@ -7,7 +7,7 @@ import {
   space_unit, white, indigo, pepper, indigo_3,
 } from '../../styles/common';
 import {
-  FormSchema, FormType, TextInputSchema, DateInputSchema, MenuItem, MenuInputSchema, ImageItem, TagSchema, ImageInputSchema,
+  FormSchema, FormType, TextInputSchema, DateInputSchema, MenuItem, MenuInputSchema, ImageItem, TagSchema, ImageInputSchema, SocialMediaInputSchema,
 } from './formTypes';
 import { PepperTextInput } from './pepperTextInput';
 import PepperRoundButton from '../pepperRoundButton/pepperRoundButton';
@@ -16,6 +16,7 @@ import { PepperGenderInput } from './pepperGenderInput';
 import { PepperMenuInput } from './pepperMenuInput';
 import { PepperImageInput } from './pepperImageInput';
 import { PepperTagsInput } from './pepperTagsInput';
+import { PepperSocialMediaInput } from './pepperSocialMediaInput';
 
 
 export const PepperForm = (formProps: {
@@ -100,6 +101,11 @@ export const PepperForm = (formProps: {
                   key={key}
                   onSubmit={(fieldOutput: { value: string[], valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
                   {..._.omit(schemaValue as TagSchema, 'type')}/>;
+              case FormType.SocialMedia:
+                return <PepperSocialMediaInput
+                  key={key}
+                  onSubmit={(fieldOutput: { value: string, valid: boolean }) => { onFieldSubmit(key, fieldOutput); }}
+                  {..._.omit(schemaValue as SocialMediaInputSchema, 'type')}/>;
               default:
                 return <Text>Missing field</Text>;
             }

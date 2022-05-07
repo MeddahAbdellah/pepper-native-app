@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet, Text, View, ScrollView, Dimensions,
+  StyleSheet, Text, View, ScrollView, Dimensions, TouchableOpacity,
 } from 'react-native';
 import {
-  white, space_unit, fontSizeRegular, fontSizeHeader, sun, sun_2, fire, fire_2, indigo_2, indigo, grey_3, color, raven,
+  white, space_unit, fontSizeRegular, fontSizeHeader, sun, sun_2, fire, fire_2, indigo_2, indigo, grey_3, color, raven, sea, indigo_3, pepper,
 } from '../../styles/common';
 import PepperDescriptionCarousel from '../pepperDescriptionCarousel/pepperDescriptionCarousel';
 import { IUser } from '../../models/types';
 import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import PepperTag from '../pepperTags/pepperTags';
 import { keyExtractor, limitTextLength } from '../../helpers/uiHelper';
+import * as Linking from 'expo-linking';
 
-const PepperMatchDescription = (descriptionProps: { route: { params: IUser } }): JSX.Element => {
+const PepperMatchDescription = (descriptionProps: { route: { params: { user: IUser, withContact: boolean } } }): JSX.Element => {
   const { width } = Dimensions.get('window');
   const [carouselWidth, setCarouselWidth] = useState(width);
-  const user = descriptionProps.route.params;
+  const { user } = descriptionProps.route.params;
+  const { withContact } = descriptionProps.route.params;
 
   const onLayout = (event: {nativeEvent: { layout: { width: number } } }): void => {
     const { width } = event.nativeEvent.layout;
@@ -31,6 +33,34 @@ const PepperMatchDescription = (descriptionProps: { route: { params: IUser } }):
       style={styles.tags}/>);
   });
 
+  const StaticSocialMediaOfMatch = (): JSX.Element[] => {
+    const socialMedia = [user.facebook, user.instagram, user.snapchat];
+    const socialMediaIcons = ['pepper-facebook', 'pepper-instagram', 'pepper-snapchat'];
+    const socialMediaColors = [sea, pepper, sun_2];
+    const socialMediaSecondColors = [sea, indigo_3, sun];
+    const socialMediaItems = socialMedia.map((socialMediaItem, index): JSX.Element => {
+      if (socialMediaItem) {
+        return (
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL('fb-messenger://user-thread/' + socialMediaItem);
+            }}
+          >
+            <PepperTag
+              iconName={socialMediaIcons[index]} text={socialMediaItem}
+              firstGradientColor={socialMediaColors[index]}
+              secondGradientColor={socialMediaSecondColors[index]}
+              style={styles.tags}
+              iconFirst={true}
+              tagStyle={styles.socialMediaTag}/>
+          </TouchableOpacity>);
+
+      }
+      return <></>;
+    });
+    return socialMediaItems;
+  };
+
   return (
     <ScrollView style={{ backgroundColor: white }}>
       <View style={styles.container} onLayout={onLayout}>
@@ -44,14 +74,13 @@ const PepperMatchDescription = (descriptionProps: { route: { params: IUser } }):
             <Text style={styles.detailText}>{user.job}</Text>
           </View>
           <View style={styles.details}>
-            <PepperImage src={PepperImages.OldPhone} style={styles.detailImages}></PepperImage>
-            <Text style={styles.detailText}>{user.phoneNumber}</Text>
-          </View>
-          <View style={styles.details}>
             <PepperImage src={PepperImages.House} style={styles.detailImages}></PepperImage>
             <Text style={styles.detailText}>{limitTextLength(user.address, 35)}</Text>
           </View>
           <View style={styles.tagsContainer}>{StaticInterestTags()}</View>
+          { withContact ? (
+            <View style={{ flex: 1 }}>{StaticSocialMediaOfMatch()}</View>
+          ) : null }
           <Text style={styles.description}>{user.description}</Text>
         </View>
       </View>
@@ -110,5 +139,11 @@ const styles = StyleSheet.create({
     color: raven,
     width: '100%',
     marginVertical: 2 * space_unit,
-  }
+  },
+  socialMediaTag: {
+    marginTop: 2 * space_unit,
+    width: '100%',
+    paddingVertical: 1.5 * space_unit,
+    borderRadius: 1 * space_unit,
+  },
 });

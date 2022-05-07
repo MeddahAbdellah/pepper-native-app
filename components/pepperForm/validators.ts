@@ -1,5 +1,29 @@
 import moment, { Moment } from 'moment';
 
+export const facebookValidator = (text: string): string => {
+  if (!text.length) { return ''; }
+  if (!(/^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/i.test(text))) {
+    return 'Enter a valid facebook username';
+  }
+  return '';
+};
+
+export const instagramValidator = (text: string): string => {
+  if (!text.length) { return ''; }
+  if (!(/^(?!.*\.\.|.*\.$)[A-z0-9][\w.]+[A-z0-9]{0,30}$/i.test(text))) {
+    return 'Enter a valid instagram username (without @)';
+  }
+  return '';
+};
+
+export const snapchatValidator = (text: string): string => {
+  if (!text.length) { return ''; }
+  if (!(/^(?!.*\.\.|.*\_\_|.*\-\-)(?!.*\.$|.*\_$|.*\-$)(?!.*\.\-|.*\-\.|.*\-\_|.*\_\-|.*\.\_|.*\_\.)[a-zA-Z]+[\w.-][0-9A-z]{0,15}$/i.test(text))) {
+    return 'Enter a valid snapchat username';
+  }
+  return '';
+};
+
 export const nameValidator = (text: string): string => {
   if (!(/^[a-zA-Z]+$/.test(text))) {
     return 'A name (with characters) is required';

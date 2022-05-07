@@ -23,6 +23,9 @@ export default class LoginService {
     interests: string[],
     job: string,
     imgs: Array<{ uri: string}>,
+    facebook?: string,
+    instagram?: string,
+    snapchat?: string,
   ): Promise<boolean> {
     const loginPath = await this.getLoginPath();
     const { token } = await ApiService.put(loginPath, {
@@ -35,6 +38,9 @@ export default class LoginService {
       interests,
       job,
       imgs,
+      facebook,
+      instagram,
+      snapchat,
     });
     if (token) {
       await ApiService.setToken(token).catch(this._errorHandler);

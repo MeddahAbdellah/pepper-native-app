@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet, View, ImageBackground, Text,
+  StyleSheet, View, ImageBackground, Text, TouchableOpacity,
 } from 'react-native';
 import { IParty, IUserBase } from '../../models/types';
 import {
@@ -25,6 +25,11 @@ const PepperPartyAttendees = (descriptionProps: { route: { params: { party: IPar
 
   const StaticCard = (attendee: IUserBase): JSX.Element => (
     <ImageBackground source={attendee.imgs[0]} style={styles.image} resizeMode="cover">
+      <TouchableOpacity
+        style={{ ...styles.imageMask, zIndex: styles.imageMask.zIndex + 1 }}
+        onPress={() => navigation.push(PepperStackRoutes.MatchDescription, { user: attendee, withContact: false })}
+      >
+      </TouchableOpacity>
       <LinearGradient colors={['transparent', color(black, .7), black]} style={styles.imageMask}>
         <View style={styles.descriptionContainer}>
           <Text style={{ ...styles.description, fontSize: fontSizeHeader, fontFamily: 'Sora_700Bold' }}>{attendee.name}</Text>

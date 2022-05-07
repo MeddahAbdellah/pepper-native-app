@@ -12,7 +12,8 @@ interface ITagProps {
   style?: any,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   tagStyle?: any,
-  iconComponent?: JSX.Element
+  iconComponent?: JSX.Element,
+  iconFirst?: boolean,
 }
 
 const PepperTag = (tagProps: ITagProps): JSX.Element => (
@@ -28,8 +29,12 @@ const PepperTag = (tagProps: ITagProps): JSX.Element => (
         x: 1,
         y: .5,
       }}>
+      { tagProps.iconName && tagProps.iconFirst ?
+        <PepperIcon name={tagProps.iconName} color={white} size={3.5 * space_unit} style={{ marginRight: 1 * space_unit }} /> :
+        null
+      }
       <Text style={styles.tagDescription}>{tagProps.text}</Text>
-      { tagProps.iconName ?
+      { tagProps.iconName && !tagProps.iconFirst ?
         <PepperIcon name={tagProps.iconName} color={white} size={3.5 * space_unit} style={{ marginLeft: 1 * space_unit }} /> :
         null
       }

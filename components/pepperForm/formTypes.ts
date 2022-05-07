@@ -6,7 +6,14 @@ export enum FormType {
   Gender = 'gender',
   Menu = 'menu',
   Image = 'image',
-  Tags = 'tags'
+  Tags = 'tags',
+  SocialMedia = 'social_media',
+}
+
+export enum SocialMediaType {
+  Facebook = 'facebook',
+  Instagram = 'instagram',
+  Snapchat = 'snapchat',
 }
 
 export enum KeyBoardType {
@@ -23,6 +30,12 @@ export interface TextInputSchema {
   max: number,
   multiline?: boolean,
   validator: (value: string) => string,
+}
+
+export interface SocialMediaInputSchema {
+  type: FormType.SocialMedia,
+  socialMediaType: SocialMediaType,
+  required: boolean,
 }
 
 export interface DateInputSchema {
@@ -46,6 +59,12 @@ export interface MenuItem {
   price: string,
 }
 
+export interface SocialMedia {
+  facebook?: string,
+  instagram?: string,
+  snapchat?: string,
+}
+
 export interface ImageItem {
   uri: string,
 }
@@ -66,5 +85,5 @@ export interface TagSchema {
 }
 
 export interface FormSchema {
-  [key: string]: TextInputSchema | DateInputSchema | GenderInputSchema | MenuInputSchema | ImageInputSchema | TagSchema,
+  [key: string]: TextInputSchema | DateInputSchema | GenderInputSchema | MenuInputSchema | ImageInputSchema | TagSchema | SocialMediaInputSchema,
 }

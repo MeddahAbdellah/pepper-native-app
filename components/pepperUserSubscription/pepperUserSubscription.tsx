@@ -3,10 +3,10 @@ import {
   View, StyleSheet, Text, TouchableOpacity, Platform, Keyboard,
 } from 'react-native';
 import {
-  white, space_unit, indigo_3, fontSizeRegular,
+  white, space_unit, indigo_3, fontSizeRegular, raven,
 } from '../../styles/common';
 import {
-  FormSchema, FormType, KeyBoardType, tagValidator,
+  FormSchema, FormType, KeyBoardType, SocialMedia, SocialMediaType, tagValidator,
 } from '../pepperForm';
 import {
   legalAgeValidator, nameValidator, cityValidator, alwaysValidValidator, codeValidator,
@@ -72,6 +72,13 @@ const PepperUserSubscription = (subscriptionProps: { route: { params: { phoneNum
       },
     },
     {
+      socialMedia: {
+        type: FormType.SocialMedia,
+        socialMediaType: SocialMediaType.Facebook,
+        required: true,
+      },
+    },
+    {
       code: {
         type: FormType.Text,
         keyboardType: KeyBoardType.Numeric,
@@ -104,6 +111,7 @@ const PepperUserSubscription = (subscriptionProps: { route: { params: { phoneNum
           interests,
           job,
           imgs,
+          socialMedia,
         } = subscriptionFormOutput;
 
         try {
@@ -118,6 +126,9 @@ const PepperUserSubscription = (subscriptionProps: { route: { params: { phoneNum
             interests as string[],
             job as string,
             imgs as Array<{ uri: string}>,
+            (socialMedia as SocialMedia).facebook as string,
+            (socialMedia as SocialMedia).instagram as string,
+            (socialMedia as SocialMedia).snapchat as string,
           );
           if (subcribeSuccess) {
             navigation.navigate(PepperStackRoutes.Tutorial);
@@ -174,5 +185,20 @@ const styles = StyleSheet.create({
     fontSize: fontSizeRegular,
     color: indigo_3,
     textDecorationLine: 'underline'
+  },
+  image: {
+    height: '40%',
+    marginBottom: 4 * space_unit,
+  },
+  description: {
+    width: '90%',
+    textAlign: 'center',
+    fontSize: fontSizeRegular,
+    color: raven,
+  },
+  headerContainer: {
+    height: '70%',
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
