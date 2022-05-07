@@ -20,7 +20,7 @@ const PepperPartyDetails = (detailsProps: { route: { params: { party: IParty } }
     }}
   >
     <StaticPartyTabs.Screen
-      initialParams={{ party: detailsProps.route.params.party, canCancel: true }}
+      initialParams={{ party: detailsProps.route.params.party, canCancel: true, withAddress: true }}
       name="Description" component={PepperPartyDescription} />
     <StaticPartyTabs.Screen
       initialParams={{ party: detailsProps.route.params.party }}

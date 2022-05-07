@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet, Text, View, ScrollView, Dimensions, TouchableOpacity,
+  StyleSheet, Text, View, ScrollView, Dimensions, TouchableOpacity, Platform,
 } from 'react-native';
 import {
   white, space_unit, fontSizeRegular, fontSizeHeader, sun, sun_2, fire, fire_2, indigo_2, indigo, grey_3, color, raven, sea, indigo_3, pepper,
@@ -11,6 +11,8 @@ import PepperImage, { PepperImages } from '../pepperImage/pepperImage';
 import PepperTag from '../pepperTags/pepperTags';
 import { keyExtractor, limitTextLength } from '../../helpers/uiHelper';
 import * as Linking from 'expo-linking';
+import * as Clipboard from 'expo-clipboard';
+import Toast from 'react-native-root-toast';
 
 const PepperMatchDescription = (descriptionProps: { route: { params: { user: IUser, withContact: boolean } } }): JSX.Element => {
   const { width } = Dimensions.get('window');
@@ -47,6 +49,22 @@ const PepperMatchDescription = (descriptionProps: { route: { params: { user: IUs
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               Linking.openURL(socialMediaActions[index] + socialMediaItem).catch(() => {
                 // TODO: manage error
+              });
+            }}
+            onLongPress={() => {
+              Clipboard.setString(socialMediaItem);
+              Toast.show('Copied to clipboard', {
+                duration: Toast.durations.LONG,
+                hideOnPress: true,
+                opacity: .9,
+                textStyle: Platform.select({
+                  ios: {
+                    fontFamily: 'Arial'
+                  },
+                  android: {
+                    fontFamily: 'normal'
+                  },
+                })
               });
             }}
           >
@@ -149,5 +167,6 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingVertical: 1.5 * space_unit,
     borderRadius: 1 * space_unit,
+    height: 8 * space_unit,
   },
 });

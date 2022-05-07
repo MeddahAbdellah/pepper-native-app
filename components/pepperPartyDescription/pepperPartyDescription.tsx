@@ -20,7 +20,9 @@ import { limitTextLength, keyExtractor } from '../../helpers/uiHelper';
 import * as Clipboard from 'expo-clipboard';
 import Toast from 'react-native-root-toast';
 
-const PepperPartyDescription = (descriptionProps: { route: { params: { party: IParty, canCancel: boolean } }}): JSX.Element => {
+const PepperPartyDescription = (descriptionProps: {
+  route: { params: { party: IParty, canCancel: boolean, withAddress?: boolean }
+}}): JSX.Element => {
   // TODO: fix location, make it open google maps or something
   const { width } = Dimensions.get('window');
   const [carouselWidth, setCarouselWidth] = useState(width);
@@ -81,6 +83,32 @@ const PepperPartyDescription = (descriptionProps: { route: { params: { party: IP
     </Modal>
   );
 
+  const StaticAddress = (): JSX.Element => (<TouchableOpacity
+    onPress={createOpenLink({ query: party.location })}
+    onLongPress={() => {
+      Clipboard.setString(party.location);
+      Toast.show('Copied to clipboard', {
+        duration: Toast.durations.LONG,
+        hideOnPress: true,
+        opacity: .9,
+        textStyle: Platform.select({
+          ios: {
+            fontFamily: 'Arial'
+          },
+          android: {
+            fontFamily: 'normal'
+          },
+        })
+      });
+    }}>
+    <PepperTag
+      iconName="pepper-location" text={limitTextLength(party.location, 30)}
+      firstGradientColor={sea}
+      secondGradientColor={indigo_3}
+      style={styles.tags}
+      tagStyle={styles.locationTag}/>
+  </TouchableOpacity>);
+
   return (
     <ScrollView style={{ backgroundColor: white }}>
       <StaticCancelPartyModal/>
@@ -92,31 +120,10 @@ const PepperPartyDescription = (descriptionProps: { route: { params: { party: IP
           <Text style={{ fontSize: fontSizeHeader }}>{party.title}</Text>
           <Text style={{ fontSize: fontSizeSubHeader }}>{party.theme}</Text>
           <Text style={styles.details}>{moment(party.date).format('YYYY MMM DD')}</Text>
-          <TouchableOpacity
-            onPress={createOpenLink({ query: party.location })}
-            onLongPress={() => {
-              Clipboard.setString(party.location);
-              Toast.show('Copied to clipboard', {
-                duration: Toast.durations.LONG,
-                hideOnPress: true,
-                opacity: .9,
-                textStyle: Platform.select({
-                  ios: {
-                    fontFamily: 'Arial'
-                  },
-                  android: {
-                    fontFamily: 'normal'
-                  },
-                })
-              });
-            }}>
-            <PepperTag
-              iconName="pepper-location" text={limitTextLength(party.location, 30)}
-              firstGradientColor={sea}
-              secondGradientColor={indigo_3}
-              style={styles.tags}
-              tagStyle={styles.locationTag}/>
-          </TouchableOpacity>
+          {
+            !!descriptionProps.route.params.withAddress ? <StaticAddress/> : null
+          }
+
           <View style={styles.tagsContainer}>
             <PepperTag
               iconName="pepper-dancing"
