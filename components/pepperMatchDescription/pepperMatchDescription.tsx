@@ -35,6 +35,7 @@ const PepperMatchDescription = (descriptionProps: { route: { params: { user: IUs
 
   const StaticSocialMediaOfMatch = (): JSX.Element[] => {
     const socialMedia = [user.facebook, user.instagram, user.snapchat];
+    const socialMediaActions = ['https://www.facebook.com/', 'instagram://user?username=', 'https://snapchat.com/add/'];
     const socialMediaIcons = ['pepper-facebook', 'pepper-instagram', 'pepper-snapchat'];
     const socialMediaColors = [sea, pepper, sun_2];
     const socialMediaSecondColors = [sea, indigo_3, sun];
@@ -43,7 +44,10 @@ const PepperMatchDescription = (descriptionProps: { route: { params: { user: IUs
         return (
           <TouchableOpacity
             onPress={() => {
-              Linking.openURL('fb-messenger://user-thread/' + socialMediaItem);
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              Linking.openURL(socialMediaActions[index] + socialMediaItem).catch(() => {
+                // TODO: manage error
+              });
             }}
           >
             <PepperTag
