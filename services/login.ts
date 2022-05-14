@@ -13,6 +13,16 @@ export default class LoginService {
     return false;
   }
 
+  public static async organizerLogin(userName: string, password: string): Promise<boolean> {
+    const loginPath = await this.getLoginPath();
+    const { token } = await ApiService.post(loginPath, { userName, password });
+    if (token) {
+      await ApiService.setToken(token).catch(this._errorHandler);
+      return true;
+    }
+    return false;
+  }
+
   public static async subscribe(
     phoneNumber: string,
     code: string,

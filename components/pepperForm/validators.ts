@@ -31,6 +31,13 @@ export const nameValidator = (text: string): string => {
   return '';
 };
 
+export const passwordValidator = (text: string): string => {
+  if (!(/(?=.{8,})/.test(text))) {
+    return 'The password must be eight characters or longer';
+  }
+  return '';
+};
+
 export const numberValidator = (text: string): string => {
   if (!(/^[0-9]+$/.test(text))) {
     return 'A number is required';

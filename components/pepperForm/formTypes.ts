@@ -26,6 +26,7 @@ export interface TextInputSchema {
   type: FormType.Text,
   label: string,
   keyboardType?: KeyBoardType,
+  isPassword?: boolean,
   initialValue?: string,
   max: number,
   multiline?: boolean,

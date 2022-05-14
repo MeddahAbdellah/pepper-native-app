@@ -5,10 +5,11 @@ import { RootSiblingParent } from 'react-native-root-siblings';
 import { Provider } from 'react-redux';
 import store from '../services/store';
 import { PepperTitle, PepperUserProfile, PepperQrCode } from '../components/pepperHeader/pepperHeader';
-import { PepperStackRoutes } from '../models/routes';
-import PepperLoginRouter from '../components/pepperLoginRouter/pepperLoginRouter';
+import { PepperOrganizerStackRoutes } from '../models/routes';
 import { white } from '../styles/common';
 import PepperLandingPage from '../components/pepperLandingPage/pepperLandingPage';
+import PepperOrganizerMain from '../components/pepperOrganizerMain/pepperOrganizerMain';
+import PepperOrganizerLogin from '../components/pepperOrganizerLogin/pepperOrganizerLogin';
 
 const ReactStack = createNativeStackNavigator();
 
@@ -26,8 +27,10 @@ const PepperOrganizerApp = (): JSX.Element => (
             headerLeft: () => (<PepperUserProfile navigation={navigation} route={route}/>),
             headerRight: () => (<PepperQrCode />),
           })}>
-          <ReactStack.Screen name={PepperStackRoutes.LandingPage} component={PepperLandingPage} options={{ headerShown: false }}/>
-          <ReactStack.Screen name={PepperStackRoutes.LoginRouter} component={PepperLoginRouter} />
+          <ReactStack.Screen name={PepperOrganizerStackRoutes.LandingPage} component={PepperLandingPage} options={{ headerShown: false }}/>
+          <ReactStack.Screen name={PepperOrganizerStackRoutes.Login} component={PepperOrganizerLogin} />
+          <ReactStack.Screen name={PepperOrganizerStackRoutes.Subscription} component={PepperOrganizerLogin} />
+          <ReactStack.Screen name={PepperOrganizerStackRoutes.Main} component={PepperOrganizerMain} />
         </ReactStack.Navigator>
       </NavigationContainer>
     </Provider>

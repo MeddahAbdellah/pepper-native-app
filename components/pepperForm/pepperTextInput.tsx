@@ -30,6 +30,7 @@ export const PepperTextInput = (textInputProps: ITextInput): JSX.Element => {
         multiline={textInputProps.multiline ?? false}
         maxLength={textInputProps.max}
         keyboardType={textInputProps.keyboardType ? textInputProps.keyboardType : KeyBoardType.Default}
+        secureTextEntry={textInputProps.isPassword ?? false}
         defaultValue={textInputProps.initialValue ? textInputProps.initialValue : ''}
         onChangeText={onChange}
         style={{

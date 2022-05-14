@@ -11,3 +11,10 @@ export enum PepperStackRoutes {
   LoginRouter = 'loginRouter',
   LandingPage = 'landingPage',
 }
+
+export enum PepperOrganizerStackRoutes {
+  LandingPage = 'landingPage',
+  Login = 'login',
+  Subscription = 'subscription',
+  Main = 'main',
+}
