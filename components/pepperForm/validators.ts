@@ -31,8 +31,8 @@ export const nameValidator = (text: string): string => {
   return '';
 };
 
-export const nameWithSpaceValidator = (text: string): string => {
-  if (!(/^[a-z A-Z]+$/.test(text))) {
+export const freeNameValidator = (text: string): string => {
+  if (!(/^[a-zA-Z\s _]+$/.test(text))) {
     return 'A name (with characters) is required';
   }
   return '';

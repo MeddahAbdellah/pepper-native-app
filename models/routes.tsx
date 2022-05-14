@@ -17,4 +17,5 @@ export enum PepperOrganizerStackRoutes {
   Login = 'login',
   Subscription = 'subscription',
   Main = 'main',
+  NewParty = 'NewParty',
 }

@@ -11,6 +11,7 @@ import PepperLandingPage from '../components/pepperLandingPage/pepperLandingPage
 import PepperOrganizerMain from '../components/pepperOrganizerMain/pepperOrganizerMain';
 import PepperOrganizerLogin from '../components/pepperOrganizerLogin/pepperOrganizerLogin';
 import PepperOrganizerSubscription from '../components/pepperOrganizerSubscription/pepperOrganizerSubscription';
+import PepperOrganizerNewParty from '../components/pepperOrganizerNewParty/pepperOrganizerNewParty';
 
 const ReactStack = createNativeStackNavigator();
 
@@ -31,6 +32,7 @@ const PepperOrganizerApp = (): JSX.Element => (
           <ReactStack.Screen name={PepperOrganizerStackRoutes.Login} component={PepperOrganizerLogin} />
           <ReactStack.Screen name={PepperOrganizerStackRoutes.Subscription} component={PepperOrganizerSubscription} />
           <ReactStack.Screen name={PepperOrganizerStackRoutes.Main} component={PepperOrganizerMain} />
+          <ReactStack.Screen name={PepperOrganizerStackRoutes.NewParty} component={PepperOrganizerNewParty} />
         </ReactStack.Navigator>
       </NavigationContainer>
     </Provider>

@@ -3,7 +3,7 @@ import LoginService from '../../services/login';
 import { useNavigation } from '@react-navigation/native';
 import { PepperOrganizerStackRoutes } from '../../models/routes';
 import {
-  PepperForm, FormType, FormSchema, MenuItem, nameValidator, passwordValidator,
+  PepperForm, FormType, FormSchema, MenuItem, freeNameValidator, passwordValidator,
 } from '../pepperForm';
 import {
   TouchableOpacity, Text, StyleSheet, Modal, View,
@@ -25,7 +25,7 @@ const PepperOrganizerLogin = (): JSX.Element => {
       type: FormType.Text,
       label: 'Enter your user name',
       max: 20,
-      validator: nameValidator,
+      validator: freeNameValidator,
     },
     password: {
       type: FormType.Text,

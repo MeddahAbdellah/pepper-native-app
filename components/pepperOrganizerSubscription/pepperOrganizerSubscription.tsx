@@ -7,7 +7,7 @@ import {
 } from '../../styles/common';
 import {
   addressValidator,
-  FormSchema, FormType, KeyBoardType, nameWithSpaceValidator, numberValidator, passwordValidator, phoneNumberValidator,
+  FormSchema, FormType, KeyBoardType, freeNameValidator, numberValidator, passwordValidator, phoneNumberValidator,
 } from '../pepperForm';
 import {
   nameValidator, alwaysValidValidator,
@@ -40,7 +40,7 @@ const PepperOrganizerSubscription = (): JSX.Element => {
         type: FormType.Text,
         label: 'Title (name of the bar)',
         max: 20,
-        validator: nameWithSpaceValidator,
+        validator: freeNameValidator,
       },
       location: {
         type: FormType.Text,
@@ -74,7 +74,7 @@ const PepperOrganizerSubscription = (): JSX.Element => {
       foods: {
         type: FormType.Menu,
         label: 'Foods served',
-        nameValidator: nameWithSpaceValidator,
+        nameValidator: freeNameValidator,
         priceValidator: numberValidator,
       },
     },
@@ -82,7 +82,7 @@ const PepperOrganizerSubscription = (): JSX.Element => {
       drinks: {
         type: FormType.Menu,
         label: 'Drinks served',
-        nameValidator: nameWithSpaceValidator,
+        nameValidator: freeNameValidator,
         priceValidator: numberValidator,
       },
     },

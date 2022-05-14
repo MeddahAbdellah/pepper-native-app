@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import ApiService from '../../services/api';
 import { IOrganizer } from '../../models/types';
 import { UtilService } from '../../services/util';
+import { Moment } from 'moment';
 
 export const emptyOrganizer: IOrganizer = {
   id: 0,
@@ -36,8 +37,15 @@ export const updateParty = createAsyncThunk('organizer/updateParty', async(updat
   return parties;
 });
 
-export const addParty = createAsyncThunk('organizer/addParty', async(updatePayload: { partyId: number }) => {
-  const { parties } = await ApiService.post('organizer/party', updatePayload).catch(async(error) => UtilService.throwError(error));
+export const addParty = createAsyncThunk('organizer/addParty', async(addPayload: {
+  theme: string,
+  date: Moment,
+  price: number,
+  people: number,
+  minAge: number,
+  maxAge: number,
+ }) => {
+  const { parties } = await ApiService.post('organizer/party', addPayload).catch(async(error) => UtilService.throwError(error));
   return parties;
 });
 
