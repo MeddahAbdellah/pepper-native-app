@@ -47,6 +47,23 @@ export interface IMatch extends IUserBase{
   status: MatchStatus,
 };
 
+export interface IOrganizerBase {
+  id: number,
+  title: string,
+  userName: string,
+  password: string,
+  location: string,
+  phoneNumber: string,
+  description: string,
+  foods: Array<{ name: string, price: number }>,
+  drinks: Array<{ name: string, price: number }>,
+  imgs: Array<{ uri: string}>
+}
+
+export interface IOrganizer extends IOrganizerBase {
+  parties: IParty[],
+}
+
 export enum MatchStatus {
   ACCEPTED = 'accepted',
   WAITING = 'waiting',
@@ -72,6 +89,18 @@ export interface IUserStore {
   deleteMatchStatus: StoreStatus;
   updatePartyStatus: StoreStatus;
   attendPartyStatus: StoreStatus;
+  deletePartyStatus: StoreStatus;
+  // TODO: Library does not provide a type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  error: any;
+}
+
+export interface IOrganizerStore {
+  organizer: IOrganizer;
+  fetchStatus: StoreStatus;
+  updateStatus: StoreStatus;
+  updatePartyStatus: StoreStatus;
+  addPartyStatus: StoreStatus;
   deletePartyStatus: StoreStatus;
   // TODO: Library does not provide a type
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

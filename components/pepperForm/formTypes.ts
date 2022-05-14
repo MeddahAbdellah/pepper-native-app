@@ -57,7 +57,7 @@ export interface ImageInputSchema {
 
 export interface MenuItem {
   name: string,
-  price: string,
+  price: number,
 }
 
 export interface SocialMedia {
@@ -73,6 +73,7 @@ export interface ImageItem {
 export interface MenuInputSchema {
   type: FormType.Menu,
   label: string,
+  initialValue?: Array<{ name: string, price: number }>,
   nameValidator: (name: string) => string,
   priceValidator: (price: string) => string,
 }

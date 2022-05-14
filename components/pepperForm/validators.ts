@@ -26,6 +26,13 @@ export const snapchatValidator = (text: string): string => {
 
 export const nameValidator = (text: string): string => {
   if (!(/^[a-zA-Z]+$/.test(text))) {
+    return 'A name (with characters and no spaces) is required';
+  }
+  return '';
+};
+
+export const nameWithSpaceValidator = (text: string): string => {
+  if (!(/^[a-z A-Z]+$/.test(text))) {
     return 'A name (with characters) is required';
   }
   return '';
@@ -68,6 +75,13 @@ export const legalAgeValidator = (date: Moment): string => {
 export const cityValidator = (text: string): string => {
   if (!(/^[a-zA-Z',.\s-]{1,25}$/.test(text))) {
     return 'A city is required';
+  }
+  return '';
+};
+
+export const addressValidator = (text: string): string => {
+  if (!(/^[a-zA-Z0-9\s,.'‘’`-]{3,60}$/.test(text))) {
+    return 'An address is required';
   }
   return '';
 };

@@ -146,6 +146,6 @@ const styles = StyleSheet.create({
   },
   validateButtonText: {
     color: indigo_3,
-    paddingVertical: 2 * space_unit,
+    paddingVertical: space_unit,
   },
 });

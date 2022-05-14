@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet, Text, View, TextInput, TouchableOpacity,
 } from 'react-native';
@@ -21,10 +21,16 @@ interface IMenuInput extends Omit<MenuInputSchema, 'type'> {
 
 export const PepperMenuInput = (menuInputProps: IMenuInput): JSX.Element => {
   const [currentName, setCurrentName] = useState('');
-  const [currentPrice, setCurrentPrice] = useState('');
+  const [currentPrice, setCurrentPrice] = useState(0);
   const [nameError, setNameError] = useState('');
   const [priceError, setPriceError] = useState('');
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+
+  useEffect(() => {
+    if (menuInputProps.initialValue) {
+      setMenuItems(menuInputProps.initialValue);
+    }
+  }, [menuInputProps.initialValue]);
 
   const onNameChange = (value: string): void => {
     const sanitizedValue = sanitizeText(value);
@@ -35,9 +41,9 @@ export const PepperMenuInput = (menuInputProps: IMenuInput): JSX.Element => {
 
   const onPriceChange = (value: string): void => {
     const sanitizedValue = sanitizeText(value);
-    const validation = menuInputProps.priceValidator(sanitizedValue);
+    const validation = menuInputProps.priceValidator(Number(sanitizedValue).toString());
     setPriceError(validation);
-    setCurrentPrice(value);
+    setCurrentPrice(Number(value) || 0);
   };
 
   const onAdd = (): void => {
@@ -46,7 +52,7 @@ export const PepperMenuInput = (menuInputProps: IMenuInput): JSX.Element => {
     setMenuItems(newMenuItems);
     menuInputProps.onSubmit({ value: newMenuItems, valid: true });
     setCurrentName('');
-    setCurrentPrice('');
+    setCurrentPrice(0);
   };
 
   const onRemove = (itemToRemove: MenuItem): void => {
@@ -55,7 +61,11 @@ export const PepperMenuInput = (menuInputProps: IMenuInput): JSX.Element => {
     menuInputProps.onSubmit({ value: newMenuItems, valid: !_.isEmpty(newMenuItems) });
   };
 
-  const isAddDisabled = (): boolean => (!_.isEmpty(priceError) || !_.isEmpty(nameError) || _.isEmpty(currentName) || _.isEmpty(currentPrice));
+  const isAddDisabled = (): boolean => (
+    !_.isEmpty(priceError) ||
+    !_.isEmpty(nameError) ||
+    _.isEmpty(currentName) ||
+    _.isEmpty(currentPrice.toString()));
 
   return (
     <View style={styles.container}>
@@ -87,7 +97,7 @@ export const PepperMenuInput = (menuInputProps: IMenuInput): JSX.Element => {
           editable
         />
         <TextInput
-          value={currentPrice}
+          value={currentPrice.toString()}
           maxLength={MENU_PRICE_MAX_LENGTH}
           onChangeText={onPriceChange}
           style={{
@@ -116,7 +126,6 @@ export const PepperMenuInput = (menuInputProps: IMenuInput): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    marginBottom: 2 * space_unit,
   },
   addButton: {
     fontSize: fontSizeRegular,

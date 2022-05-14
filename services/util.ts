@@ -41,9 +41,13 @@ export class UtilService {
 
   public static async throwError(error: object): Promise<void> {
     await UtilService.cleanHistory();
-    // we need to log error to debug it
-    // eslint-disable-next-line no-console
-    console.error('Pepper Error: ', error);
+    try {
+      // we need to log error to debug it
+      // eslint-disable-next-line no-console
+      console.error('Pepper Error: ', JSON.stringify(error));
+    } catch (e) {
+      console.error('Pepper Error: ', error);
+    }
     await SecureStore.setItemAsync(SecureStoreKeys.Error, error?.toString());
     UtilService.reloadApp();
   }

@@ -3,75 +3,92 @@ import {
   StyleSheet, Text, View, ScrollView, TouchableOpacity,
 } from 'react-native';
 import {
-  white, space_unit, fontSizeHeader, pepper,
+  white, space_unit, pepper,
 } from '../../styles/common';
 import LoginService from '../../services/login';
 import { usePepperDispatch } from '../../hooks/store.hooks';
-import { resetUser, updateUser } from '../../features/user/userActions';
-import { usePepperUser } from '../../hooks/user.hooks';
+import { resetOrganizer, updateOrganizer } from '../../features/organizer/organizerActions';
 import { useNavigation } from '@react-navigation/native';
-import { PepperStackRoutes } from '../../models/routes';
+import { PepperOrganizerStackRoutes } from '../../models/routes';
 import {
-  FormSchema, PepperForm, FormType, nameValidator, cityValidator, alwaysValidValidator, MenuItem, tagValidator,
+  FormSchema, PepperForm, FormType, alwaysValidValidator, MenuItem,
+  nameWithSpaceValidator, addressValidator, KeyBoardType, phoneNumberValidator, numberValidator,
 } from '../pepperForm';
+import { usePepperOrganizer } from '../../hooks/organizer.hooks';
+import { fetchOrganizer } from '../../features/organizer/organizerActions';
 
 const PepperOrganizerMain = (): JSX.Element => {
   const [schema, setSchema] = useState<FormSchema>({});
   const storeDispatch = usePepperDispatch();
-  // Fetch user on load
-  // useEffect(() => { storeDispatch(fetchUser()); }, []);
-  const currentUser = usePepperUser();
+  // Fetch organizer on load
+  useEffect(() => { storeDispatch(fetchOrganizer()); }, []);
+  const currentOrganizer = usePepperOrganizer();
   useEffect(() => {
-    if (!currentUser.user) { return; }
+    if (!currentOrganizer.organizer) { return; }
     setSchema({
       imgs: {
         type: FormType.Image,
-        initialValue: currentUser.user.imgs,
+        initialValue: currentOrganizer.organizer.imgs,
       },
-      interests: {
-        type: FormType.Tags,
-        label: 'You & your hobbies',
-        initialValue: currentUser.user.interests,
-        validator: tagValidator,
-      },
-      job: {
+      title: {
         type: FormType.Text,
-        label: 'Job',
-        initialValue: currentUser.user.job,
+        label: 'Title (name of the bar)',
+        initialValue: currentOrganizer.organizer.title,
         max: 20,
-        validator: nameValidator,
+        validator: nameWithSpaceValidator,
       },
-      address: {
+      location: {
         type: FormType.Text,
-        label: 'Ville',
-        initialValue: currentUser.user.address,
-        max: 30,
-        validator: cityValidator,
+        label: 'Address of the establishment',
+        max: 60,
+        initialValue: currentOrganizer.organizer.location,
+        validator: addressValidator,
+      },
+      phoneNumber: {
+        type: FormType.Text,
+        keyboardType: KeyBoardType.Numeric,
+        label: 'Phone number',
+        initialValue: currentOrganizer.organizer.phoneNumber,
+        max: 10,
+        validator: phoneNumberValidator,
       },
       description: {
         type: FormType.Text,
         label: 'Description',
-        initialValue: currentUser.user.description,
+        initialValue: currentOrganizer.organizer.description,
         multiline: true,
         max: 200,
         validator: alwaysValidValidator,
-      }
+      },
+      foods: {
+        type: FormType.Menu,
+        label: 'Foods served',
+        initialValue: currentOrganizer.organizer.foods,
+        nameValidator: nameWithSpaceValidator,
+        priceValidator: numberValidator,
+      },
+      drinks: {
+        type: FormType.Menu,
+        label: 'Drinks served',
+        initialValue: currentOrganizer.organizer.drinks,
+        nameValidator: nameWithSpaceValidator,
+        priceValidator: numberValidator,
+      },
     });
-  }, [currentUser]);
+  }, [currentOrganizer]);
 
   // TODO: Library does not provide a type
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const navigation = useNavigation<any>();
 
   const updatePersonalInfo = (result: { [key: string]: string | MenuItem[] | string[]; }): void => {
-    storeDispatch(updateUser(result));
+    storeDispatch(updateOrganizer(result));
   };
 
   return (
     <ScrollView style={{ backgroundColor: white }}>
       <View style={styles.container}>
         <View style={styles.detailsContainer}>
-          <Text style={{ fontSize: fontSizeHeader }}>{currentUser.user.name}</Text>
           <PepperForm
             schema={schema}
             onSubmit={updatePersonalInfo}
@@ -82,8 +99,8 @@ const PepperOrganizerMain = (): JSX.Element => {
         <TouchableOpacity style={styles.logoutButton}
           onPress={async() => {
             await LoginService.logout();
-            storeDispatch(resetUser());
-            navigation.navigate(PepperStackRoutes.LandingPage);
+            storeDispatch(resetOrganizer());
+            navigation.navigate(PepperOrganizerStackRoutes.LandingPage);
           }}>
           <Text style={styles.logoutButtonText}>Logout</Text>
         </TouchableOpacity>
@@ -109,14 +126,12 @@ const styles = StyleSheet.create({
   },
   logoutButton: {
     flexDirection: 'row',
-    backgroundColor: pepper,
-    marginTop: 6 * space_unit,
+    marginTop: 4 * space_unit,
     borderRadius: 1 * space_unit,
   },
   logoutButtonText: {
     width: '80%',
     textAlign: 'center',
-    color: white,
-    paddingVertical: 2 * space_unit,
+    color: pepper,
   },
 });

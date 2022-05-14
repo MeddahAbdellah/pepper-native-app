@@ -8,5 +8,5 @@ export const capitalize = (text: string | undefined): string => (text ? `${text.
 
 export const sanitizeText = (text: string): string => text.
   replace(/\r?\n|\r/g, ' ').
-  replace(/[`~!@#$%^&*()_|\-=?;:'",.<>\{\}\[\]\\\/]/gi, ' ').
+  replace(/[`~@$%^&*|\=?;:,.<>\{\}\[\]\\\/]/gi, ' ').
   replace(/\s{2,}/g, ' ');

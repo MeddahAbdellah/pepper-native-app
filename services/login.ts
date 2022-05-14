@@ -59,6 +59,37 @@ export default class LoginService {
     return false;
   }
 
+  public static async organizerSsubscribe(
+    userName: string,
+    password: string,
+    title: string,
+    location: string,
+    phoneNumber: string,
+    description: string,
+    foods: Array<{ name: string, price: number }>,
+    drinks: Array<{ name: string, price: number }>,
+    imgs: Array<{ uri: string}>,
+  ): Promise<boolean> {
+    const loginPath = await this.getLoginPath();
+    const { token } = await ApiService.put(loginPath, {
+      userName,
+      password,
+      title,
+      location,
+      phoneNumber,
+      description,
+      foods,
+      drinks,
+      imgs,
+    });
+    if (token) {
+      await ApiService.setToken(token).catch(this._errorHandler);
+      return true;
+    }
+    return false;
+  }
+
+
   public static async logout(): Promise<void> {
     await UtilService.cleanHistory();
     UtilService.reloadApp();
