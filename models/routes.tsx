@@ -18,4 +18,5 @@ export enum PepperOrganizerStackRoutes {
   Subscription = 'subscription',
   Main = 'main',
   NewParty = 'NewParty',
+  CancelParty = 'CancelParty',
 }

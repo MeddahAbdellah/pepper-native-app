@@ -17,7 +17,6 @@ import moment from 'moment';
 
 const PepperOrganizerNewParty = (newPartyProps: { route: { params: { date: string } } }): JSX.Element => {
   const storeDispatch = usePepperDispatch();
-  // addParty()
   const schemas: FormSchema[] = [
     {
       theme: {
