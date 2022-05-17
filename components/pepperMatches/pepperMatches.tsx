@@ -86,9 +86,9 @@ const PepperMatches = (): JSX.Element => {
       onRequestClose={() => closeModalAndResetSelection() }>
       <BlurView tint="dark" style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          <PepperImage src={PepperImages.Wellness} style={styles.modalImage}></PepperImage>
+          <PepperImage src={PepperImages.ShyHeart} style={styles.modalImage}></PepperImage>
           <Text style={styles.modalDescription}>
-            In life there is time for work and time for love. {selectedMatch?.gender === Gender.MAN ? 'He' : 'She' }’s probably busy working!
+            Maybe {selectedMatch?.gender === Gender.MAN ? 'He' : 'She' } Didn't see you, go talk to them!
           </Text>
           <View style={{
             marginTop: 2 * space_unit, width: '100%', flexDirection: 'row', justifyContent: 'space-around'
