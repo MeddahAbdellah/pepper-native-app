@@ -31,7 +31,7 @@ const PepperUserParties = (): JSX.Element => {
         style={{ ...styles.imageMask, zIndex: styles.imageMask.zIndex + 1 }}
         onPress={() => navigation.push(
           party.status === UserPartyStatus.ATTENDED ? PepperStackRoutes.PartyDetails : PepperStackRoutes.PartyDescription,
-          { party, canCancel: false })}
+          { party, canCancel: false, withAddress: true })}
       >
       </TouchableOpacity>
       <LinearGradient colors={['transparent', color(black, .7), black]} style={styles.imageMask}>

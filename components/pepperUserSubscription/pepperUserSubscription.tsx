@@ -6,10 +6,10 @@ import {
   white, space_unit, indigo_3, fontSizeRegular, raven,
 } from '../../styles/common';
 import {
-  FormSchema, FormType, KeyBoardType, SocialMedia, SocialMediaType, tagValidator,
+  FormSchema, FormType, KeyBoardType, SocialMedia, SocialMediaType,
 } from '../pepperForm';
 import {
-  legalAgeValidator, nameValidator, cityValidator, alwaysValidValidator, codeValidator,
+  legalAgeValidator, freeNameValidator, codeValidator,
 } from '../pepperForm';
 import { PepperFormStepper } from '../pepperForm/pepperFormStepper';
 import { useNavigation } from '@react-navigation/native';
@@ -27,7 +27,7 @@ const PepperUserSubscription = (subscriptionProps: { route: { params: { phoneNum
         type: FormType.Text,
         label: 'Name',
         max: 20,
-        validator: nameValidator,
+        validator: freeNameValidator,
       },
       gender: {
         type: FormType.Gender,
@@ -36,34 +36,6 @@ const PepperUserSubscription = (subscriptionProps: { route: { params: { phoneNum
         type: FormType.Date,
         label: 'Date of birth',
         validator: legalAgeValidator,
-      },
-    },
-    {
-      job: {
-        type: FormType.Text,
-        label: 'Job',
-        max: 20,
-        validator: nameValidator,
-      },
-      address: {
-        type: FormType.Text,
-        label: 'Ville',
-        max: 30,
-        validator: cityValidator,
-      },
-      description: {
-        type: FormType.Text,
-        label: 'Description',
-        multiline: true,
-        max: 200,
-        validator: alwaysValidValidator,
-      },
-    },
-    {
-      interests: {
-        type: FormType.Tags,
-        label: 'You & your hobbies',
-        validator: tagValidator,
       },
     },
     {
@@ -106,10 +78,6 @@ const PepperUserSubscription = (subscriptionProps: { route: { params: { phoneNum
           code,
           name,
           gender,
-          address,
-          description,
-          interests,
-          job,
           imgs,
           socialMedia,
         } = subscriptionFormOutput;
@@ -121,10 +89,6 @@ const PepperUserSubscription = (subscriptionProps: { route: { params: { phoneNum
             code as string,
             name as string,
             gender as Gender,
-            address as string,
-            description as string,
-            interests as string[],
-            job as string,
             imgs as Array<{ uri: string}>,
             (socialMedia as SocialMedia).facebook as string,
             (socialMedia as SocialMedia).instagram as string,
