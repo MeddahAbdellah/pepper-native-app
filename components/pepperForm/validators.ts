@@ -1,8 +1,46 @@
 import moment, { Moment } from 'moment';
 
+export const facebookValidator = (text: string): string => {
+  if (!text.length) { return ''; }
+  if (!(/^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/i.test(text))) {
+    return 'Enter a valid facebook username';
+  }
+  return '';
+};
+
+export const instagramValidator = (text: string): string => {
+  if (!text.length) { return ''; }
+  if (!(/^(?!.*\.\.|.*\.$)[A-z0-9][\w.]+[A-z0-9]{0,30}$/i.test(text))) {
+    return 'Enter a valid instagram username (without @)';
+  }
+  return '';
+};
+
+export const snapchatValidator = (text: string): string => {
+  if (!text.length) { return ''; }
+  if (!(/^(?!.*\.\.|.*\_\_|.*\-\-)(?!.*\.$|.*\_$|.*\-$)(?!.*\.\-|.*\-\.|.*\-\_|.*\_\-|.*\.\_|.*\_\.)[a-zA-Z]+[\w.-][0-9A-z]{0,15}$/i.test(text))) {
+    return 'Enter a valid snapchat username';
+  }
+  return '';
+};
+
 export const nameValidator = (text: string): string => {
   if (!(/^[a-zA-Z]+$/.test(text))) {
+    return 'A name (with characters and no spaces) is required';
+  }
+  return '';
+};
+
+export const freeNameValidator = (text: string): string => {
+  if (!(/^[a-zA-Z\s _]+$/.test(text))) {
     return 'A name (with characters) is required';
+  }
+  return '';
+};
+
+export const passwordValidator = (text: string): string => {
+  if (!(/(?=.{8,})/.test(text))) {
+    return 'The password must be eight characters or longer';
   }
   return '';
 };
@@ -37,6 +75,13 @@ export const legalAgeValidator = (date: Moment): string => {
 export const cityValidator = (text: string): string => {
   if (!(/^[a-zA-Z',.\s-]{1,25}$/.test(text))) {
     return 'A city is required';
+  }
+  return '';
+};
+
+export const addressValidator = (text: string): string => {
+  if (!(/^[a-zA-Z0-9\s,.'‘’`-]{3,60}$/.test(text))) {
+    return 'An address is required';
   }
   return '';
 };

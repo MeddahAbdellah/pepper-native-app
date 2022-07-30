@@ -42,8 +42,8 @@ export const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
         base64: true,
         quality: 1,
       });
+      setIsImgLoading(true);
       if (image && !image.cancelled && image.base64) {
-        setIsImgLoading(true);
         try {
           const img = await FileUploadService.uploadImage(image.base64);
           const newImgOutput = { ...imgsOutput, [id]: img };
@@ -53,7 +53,9 @@ export const PepperImageInput = (imageInputProms: IImageInput): JSX.Element => {
         } catch (error) {
           setIsHugeImage(true);
         }
-      };
+      } else {
+        setIsImgLoading(false);
+      }
     })();
   };
 

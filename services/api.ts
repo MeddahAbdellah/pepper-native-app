@@ -14,10 +14,14 @@ enum HttpMethod {
   DELETE = 'delete',
 }
 
-const HTTP_OK = 200;
+export enum HttpStatus {
+  OK = 200,
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
+}
 
 export default class ApiService {
-  private static _baseUrl: string = `http://192.168.43.75:7550/api`;
+  private static _baseUrl: string = `http://localhost:7550/api`;
 
   public static async get(resource: string, params?: any): Promise<any> {
     const queryString = params ? Object.keys(params).map(key => `${key}=${params[key]}`).join('&') : '';
@@ -73,7 +77,7 @@ export default class ApiService {
   }
 
   private static _responseFormatter(response: any): any {
-    if (response.status !== HTTP_OK) {
+    if (response.status !== HttpStatus.OK) {
       throw response;
     }
     return response.json();

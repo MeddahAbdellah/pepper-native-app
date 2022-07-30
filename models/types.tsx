@@ -33,6 +33,9 @@ export interface IUserBase {
   job: string,
   imgs: Array<{ uri: string }>,
   interests: string[],
+  facebook: string,
+  instagram: string,
+  snapchat: string,
 }
 
 export interface IUser extends IUserBase {
@@ -44,11 +47,26 @@ export interface IMatch extends IUserBase{
   status: MatchStatus,
 };
 
+export interface IOrganizerBase {
+  id: number,
+  title: string,
+  userName: string,
+  password: string,
+  location: string,
+  phoneNumber: string,
+  description: string,
+  foods: Array<{ name: string, price: number }>,
+  drinks: Array<{ name: string, price: number }>,
+  imgs: Array<{ uri: string}>
+}
+
+export interface IOrganizer extends IOrganizerBase {
+  parties: IParty[],
+}
+
 export enum MatchStatus {
   ACCEPTED = 'accepted',
   WAITING = 'waiting',
-  UNCHECKED = 'unchecked',
-  UNAVAILABLE = 'unavailable',
 }
 
 export enum Gender {
@@ -68,10 +86,21 @@ export interface IUserStore {
   fetchStatus: StoreStatus;
   updateStatus: StoreStatus;
   addMatchStatus: StoreStatus;
-  updateMatchStatus: StoreStatus;
   deleteMatchStatus: StoreStatus;
   updatePartyStatus: StoreStatus;
   attendPartyStatus: StoreStatus;
+  deletePartyStatus: StoreStatus;
+  // TODO: Library does not provide a type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  error: any;
+}
+
+export interface IOrganizerStore {
+  organizer: IOrganizer;
+  fetchStatus: StoreStatus;
+  updateStatus: StoreStatus;
+  updatePartyStatus: StoreStatus;
+  addPartyStatus: StoreStatus;
   deletePartyStatus: StoreStatus;
   // TODO: Library does not provide a type
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

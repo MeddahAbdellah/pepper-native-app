@@ -20,13 +20,15 @@
       "supportsTablet": false
     },
     "android": {
+      "package": "com.pepper.com",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/adaptive-icon.png"
     },
     "description": "Dating App",
     "plugins": [

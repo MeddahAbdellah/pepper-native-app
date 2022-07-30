@@ -3,13 +3,13 @@ import {
   View, StyleSheet, Text, TouchableOpacity, Platform, Keyboard,
 } from 'react-native';
 import {
-  white, space_unit, indigo_3, fontSizeRegular,
+  white, space_unit, indigo_3, fontSizeRegular, raven,
 } from '../../styles/common';
 import {
-  FormSchema, FormType, KeyBoardType, tagValidator,
+  FormSchema, FormType, KeyBoardType, SocialMedia, SocialMediaType,
 } from '../pepperForm';
 import {
-  legalAgeValidator, nameValidator, cityValidator, alwaysValidValidator, codeValidator,
+  legalAgeValidator, freeNameValidator, codeValidator,
 } from '../pepperForm';
 import { PepperFormStepper } from '../pepperForm/pepperFormStepper';
 import { useNavigation } from '@react-navigation/native';
@@ -27,7 +27,7 @@ const PepperUserSubscription = (subscriptionProps: { route: { params: { phoneNum
         type: FormType.Text,
         label: 'Name',
         max: 20,
-        validator: nameValidator,
+        validator: freeNameValidator,
       },
       gender: {
         type: FormType.Gender,
@@ -39,36 +39,15 @@ const PepperUserSubscription = (subscriptionProps: { route: { params: { phoneNum
       },
     },
     {
-      job: {
-        type: FormType.Text,
-        label: 'Job',
-        max: 20,
-        validator: nameValidator,
-      },
-      address: {
-        type: FormType.Text,
-        label: 'Ville',
-        max: 30,
-        validator: cityValidator,
-      },
-      description: {
-        type: FormType.Text,
-        label: 'Description',
-        multiline: true,
-        max: 200,
-        validator: alwaysValidValidator,
-      },
-    },
-    {
-      interests: {
-        type: FormType.Tags,
-        label: 'You & your hobbies',
-        validator: tagValidator,
-      },
-    },
-    {
       imgs: {
         type: FormType.Image,
+      },
+    },
+    {
+      socialMedia: {
+        type: FormType.SocialMedia,
+        socialMediaType: SocialMediaType.Facebook,
+        required: true,
       },
     },
     {
@@ -99,11 +78,8 @@ const PepperUserSubscription = (subscriptionProps: { route: { params: { phoneNum
           code,
           name,
           gender,
-          address,
-          description,
-          interests,
-          job,
           imgs,
+          socialMedia,
         } = subscriptionFormOutput;
 
         try {
@@ -113,11 +89,10 @@ const PepperUserSubscription = (subscriptionProps: { route: { params: { phoneNum
             code as string,
             name as string,
             gender as Gender,
-            address as string,
-            description as string,
-            interests as string[],
-            job as string,
             imgs as Array<{ uri: string}>,
+            (socialMedia as SocialMedia).facebook as string,
+            (socialMedia as SocialMedia).instagram as string,
+            (socialMedia as SocialMedia).snapchat as string,
           );
           if (subcribeSuccess) {
             navigation.navigate(PepperStackRoutes.Tutorial);
@@ -174,5 +149,20 @@ const styles = StyleSheet.create({
     fontSize: fontSizeRegular,
     color: indigo_3,
     textDecorationLine: 'underline'
+  },
+  image: {
+    height: '40%',
+    marginBottom: 4 * space_unit,
+  },
+  description: {
+    width: '90%',
+    textAlign: 'center',
+    fontSize: fontSizeRegular,
+    color: raven,
+  },
+  headerContainer: {
+    height: '70%',
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });

@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 const PepperCarousel = (
   onBoardingProps: { pages: Array<{ image: PepperImages, text: string | JSX.Element }>,
   nextStep: string,
-  paramsToPass: object,
+  paramsToPass?: object,
 }): JSX.Element => {
   const carouselWidth = Dimensions.get('window').width;
 

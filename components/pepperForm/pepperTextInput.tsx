@@ -17,7 +17,7 @@ interface ITextInput extends Omit<TextInputSchema, 'type'> {
 export const PepperTextInput = (textInputProps: ITextInput): JSX.Element => {
   const [error, setError] = useState('');
   const onChange = (value: string): void => {
-    const sanitizedValue = capitalize(sanitizeText(value));
+    const sanitizedValue = capitalize(sanitizeText(value)).trim();
     const validation = textInputProps.validator(sanitizedValue);
     setError(validation);
     textInputProps.onSubmit({ value: sanitizedValue, valid: _.isEmpty(validation) });
@@ -30,6 +30,7 @@ export const PepperTextInput = (textInputProps: ITextInput): JSX.Element => {
         multiline={textInputProps.multiline ?? false}
         maxLength={textInputProps.max}
         keyboardType={textInputProps.keyboardType ? textInputProps.keyboardType : KeyBoardType.Default}
+        secureTextEntry={textInputProps.isPassword ?? false}
         defaultValue={textInputProps.initialValue ? textInputProps.initialValue : ''}
         onChangeText={onChange}
         style={{

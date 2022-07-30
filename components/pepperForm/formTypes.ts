@@ -6,7 +6,14 @@ export enum FormType {
   Gender = 'gender',
   Menu = 'menu',
   Image = 'image',
-  Tags = 'tags'
+  Tags = 'tags',
+  SocialMedia = 'social_media',
+}
+
+export enum SocialMediaType {
+  Facebook = 'facebook',
+  Instagram = 'instagram',
+  Snapchat = 'snapchat',
 }
 
 export enum KeyBoardType {
@@ -19,10 +26,17 @@ export interface TextInputSchema {
   type: FormType.Text,
   label: string,
   keyboardType?: KeyBoardType,
+  isPassword?: boolean,
   initialValue?: string,
   max: number,
   multiline?: boolean,
   validator: (value: string) => string,
+}
+
+export interface SocialMediaInputSchema {
+  type: FormType.SocialMedia,
+  socialMediaType: SocialMediaType,
+  required: boolean,
 }
 
 export interface DateInputSchema {
@@ -43,7 +57,13 @@ export interface ImageInputSchema {
 
 export interface MenuItem {
   name: string,
-  price: string,
+  price: number,
+}
+
+export interface SocialMedia {
+  facebook?: string,
+  instagram?: string,
+  snapchat?: string,
 }
 
 export interface ImageItem {
@@ -53,6 +73,7 @@ export interface ImageItem {
 export interface MenuInputSchema {
   type: FormType.Menu,
   label: string,
+  initialValue?: Array<{ name: string, price: number }>,
   nameValidator: (name: string) => string,
   priceValidator: (price: string) => string,
 }
@@ -66,5 +87,5 @@ export interface TagSchema {
 }
 
 export interface FormSchema {
-  [key: string]: TextInputSchema | DateInputSchema | GenderInputSchema | MenuInputSchema | ImageInputSchema | TagSchema,
+  [key: string]: TextInputSchema | DateInputSchema | GenderInputSchema | MenuInputSchema | ImageInputSchema | TagSchema | SocialMediaInputSchema,
 }

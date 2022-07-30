@@ -12,7 +12,7 @@ import { usePepperUser } from '../../hooks/user.hooks';
 import { useNavigation } from '@react-navigation/native';
 import { PepperStackRoutes } from '../../models/routes';
 import {
-  FormSchema, PepperForm, FormType, nameValidator, cityValidator, alwaysValidValidator, MenuItem, tagValidator,
+  FormSchema, PepperForm, FormType, cityValidator, alwaysValidValidator, MenuItem, tagValidator, freeNameValidator,
 } from '../pepperForm';
 
 const PepperUserDescription = (): JSX.Element => {
@@ -39,7 +39,7 @@ const PepperUserDescription = (): JSX.Element => {
         label: 'Job',
         initialValue: currentUser.user.job,
         max: 20,
-        validator: nameValidator,
+        validator: freeNameValidator,
       },
       address: {
         type: FormType.Text,

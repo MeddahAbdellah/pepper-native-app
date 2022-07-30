@@ -35,13 +35,14 @@ const PepperQRCodeModal = (modalProps: { show: boolean, onRequestClose: () => vo
   const [mode, setMode] = useState(QRcodeModalMode.Display);
   const [qrCodeScannedType, setQrCodeScannedType] = useState(QrCodeScannedType.None);
   const storeDispatch = usePepperDispatch();
+  const currentUser = usePepperUser();
+
   // Fetch user on load
   useEffect(() => {
     if (modalProps.show) {
       storeDispatch(fetchUser());
     }
   }, [modalProps.show]);
-  const currentUser = usePepperUser();
 
   const handleBarCodeScanned = (result: BarCodeScanningResult): void => {
     // Keeping console log until implmentation
@@ -55,7 +56,7 @@ const PepperQRCodeModal = (modalProps: { show: boolean, onRequestClose: () => vo
       });
       return;
     }
-    storeDispatch(attendParty({ partyId: qrCodeData.id })).then(() => {
+    storeDispatch(attendParty({ organizerId: qrCodeData.id })).then(() => {
       modalProps.onRequestClose();
       setQrCodeScannedType(QrCodeScannedType.Party);
     });

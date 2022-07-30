@@ -4,7 +4,7 @@ import {
   ActivityIndicator, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { PepperStackRoutes } from '../../models/routes';
+import { PepperOrganizerStackRoutes, PepperStackRoutes } from '../../models/routes';
 import {
   pepper, white, space_unit, fontSizeHeader, indigo, black, fontSizeRegular, color, fontSizeSubSubHeader, indigo_3, fontSizeTypo, raven,
 } from '../../styles/common';
@@ -38,13 +38,18 @@ const PepperLandingPage = (): JSX.Element => {
         const isOrganizer = await UtilService.isOrganizer();
         setIsOrganizer(isOrganizer);
         setIsLangingPageShowing(true);
-      } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         UtilService.throwError(error);
       }
     })();
   }, [fontsLoaded]);
 
   const onGo = (): void => {
+    if (isOrganizer) {
+      navigation.navigate(PepperOrganizerStackRoutes.Login);
+      return;
+    }
     navigation.navigate(PepperStackRoutes.LoginRouter);
   };
 

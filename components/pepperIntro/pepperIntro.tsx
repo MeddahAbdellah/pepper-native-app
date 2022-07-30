@@ -15,7 +15,6 @@ const PepperIntro = (introProps: { route: { params: { phoneNumber: string} } }):
         are the best place to meet awesome people</>)
       },
       { image: PepperImages.Bracelets, text: 'You will all have the same bracelets so talking to strangers will be much easier' },
-      { image: PepperImages.Parity, text: 'The parity will be respected! Half girlz half boyz' },
     ]}
     nextStep={PepperStackRoutes.Subscription}
     paramsToPass={introProps.route.params}

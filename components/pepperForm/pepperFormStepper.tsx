@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import _ from 'lodash';
-import { FormSchema, MenuItem } from './formTypes';
+import { FormSchema, MenuItem, SocialMedia } from './formTypes';
 import { PepperForm } from './pepperForm';
 
 export const PepperFormStepper = (formProps: {
   schemas: FormSchema[],
-  onDone: (result: { [key: string]: string | MenuItem[] | string[] | Array<{ uri: string}> }) => void,
+  onDone: (result: { [key: string]: string | MenuItem[] | string[] | Array<{ uri: string}> | SocialMedia}) => void,
 }): JSX.Element => {
   const [stepperFormOutput, setStepperFormOutput] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);

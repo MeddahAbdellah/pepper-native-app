@@ -8,6 +8,7 @@ import LoginService from '../../services/login';
 import { usePepperUser } from '../../hooks/user.hooks';
 import { UtilService } from '../../services/util';
 import { PepperStackRoutes } from '../../models/routes';
+import { usePepperOrganizer } from '../../hooks/organizer.hooks';
 
 export const PepperTitle = (): JSX.Element => (
   <PepperImage src={PepperImages.PepperTitle} style={
@@ -66,7 +67,6 @@ export const PepperUserProfile = (userProfileProps: {
     </>
   );
 };
-//  :
 
 export const PepperQrCode = (): JSX.Element => {
   const [showQrCodeModal, setShowQrCodeModal] = useState(false);
@@ -94,6 +94,40 @@ export const PepperQrCode = (): JSX.Element => {
       { isLoggedIn ?
         (
           <TouchableOpacity onPress={ () => setShowQrCodeModal(true) }>
+            <PepperIcon name="pepper-qrCode" color={black} size={4.5 * space_unit} />
+          </TouchableOpacity>
+        ) : null
+      }
+    </>
+  );
+};
+
+export const PepperOrganizerQrCode = (): JSX.Element => {
+  // TODO: Add QR code modal
+  // const [showQrCodeModal, setShowQrCodeModal] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const currentOrganizer = usePepperOrganizer();
+
+  // Show Qr code button only when user is logged in
+  useEffect( () => {
+    const abortController = new AbortController();
+    (async() => {
+      try {
+        const loggedIn = await LoginService.isLoggedin();
+        setIsLoggedIn(loggedIn);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        UtilService.throwError(error);
+      }
+    })();
+    return () => { abortController.abort(); };
+  }, [currentOrganizer]);
+
+  return (
+    <>
+      { isLoggedIn ?
+        (
+          <TouchableOpacity>
             <PepperIcon name="pepper-qrCode" color={black} size={4.5 * space_unit} />
           </TouchableOpacity>
         ) : null
