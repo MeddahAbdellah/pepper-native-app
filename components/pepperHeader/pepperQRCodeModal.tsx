@@ -56,7 +56,7 @@ const PepperQRCodeModal = (modalProps: { show: boolean, onRequestClose: () => vo
       });
       return;
     }
-    storeDispatch(attendParty({ partyId: qrCodeData.id })).then(() => {
+    storeDispatch(attendParty({ organizerId: qrCodeData.id })).then(() => {
       modalProps.onRequestClose();
       setQrCodeScannedType(QrCodeScannedType.Party);
     });

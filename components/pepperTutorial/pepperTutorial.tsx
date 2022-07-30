@@ -9,7 +9,7 @@ import { pepper, white } from '../../styles/common';
 
 const PepperTutorial = (): JSX.Element => {
   const currentUser = usePepperUser();
-  const genderDependentSlide = currentUser.user.gender === Gender.MAN ?
+  const genderDependentSlideEncouragement = currentUser.user.gender === Gender.MAN ?
     ({
       image: PepperImages.FamousMan, text: (<>
         Being ghosted is no way to find a lover, in
@@ -19,26 +19,25 @@ const PepperTutorial = (): JSX.Element => {
     ({
       image: PepperImages.FamousWoman,
       text: (<>
-        You are not just a pretty picture to wipe on, in
+        You are more than just a pretty picture to swipe on, in
         {(<Text style={{ color: pepper, fontFamily: 'Sora_700Bold' }}> Pepper parties </Text>)}
         you will be treated like the star you are! </>)
+    });
+
+  const genderDependentSlideAfterParty = currentUser.user.gender === Gender.MAN ?
+    ({
+      image: PepperImages.SwipeOnWoman, text: (<> The day after the party, you will be able to swipe on the people you met at the party! </>)
+    }) :
+    ({
+      image: PepperImages.SwipeOnMan, text: (<> The day after the party, you will be able to swipe on the people you met at the party! </>)
     });
 
   return (
     <View style={styles.container}>
       <PepperCarousel pages={[
-        { image: PepperImages.Romance, text: 'When you’ll get to the event you will probably meet some lovely people' },
-        {
-          image: PepperImages.QrCode,
-          text: `As soon as you get to the event, scan the QR code at the entrance and
-you will be able to see the people that are coming!`
-        },
-        {
-          image: PepperImages.Swipe,
-          text: `If you see someone you like, swipe right!
-you might match with someone that you can actually talk to!`,
-        },
-        genderDependentSlide,
+        { image: PepperImages.Romance, text: 'When you’ll get to the event you will probably meet some lovely people, talk to them!' },
+        genderDependentSlideAfterParty,
+        genderDependentSlideEncouragement,
       ]}
       nextStep={PepperStackRoutes.Main}
       ></PepperCarousel>
