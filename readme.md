@@ -30,7 +30,6 @@ expo start
 ## PepperIcon
 You'll find the available icons on icomoon
 user: meddeah.abdellah.spcx@gmail.com
-password: 123pepper
 
 ```javascript
 <PepperIcon name={'PepperIcons'} color={'string'} size={'number'} />;
